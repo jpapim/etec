@@ -39,6 +39,59 @@ class EventoController extends AbstractCrudController
 
     }
 
+    public function indexPaginationAction()
+    {
+    	$filter = $this->getFilterPage();
+    
+    	$camposFilter = [
+    			'0' => [
+    					'filter' => "eventos.nm_evento LIKE ?",
+    			],
+    			'1' => [
+    					'filter' => "cidade.nm_cidade LIKE ?",
+    			],
+    			'2' => [
+    					'filter' => "regras_lutas.nm_regra_luta LIKE ?",
+    			],
+    			'3' => [
+    					'filter' => "DATE(eventos.dt_evento) LIKE STR_TO_DATE(?, '%d/%m/%Y')",
+    			],
+    			'4' => [
+    					'filter' => "eventos.vl_inscricao_colorida LIKE ?",
+    			],
+    			'5' => [
+    					'filter' => "eventos.vl_inscricao_preta LIKE ?",
+    			],
+    			'6' => NULL,
+    	];
+    
+    
+    	$paginator = $this->service->getEventosPaginator($filter, $camposFilter);
+    
+    	$paginator->setItemCountPerPage($paginator->getTotalItemCount());
+    
+    	$countPerPage = $this->getCountPerPage(
+    			current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+    			);
+    
+    	$paginator->setItemCountPerPage($this->getCountPerPage(
+    			current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+    			))->setCurrentPageNumber($this->getCurrentPage());
+    
+    			$viewModel = new ViewModel([
+    					'service' => $this->service,
+    					'form' => $this->form,
+    					'paginator' => $paginator,
+    					'filter' => $filter,
+    					'countPerPage' => $countPerPage,
+    					'camposFilter' => $camposFilter,
+    					'controller' => $this->params('controller'),
+    					'atributos' => array()
+    			]);
+    
+    			return $viewModel->setTerminal(TRUE);
+    }
+
     public function gravarAction()
     {
         try {
