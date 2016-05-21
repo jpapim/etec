@@ -2,24 +2,26 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterAtletas" >
+        <table class="table table-striped" id="tablesorterUsuarios" >
             <thead>
                 <tr>
-                    <th class="text-center">Nome do Atleta</th>
-                    <th class="text-center">Academia</th>
-                    <th class="text-center">Sexo</th>
-                    <th class="text-center">Peso</th>
-                    <th class="text-center">Idade</th>
+                    <th class="text-center">Usuário</th>
+                    <th class="text-center">Data de Nascimento</th>
+                    <th class="text-center">RG</th>
+                    <th class="text-center">CPF</th>
+                    <th class="text-center">Profissão</th>
+                    <th class="text-center">Nacionalidade</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th class="text-center">Nome do Atleta</th>
-                    <th class="text-center">Academia</th>
-                    <th class="text-center">Sexo</th>
-                    <th class="text-center">Peso</th>
-                    <th class="text-center">Idade</th>
+                    <th class="text-center">Usuário</th>
+                    <th class="text-center">Data de Nascimento</th>
+                    <th class="text-center">RG</th>
+                    <th class="text-center">CPF</th>
+                    <th class="text-center">Profissão</th>
+                    <th class="text-center">Nacionalidade</th>
                     <th class="text-center">Ações</th>
                 </tr>
                 <tr>
@@ -27,9 +29,9 @@
                         <?php
                         echo $this->paginationControl(
                                 $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/atleta-atleta/index-pagination',
+                            'urlPagination' => '/usuario-usuario/index-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#atleta-pagination',
+                            'divData' => '#usuario-pagination',
                                 ]
                         );
                         ?>  
@@ -45,7 +47,7 @@
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
                         ?>    
-                            <td>
+                            <!--<td>
                                 <?php
                                 if (!is_null($campoFilter)) {
                                 ?>
@@ -57,27 +59,28 @@
                                     <?php
                                 }
                                 ?>
-                            </td>
+                            </td> -->
                             <?php
                         }
                         ?>                            
                     </tr>
                     <?php
-                    foreach ($paginator as $key => $atleta) {
+                    foreach ($paginator as $key => $usuario) {
                     ?>
                         <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($atleta['nm_atleta']) ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($atleta['nm_academia']) . ' (' . $atleta['nm_cidade'] . ', ' . $atleta['nm_estado'] . ')' ?></td>
-                            <td class="text-center"><?= $atleta['nm_sexo'] ?></td>
-                            <td class="text-center"><?= $atleta['nr_peso'] . ' Kg' ?></td>
-                            <td class="text-center"><?= \Estrutura\Helpers\Data::calcularIdadeDoAtleta($atleta['dt_nascimento']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_usuario']) ?></td>
+                            <td class="text-center"><?= $usuario['dt_nascimento'] ?></td>
+                            <td class="text-center"><?= $usuario['nu_rg'] ?></td>
+                            <td class="text-center"><?= $usuario['nu_cpf'] ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_profissao']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($usuario['nm_nacionalidade']) ?></td>
 
 
                             <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($atleta['id_atleta'])))) 
+                                <span class="btn-group" style="width: 120px;">
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($usuario['id_usuario'])))) 
                                     ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($atleta['id_atleta'])))) 
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($usuario['id_usuario'])))) 
                                     ?>
                                 </span>
                             </td>
@@ -94,7 +97,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um novo Atleta">Novo Atleta</a>
+                <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um novo Usuário">Novo Usuário</a>
             </div>
         </div>
     </div>
@@ -127,7 +130,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterAtletas").tablesorter({
+        $("#tablesorterUsuarios").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",

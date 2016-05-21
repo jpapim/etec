@@ -110,4 +110,5 @@ VIEW `bdetec`.`auth` AS
         JOIN `bdetec`.`login` ON ((`bdetec`.`login`.`id_usuario` = `bdetec`.`usuario`.`id_usuario`)))
         JOIN `bdetec`.`email` ON ((`bdetec`.`email`.`id_email` = `bdetec`.`login`.`id_email`)))
         JOIN `bdetec`.`perfil` ON ((`bdetec`.`perfil`.`id_perfil` = `bdetec`.`login`.`id_perfil`))));
-	  
+
+  
