@@ -1,1 +1,2 @@
 INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('3','51','1');	
+INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('14','51','1');	

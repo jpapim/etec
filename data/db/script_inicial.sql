@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.26, for Win32 (x86)
+-- MySQL dump 10.16  Distrib 10.1.9-MariaDB, for Win32 (AMD64)
 --
 -- Host: localhost    Database: bdetec
 -- ------------------------------------------------------
--- Server version	5.6.26-log
+-- Server version	10.1.9-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -69,16 +69,17 @@ INSERT INTO `academias` VALUES (1,1724,1,1,1,'Academia Olimpica',NULL,NULL,'2015
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `acl`
+-- Temporary table structure for view `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `acl` AS SELECT 
- 1 AS `id_perfil`,
- 1 AS `nm_resource`*/;
+/*!50001 CREATE TABLE `acl` (
+  `id_perfil` tinyint NOT NULL,
+  `nm_resource` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -183,20 +184,21 @@ INSERT INTO `atleta` VALUES (1,1,4213,1,1,'Alysson Vicuña de Oliveira','1981-08
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `auth`
+-- Temporary table structure for view `auth`
 --
 
 DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `auth` AS SELECT 
- 1 AS `id_usuario`,
- 1 AS `id_perfil`,
- 1 AS `em_email`,
- 1 AS `pw_senha`,
- 1 AS `nm_usuario`,
- 1 AS `id_contrato`*/;
+/*!50001 CREATE TABLE `auth` (
+  `id_usuario` tinyint NOT NULL,
+  `id_perfil` tinyint NOT NULL,
+  `em_email` tinyint NOT NULL,
+  `pw_senha` tinyint NOT NULL,
+  `nm_usuario` tinyint NOT NULL,
+  `id_contrato` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -536,7 +538,7 @@ CREATE TABLE `eventos` (
   `vl_inscricao_colorida` decimal(10,2) DEFAULT '0.00' COMMENT 'vl_inscricao_colorida',
   `vl_inscricao_preta` decimal(10,2) DEFAULT '0.00' COMMENT 'vl_inscricao_preta',
   `id_regra_luta` smallint(6) NOT NULL,
-  `bo_inativo` bit(1) DEFAULT b'0',
+  `bo_inativo` char(1) DEFAULT '0',
   `id_cidade` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_evento`),
   KEY `FK_TB_EVENT_REFERENCE_TB_TIPOS` (`id_tipo_evento`),
@@ -556,7 +558,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (1,1,'1ª Copa Brasil','2015-09-08 21:47:08',41.69,60.36,3,'\0',568),(2,1,'Brazil Open 2015 - LNT','2016-10-20 21:47:08',35.00,54.00,7,'\0',4298),(3,1,'Brazil Open 2015 - CBTKD','2015-11-16 21:47:08',32.00,36.00,3,'',547),(4,1,'Rio Verde Open','2015-12-20 21:47:08',28.00,45.00,3,'\0',4),(5,1,'Copa Pantanal','2015-11-16 00:00:00',45.00,55.00,7,'\0',968),(6,1,'3º GranPrix Vicuña','2015-10-18 01:00:00',41.58,60.00,7,'\0',5185),(7,1,'Wilmar Open de Taekwondo','2015-08-29 00:00:00',41.50,55.00,3,'\0',5064);
+INSERT INTO `eventos` VALUES (1,1,'1ª Copa Brasil','2015-09-08 21:47:08',41.69,60.36,3,'0',568),(2,1,'Brazil Open 2015 - LNT','2016-10-20 21:47:08',35.00,54.00,7,'0',4298),(3,1,'Brazil Open 2015 - CBTKD','2015-11-16 21:47:08',32.00,36.00,3,'1',547),(4,1,'Rio Verde Open','2015-12-20 21:47:08',28.00,45.00,3,'0',4),(5,1,'Copa Pantanal','2015-11-16 00:00:00',45.00,55.00,7,'0',968),(6,1,'3º GranPrix Vicuña','2015-10-18 01:00:00',41.58,60.00,7,'0',5185),(7,1,'Wilmar Open de Taekwondo','2015-08-29 00:00:00',41.50,55.00,3,'0',5064);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -971,18 +973,19 @@ INSERT INTO `usuario` VALUES (1,'Alysson Vicuña de Oliveira','1983-12-20 21:47:
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `vw_regras_lutas`
+-- Temporary table structure for view `vw_regras_lutas`
 --
 
 DROP TABLE IF EXISTS `vw_regras_lutas`;
 /*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_regras_lutas` AS SELECT 
- 1 AS `id_regra_luta`,
- 1 AS `nm_regra_luta`,
- 1 AS `nm_graduacao_inicial`,
- 1 AS `nm_graduacao_final`*/;
+/*!50001 CREATE TABLE `vw_regras_lutas` (
+  `id_regra_luta` tinyint NOT NULL,
+  `nm_regra_luta` tinyint NOT NULL,
+  `nm_graduacao_inicial` tinyint NOT NULL,
+  `nm_graduacao_final` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -995,6 +998,7 @@ USE `bdetec`;
 -- Final view structure for view `acl`
 --
 
+/*!50001 DROP TABLE IF EXISTS `acl`*/;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1013,13 +1017,14 @@ USE `bdetec`;
 -- Final view structure for view `auth`
 --
 
+/*!50001 DROP TABLE IF EXISTS `auth`*/;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = cp850 */;
+/*!50001 SET character_set_results     = cp850 */;
+/*!50001 SET collation_connection      = cp850_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `auth` AS (select `login`.`id_usuario` AS `id_usuario`,`perfil`.`id_perfil` AS `id_perfil`,`email`.`em_email` AS `em_email`,`login`.`pw_senha` AS `pw_senha`,`usuario`.`nm_usuario` AS `nm_usuario`,1 AS `id_contrato` from (((`usuario` join `login` on((`login`.`id_usuario` = `usuario`.`id_usuario`))) join `email` on((`email`.`id_email` = `login`.`id_email`))) join `perfil` on((`perfil`.`id_perfil` = `login`.`id_perfil`)))) */;
@@ -1031,6 +1036,7 @@ USE `bdetec`;
 -- Final view structure for view `vw_regras_lutas`
 --
 
+/*!50001 DROP TABLE IF EXISTS `vw_regras_lutas`*/;
 /*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1054,4 +1060,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-09 16:05:53
+-- Dump completed on 2016-05-22 17:11:42
