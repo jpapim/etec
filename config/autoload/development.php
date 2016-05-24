@@ -3,7 +3,7 @@
 return array(
     'db' => array(
 		'username' => 'root',
-        'password' => 'magatti123',
+        'password' => '',
         'dsn' => 'mysql:dbname=bdetec;host=localhost',
     ),
     'service_manager' => array(

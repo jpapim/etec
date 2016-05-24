@@ -11,6 +11,7 @@ return array(
         'Usuario',
         'Perfil',
         'EsqueciSenha',
+        'Controller',
         'Config',
         'Cidade',
         'Estado',
