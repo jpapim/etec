@@ -4,7 +4,7 @@ return array(
     'db' => array(
 		'username' => 'root',
         'password' => 'magatti123',
-        'dsn' => 'mysql:dbname=bdetec;host=localhost',
+        'dsn' => 'mysql:dbname=bdcatequese;host=localhost',
     ),
     'service_manager' => array(
         'factories' => array(
