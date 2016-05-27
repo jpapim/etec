@@ -361,6 +361,8 @@ DROP TABLE IF EXISTS `controller`;
 CREATE TABLE `controller` (
   `id_controller` int(11) NOT NULL AUTO_INCREMENT,
   `nm_controller` varchar(400) DEFAULT NULL COMMENT '{"label":"Controller"}',
+  `nm_modulo` varchar(50) DEFAULT NULL,
+  `cs_exibir_combo` char(1) DEFAULT 'S',
   PRIMARY KEY (`id_controller`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -371,7 +373,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial'),(2,'estilo-estilo'),(3,'usuario-usuario'),(4,'application-index'),(5,'cidade-cidade'),(6,'estado-estado'),(7,'graduacao-graduacao'),(8,'pagamento-pagamento'),(9,'PhpBoletoZf2\\Controller\\Itau'),(10,'banco-banco'),(11,'principal-principal'),(12,'perfil-perfil'),(13,'tipo_evento-tipoevento'),(14,'evento-evento'),(15,'graduacao'),(16,'academia-academia'),(17,'atleta-atleta'),(18,'categoria_peso-categoriapeso'),(19,'categoria_idade-categoriaidade'),(20,'regras_lutas-regraslutas'),(21,'detalhes_regras_luta-detalhesregrasluta'),(22,'inscricoes_evento-inscricoesevento');
+INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','N'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','N'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','N'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1345,4 +1347,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-24 14:51:28
+-- Dump completed on 2016-05-27 15:59:52
