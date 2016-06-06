@@ -45,6 +45,8 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
+		'TipoTcc',
+		'AreaConhecimento',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
