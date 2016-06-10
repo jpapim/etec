@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: bdetec
 -- ------------------------------------------------------
--- Server version	5.6.26-log
+-- Server version	5.6.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -116,7 +116,7 @@ CREATE TABLE `area_conhecimento` (
   `id_area_conhecimento` smallint(6) NOT NULL AUTO_INCREMENT,
   `nm_area_conhecimento` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_area_conhecimento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,6 +125,7 @@ CREATE TABLE `area_conhecimento` (
 
 LOCK TABLES `area_conhecimento` WRITE;
 /*!40000 ALTER TABLE `area_conhecimento` DISABLE KEYS */;
+INSERT INTO `area_conhecimento` VALUES (1,'Engenharia de Software'),(2,'Segurança da Informação');
 /*!40000 ALTER TABLE `area_conhecimento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,6 +308,7 @@ CREATE TABLE `cidade` (
   `id_estado` int(11) NOT NULL,
   `nm_cidade` varchar(150) DEFAULT NULL COMMENT '{"label":"Cidade"}',
   PRIMARY KEY (`id_cidade`),
+  KEY `FK_Reference_25` (`id_estado`),
   CONSTRAINT `FK_Reference_25` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9715 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -364,7 +366,7 @@ CREATE TABLE `controller` (
   `nm_modulo` varchar(50) DEFAULT NULL,
   `cs_exibir_combo` char(1) DEFAULT 'S',
   PRIMARY KEY (`id_controller`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -373,7 +375,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','N'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','N'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','N'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S');
+INSERT INTO `controller` VALUES (1,'arte_marcial-artemarcial','Arte Marcial','S'),(2,'estilo-estilo','Estilo da Arte','S'),(3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','N'),(5,'cidade-cidade','Cidade','S'),(6,'estado-estado','Estado','S'),(7,'graduacao-graduacao','Graduação','S'),(8,'pagamento-pagamento','Pagamento','S'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','N'),(10,'banco-banco','Banco','S'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(13,'tipo_evento-tipoevento','Tipo de Evento','S'),(14,'evento-evento','Evento','S'),(15,'graduacao','Teste de Action ','N'),(16,'academia-academia','Academia','S'),(17,'atleta-atleta','Atleta','S'),(18,'categoria_peso-categoriapeso','Categoria de Peso','S'),(19,'categoria_idade-categoriaidade','Categoria de Idade','S'),(20,'regras_lutas-regraslutas','Regras de Luta','S'),(21,'detalhes_regras_luta-detalhesregrasluta','Definição das Regras de Luta','S'),(22,'inscricoes_evento-inscricoesevento','Inscrições nos Eventos','S'),(23,'tipo_tcc-tipotcc','Tipo de TCC','S'),(24,'area_conhecimento-areaconhecimento','Área de Conhecimento','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -640,6 +642,7 @@ CREATE TABLE `eventos` (
   PRIMARY KEY (`id_evento`),
   KEY `IX_REGRA_LUTA` (`id_regra_luta`),
   KEY `IX_CIDADE` (`id_cidade`),
+  KEY `FK_Reference_29` (`id_tipo_evento`),
   CONSTRAINT `FK_EVENTO_REFERENCES_CIDADE` FOREIGN KEY (`id_cidade`) REFERENCES `cidade` (`id_cidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_EVENTO_REFERENCES_REGRAS_LUTA` FOREIGN KEY (`id_regra_luta`) REFERENCES `regras_lutas` (`id_regra_luta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_Reference_29` FOREIGN KEY (`id_tipo_evento`) REFERENCES `tipos_eventos` (`id_tipo_evento`),
@@ -738,6 +741,8 @@ CREATE TABLE `login` (
   PRIMARY KEY (`id_Login`),
   KEY `ix_Login_emails` (`id_email`),
   KEY `ix_Login_situacao` (`id_situacao`),
+  KEY `FK_Reference_26` (`id_perfil`),
+  KEY `fk_Login_usuarios` (`id_usuario`),
   CONSTRAINT `FK_Reference_26` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
   CONSTRAINT `FK_Reference_31` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
   CONSTRAINT `fk_Login_emails` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -878,7 +883,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -887,7 +892,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(3,3,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(20,3,7,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(24,3,14,1),(25,8,18,1),(26,5,16,1),(27,3,17,1),(28,3,18,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(62,3,15,1),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(81,3,36,1),(82,3,36,2),(83,3,37,1),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(89,3,6,1),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(135,18,1,1),(136,18,6,1),(137,18,7,1),(138,18,8,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,14,51,1);
+INSERT INTO `perfil_controller_action` VALUES (1,1,1,1),(2,2,1,1),(3,3,1,1),(4,4,1,1),(5,5,1,1),(6,6,1,1),(7,1,5,1),(8,6,6,1),(9,5,6,1),(10,5,7,1),(11,6,7,1),(12,6,8,1),(13,1,2,1),(14,1,3,1),(15,1,9,1),(16,7,1,1),(17,1,4,1),(18,1,10,1),(19,1,11,1),(20,3,7,1),(21,2,5,1),(22,2,12,1),(23,2,13,1),(24,3,14,1),(25,8,18,1),(26,5,16,1),(27,3,17,1),(28,3,18,1),(29,8,19,1),(30,1,1,2),(31,2,1,2),(32,3,1,2),(33,4,1,2),(34,5,1,2),(35,6,1,2),(36,1,5,2),(37,6,6,2),(38,5,6,2),(39,5,7,2),(40,6,7,2),(41,6,8,2),(42,1,2,2),(43,1,3,2),(44,1,9,2),(45,7,1,2),(46,1,4,2),(47,1,10,2),(48,1,11,2),(49,3,7,2),(50,2,5,2),(51,2,12,2),(52,2,13,2),(53,3,14,2),(54,8,18,2),(55,8,20,1),(56,8,21,1),(57,8,22,1),(58,8,23,1),(59,3,15,2),(60,1,24,1),(61,1,24,2),(62,3,15,1),(63,2,25,1),(64,2,25,2),(65,2,26,1),(66,2,26,2),(67,2,27,1),(68,2,27,2),(69,2,28,1),(70,2,28,2),(71,2,29,1),(72,2,30,1),(73,8,9,1),(74,8,9,2),(75,8,31,1),(76,8,31,2),(77,8,32,1),(78,8,33,1),(79,8,34,1),(80,2,35,1),(81,3,36,1),(82,3,36,2),(83,3,37,1),(84,3,37,2),(85,5,16,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(89,3,6,1),(90,10,1,1),(91,10,6,1),(92,10,7,1),(93,11,1,1),(94,10,8,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(98,1,7,1),(99,1,6,1),(100,1,8,1),(101,2,6,1),(102,2,8,1),(103,2,7,1),(104,7,6,1),(105,7,7,1),(106,7,8,1),(107,13,1,1),(108,13,6,1),(109,13,7,1),(110,13,8,1),(111,14,1,1),(112,14,6,1),(113,14,7,1),(114,14,8,1),(115,7,39,1),(116,15,39,1),(117,15,1,1),(118,16,1,1),(119,16,6,1),(120,16,7,1),(121,16,8,1),(122,16,40,1),(123,16,41,1),(124,17,1,1),(125,17,6,1),(126,17,7,1),(127,17,8,1),(128,17,42,1),(129,17,43,1),(130,17,44,1),(131,17,45,1),(132,17,46,1),(133,17,47,1),(134,17,40,1),(135,18,1,1),(136,18,6,1),(137,18,7,1),(138,18,8,1),(139,19,1,1),(140,19,6,1),(141,19,7,1),(142,19,8,1),(143,20,1,1),(144,20,6,1),(145,20,7,1),(146,20,8,1),(147,21,1,1),(148,21,6,1),(149,21,7,1),(150,21,8,1),(151,19,48,1),(152,22,1,1),(153,22,6,1),(154,22,7,1),(155,22,8,1),(156,14,49,1),(157,5,40,1),(158,16,42,1),(159,16,47,1),(160,17,50,1),(161,17,51,1),(162,17,1,1),(163,14,51,1),(164,23,1,1),(165,23,2,1),(166,23,3,1),(167,23,4,1),(168,23,5,1),(169,23,6,1),(170,23,7,1),(171,23,8,1),(172,23,9,1),(173,23,10,1),(174,23,11,1),(175,23,12,1),(176,23,13,1),(177,23,14,1),(178,23,15,1),(179,23,16,1),(180,23,17,1),(181,23,18,1),(182,23,19,1),(183,23,20,1),(184,23,21,1),(185,23,22,1),(186,23,23,1),(187,23,23,1),(188,23,25,1),(189,23,26,1),(190,23,27,1),(191,23,28,1),(192,23,29,1),(193,23,30,1),(194,23,31,1),(195,23,32,1),(196,23,33,1),(197,23,34,1),(198,23,35,1),(199,23,36,1),(200,23,37,1),(201,23,38,1),(202,23,39,1),(203,23,40,1),(204,23,41,1),(205,23,42,1),(206,23,43,1),(207,23,44,1),(208,23,45,1),(209,23,46,1),(210,23,47,1),(211,23,48,1),(212,23,49,1),(213,23,50,1),(214,23,51,1),(215,24,1,1),(216,24,2,1),(217,24,3,1),(218,24,4,1),(219,24,5,1),(220,24,6,1),(221,24,7,1),(222,24,8,1),(223,24,9,1),(224,24,10,1),(225,24,11,1),(226,24,12,1),(227,24,13,1),(228,24,14,1),(229,24,15,1),(230,24,16,1),(231,24,17,1),(232,24,18,1),(233,24,19,1),(234,24,20,1),(235,24,21,1),(236,24,22,1),(237,24,23,1),(238,24,24,1),(239,24,25,1),(240,24,26,1),(241,24,27,1),(242,24,28,1),(243,24,29,1),(244,24,30,1),(245,24,31,1),(246,24,32,1),(247,24,33,1),(248,24,34,1),(249,24,35,1),(250,24,36,1),(251,24,37,1),(252,24,38,1),(253,24,39,1),(254,24,40,1),(255,24,41,1),(256,24,42,1),(257,24,43,1),(258,24,44,1),(259,24,45,1),(260,24,46,1),(261,24,47,1),(262,24,48,1),(263,24,49,1),(264,24,50,1),(265,24,51,1),(266,3,51,1),(267,3,51,2);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1079,6 +1084,7 @@ CREATE TABLE `telefone` (
   `id_situacao` int(11) NOT NULL,
   PRIMARY KEY (`id_telefone`),
   KEY `ix_telefones_situacao` (`id_situacao`),
+  KEY `fk_telefones_tipo_telefone1` (`id_tipo_telefone`),
   CONSTRAINT `fk_telefones_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_telefones_tipo_telefone1` FOREIGN KEY (`id_tipo_telefone`) REFERENCES `tipo_telefone` (`id_tipo_telefone`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
@@ -1105,7 +1111,7 @@ CREATE TABLE `tipo_tcc` (
   `id_tipo_tcc` smallint(6) NOT NULL AUTO_INCREMENT,
   `nm_tipo_tcc` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id_tipo_tcc`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1114,6 +1120,7 @@ CREATE TABLE `tipo_tcc` (
 
 LOCK TABLES `tipo_tcc` WRITE;
 /*!40000 ALTER TABLE `tipo_tcc` DISABLE KEYS */;
+INSERT INTO `tipo_tcc` VALUES (1,'Projeto Completo'),(2,'Artigo Cienctífico'),(3,'Monografia');
 /*!40000 ALTER TABLE `tipo_tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1347,4 +1354,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-27 15:59:52
+-- Dump completed on 2016-06-06 16:05:37
