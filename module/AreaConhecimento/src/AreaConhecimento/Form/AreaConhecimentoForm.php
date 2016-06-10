@@ -12,9 +12,12 @@ class AreaConhecimentoForm extends AbstractForm{
 
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('areaconhecimentoform',$this,$this->inputFilter);
-        $objForm->hidden("id")->required(false)->label("Id");  
-        $objForm->text("nm_area_conhecimento")->required(false)->label("Area Conhecimento");
+        $objForm->hidden("id")->required(false)->label("Id");
+        $objForm->hidden("id_usuario")->required(false)->label("Id Usuario");
+        $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario Cadastrador");
 
+        $objForm->text("nm_area_conhecimento")->required(true)->label("Área de Conhecimento");
+       
         $this->formObject = $objForm;
     }
 

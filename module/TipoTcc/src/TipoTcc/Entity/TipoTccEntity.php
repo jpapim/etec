@@ -9,6 +9,4 @@ class TipoTccEntity extends AbstractEstruturaService{
         protected $id; 
         protected $nm_tipo_tcc;
 
-
-
 }

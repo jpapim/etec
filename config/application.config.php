@@ -45,8 +45,10 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
-		'TipoTcc',
+	    'TipoTcc',
 		'AreaConhecimento',
+        'PalavraChave',
+        'Curso',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
