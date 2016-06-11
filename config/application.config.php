@@ -46,12 +46,9 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
-<<<<<<< HEAD
         'Check',
-=======
 		'TipoTcc',
 		'AreaConhecimento',
->>>>>>> 4ba0713047493d0e8b573e95ee14cc258a993fc0
     ),
     'module_listener_options' => array(
         'module_paths' => array(
