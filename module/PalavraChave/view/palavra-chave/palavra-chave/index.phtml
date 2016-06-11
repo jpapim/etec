@@ -9,16 +9,16 @@
 /** @var $lista \areaconhecimento\Service\areaconhecimento[] */
 ?>
 <div class="page-head">
-    <h2>Lista de Área de Conhecimento</h2>
+    <h2>Lista de Palavras Chaves</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um nova Área de Conhecimento">Nova Área de Conhecimento</a>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um nova Palavra Chave">Nova Palavra Chave</a>
         </div>
     </div>
     <br />
-    <div class="row" id="areaconhecimento-pagination"></div>    
+    <div class="row" id="palavrachave-pagination"></div>    
 </div>
 
 <script>
@@ -28,19 +28,19 @@
             type: "post",
             dataType: "text",
             cache: false,
-            url: '/area_conhecimento-areaconhecimento/index-pagination',
+            url: '/palavra_chave-palavrachave/index-pagination',
             async: true,
             data: {
             },
             beforeSend: function () {
 
-                $('#areaconhecimento-pagination').html(
+                $('#palavrachave-pagination').html(
                         '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                         );
             },
             success: function (data) {
 
-                $('#areaconhecimento-pagination').html(data);
+                $('#palavrachave-pagination').html(data);
             }
         });
 

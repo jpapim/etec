@@ -1,22 +1,22 @@
 <?php
 
-namespace AreaConhecimento\Form;
+namespace Curso\Form;
 
 use Estrutura\Form\AbstractForm;
 use Estrutura\Form\FormObject;
 use Zend\InputFilter\InputFilter;
 
-class AreaConhecimentoForm extends AbstractForm{
+class CursoForm extends AbstractForm{
     public function __construct($options=[]){
-        parent::__construct('areaconhecimentoform');
+        parent::__construct('cursoform');
 
         $this->inputFilter = new InputFilter();
-        $objForm = new FormObject('areaconhecimentoform',$this,$this->inputFilter);
+        $objForm = new FormObject('cursoform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
         $objForm->hidden("id_usuario")->required(false)->label("Id Usuario");
         $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario Cadastrador");
 
-        $objForm->text("nm_area_conhecimento")->required(true)->label("Área de Conhecimento");
+        $objForm->text("nm_curso")->required(true)->label("Curso");
        
         $this->formObject = $objForm;
     }

@@ -12,12 +12,12 @@ return array(
                     ),
                 ),
             ),
-            'tipo_tcc-home' => array(
+            'curso-home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/tipo_tcc',
+                    'route'    => '/curso',
                     'defaults' => array(
-                        'controller' => 'tipo_tcc',
+                        'controller' => 'curso',
                         'action'     => 'index',
                     ),
                 ),
@@ -45,8 +45,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'tipo_tcc' => 'TipoTcc\Controller\TipoTccController',
-            'tipo_tcc-tipotcc' => 'TipoTcc\Controller\TipoTccController',
+            'curso' => 'Curso\Controller\CursoController',
+            'curso-curso' => 'Curso\Controller\CursoController',
 
         ),
     ),

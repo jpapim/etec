@@ -12,12 +12,12 @@ return array(
                     ),
                 ),
             ),
-            'tipo_tcc-home' => array(
+            'palavra_chave-home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/tipo_tcc',
+                    'route'    => '/palavra_chave',
                     'defaults' => array(
-                        'controller' => 'tipo_tcc',
+                        'controller' => 'palavra_chave',
                         'action'     => 'index',
                     ),
                 ),
@@ -45,8 +45,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'tipo_tcc' => 'TipoTcc\Controller\TipoTccController',
-            'tipo_tcc-tipotcc' => 'TipoTcc\Controller\TipoTccController',
+            'palavra_chave' => 'PalavraChave\Controller\PalavraChaveController',
+            'palavra_chave-palavrachave' => 'PalavraChave\Controller\PalavraChaveController',
 
         ),
     ),

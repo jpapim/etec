@@ -5,20 +5,20 @@
 
 
 <?php
-/** @var $form \areaconhecimento\Form\areaconhecimento */
-/** @var $lista \areaconhecimento\Service\areaconhecimento[] */
+/** @var $form \Curso\Form\Curso */
+/** @var $lista \Curso\Service\Curso[] */
 ?>
 <div class="page-head">
-    <h2>Lista de Área de Conhecimento</h2>
+    <h2>Lista de Cursos</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um nova Área de Conhecimento">Nova Área de Conhecimento</a>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um novo Curso">Novo Curso</a>
         </div>
     </div>
     <br />
-    <div class="row" id="areaconhecimento-pagination"></div>    
+    <div class="row" id="curso-pagination"></div>    
 </div>
 
 <script>
@@ -28,19 +28,19 @@
             type: "post",
             dataType: "text",
             cache: false,
-            url: '/area_conhecimento-areaconhecimento/index-pagination',
+            url: '/curso-curso/index-pagination',
             async: true,
             data: {
             },
             beforeSend: function () {
 
-                $('#areaconhecimento-pagination').html(
+                $('#curso-pagination').html(
                         '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                         );
             },
             success: function (data) {
 
-                $('#areaconhecimento-pagination').html(data);
+                $('#curso-pagination').html(data);
             }
         });
 

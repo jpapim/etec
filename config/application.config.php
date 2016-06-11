@@ -46,9 +46,15 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
+<<<<<<< HEAD
         'Check',
 		'TipoTcc',
+=======
+	    'TipoTcc',
+>>>>>>> dev-jean
 		'AreaConhecimento',
+        'PalavraChave',
+        'Curso',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

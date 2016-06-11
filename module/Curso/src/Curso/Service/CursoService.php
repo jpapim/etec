@@ -1,63 +1,63 @@
 <?php
 
-namespace TipoTcc\Service;
+namespace Curso\Service;
 
-use \TipoTcc\Entity\TipoTccEntity as Entity;
-use TipoTcc\Table\TipoTccTable;
+use \Curso\Entity\CursoEntity as Entity;
+use Curso\Table\CursoTable;
 use Zend\Db\Sql\Select;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Stdlib\Hydrator\Reflection;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class TipoTccService extends Entity {
+class CursoService extends Entity {
 
-    public function getTipoTccToArray($id) {
+    public function getCursoToArray($id) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-        $select = $sql->select('tipo_tcc')
+        $select = $sql->select('curso')
                 ->where([
-            'tipo_tcc.id_tipo_tcc = ?' => $id,
+            'curso.id_curso = ?' => $id,
         ]);
 
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    public function getIdTipoTccPorNomeToArray($nm_tipo_tcc) {
+    public function getIdCursoPorNomeToArray($nm_curso) {
 
-        $arNomeTipoTcc = explode('(', $nm_tipo_tcc);
-        $nm_tipo_tcc = $arNomeTipoTcc[0];
+        $arNomeCurso = explode('(', $nm_curso);
+        $nm_curso = $arNomeCurso[0];
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
         $filter = new \Zend\Filter\StringTrim();
-        $select = $sql->select('tipo_tcc')
-                ->columns(array('nm_tipo_tcc'))
+        $select = $sql->select('curso')
+                ->columns(array('nm_curso'))
                 ->where([
-            'tipo_tcc.nm_tipo_tcc = ?' => $filter->filter($nm_tipo_tcc),
+            'curso.nm_curso = ?' => $filter->filter($nm_curso),
         ]);
 
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
     /*     * *
-     * Metodo customizado que para cadastramento de TipoTccs Atravez da tela de cadastro de academias
+     * Metodo customizado que para cadastramento de Cursos Atravez da tela de cadastro de academias
      * @param $post
      * @return mixed
      */
 
-    public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'nm_tipo_tcc ASC', $like = null, $itensPaginacao = 5) {
+    public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'nm_curso ASC', $like = null, $itensPaginacao = 5) {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
         // preparar um select para tabela contato com uma ordem
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
-        $select = $sql->select('tipo_tcc')->order($ordem);
+        $select = $sql->select('curso')->order($ordem);
 
         if (isset($like)) {
             $select
                     ->where
-                    ->like('id_tipo_tcc', "%{$like}%")
+                    ->like('id_curso', "%{$like}%")
                     ->or
-                    ->like('nm_tipo_tcc', "%{$like}%")
+                    ->like('nm_curso', "%{$like}%")
             #->or
             #->like('telefone_principal', "%{$like}%")
             #->or
@@ -66,7 +66,7 @@ class TipoTccService extends Entity {
         }
 
         // criar um objeto com a estrutura desejada para armazenar valores
-        $resultSet = new HydratingResultSet(new Reflection(), new \TipoTcc\Entity\TipoTccEntity());
+        $resultSet = new HydratingResultSet(new Reflection(), new \Curso\Entity\CursoEntity());
 
         // criar um objeto adapter paginator
         $paginatorAdapter = new DbSelect(
@@ -95,13 +95,13 @@ class TipoTccService extends Entity {
      * @param type $dtFim
      * @return type
      */
-    public function getTipoTccsPaginator($filter = NULL, $camposFilter = NULL) {
+    public function getCursosPaginator($filter = NULL, $camposFilter = NULL) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
-        $select = $sql->select('tipo_tcc')->columns([
-                    'id_tipo_tcc',
-                    'nm_tipo_tcc',
+        $select = $sql->select('curso')->columns([
+                    'id_curso',
+                    'nm_curso',
         ]);
 
         $where = [
@@ -123,7 +123,7 @@ class TipoTccService extends Entity {
             }
         }
 
-        $select->where($where)->order(['nm_tipo_tcc DESC']);
+        $select->where($where)->order(['nm_curso DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }

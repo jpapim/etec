@@ -1,10 +1,6 @@
-insert into controller (id_controller, nm_controller) values(null, 'curso-curso');
+insert into controller (id_controller, nm_controller) values(null, 'tipo_tcc-tipotcc');
 
-<<<<<<< HEAD
 insert into controller (id_controller, nm_controller) values(null, 'area_conhecimento-areaconhecimento');
-
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('3','51','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('3','51','2');
 
 INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('23','1','1');
 INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('23','2','1');
@@ -109,56 +105,3 @@ INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil
 INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('24','49','1');
 INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('24','50','1');
 INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('24','51','1');
-=======
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','1','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','2','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','3','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','4','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','5','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','6','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','7','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','8','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','9','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','10','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','11','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','12','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','13','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','14','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','15','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','16','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','17','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','18','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','19','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','20','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','21','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','22','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','23','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','24','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','25','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','26','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','27','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','28','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','29','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','30','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','31','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','32','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','33','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','34','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','35','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','36','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','37','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','38','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','39','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','40','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','41','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','42','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','43','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','44','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','45','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','46','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','47','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','48','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','49','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','50','1');
-INSERT INTO bdetec.perfil_controller_action (id_controller, id_action, id_perfil) VALUES ('26','51','1');
->>>>>>> dev-jean

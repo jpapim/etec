@@ -19,15 +19,12 @@
             echo $this->formHidden($form->get('id_usuario'));
             echo $this->formHidden($form->get('id_usuario_cadastro'));
 
-
-            $id_tipo_tcc =  $form->get('nm_tipo_tcc')->getValue();
             ?>
                 <div class="form-group">
                     <div class="col-md-4">
-                        <?=$this->formRow($form->get('nm_tipo_tcc'))?>
+                        <?=$this->formRow($form->get('nm_curso'))?>
                     </div>
                 </div>
-                
 
                
                 <div class="form-group">
@@ -41,3 +38,20 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $( "#dt_nascimento" ).datepicker(
+            { dateFormat: 'dd/mm/yy' }
+        );
+
+        $( "input#id_academia" ).autocomplete({
+            minLength: 3,
+            source: "/academia-academia/autocompleteacademia"
+        });
+
+        $( "input#id_cidade" ).autocomplete({
+            minLength: 4,
+            source: "/cidade-cidade/autocompletecidade"
+        });
+    });
+</script>

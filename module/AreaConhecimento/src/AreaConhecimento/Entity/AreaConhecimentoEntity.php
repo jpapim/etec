@@ -9,6 +9,4 @@ class AreaConhecimentoEntity extends AbstractEstruturaService{
         protected $id; 
         protected $nm_area_conhecimento;
 
-
-
 }

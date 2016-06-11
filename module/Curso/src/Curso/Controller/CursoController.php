@@ -1,6 +1,6 @@
 <?php
 
-namespace AreaConhecimento\Controller;
+namespace Curso\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
@@ -8,15 +8,15 @@ use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-class AreaConhecimentoController extends AbstractCrudController
+class CursoController extends AbstractCrudController
 {
     /**
-     * @var \AreaConhecimento\Service\AreaConhecimento
+     * @var \Curso\Service\Curso
      */
     protected $service;
 
     /**
-     * @var \AreaConhecimento\Form\AreaConhecimento
+     * @var \Curso\Form\Curso
      */
     protected $form;
 
@@ -44,13 +44,13 @@ class AreaConhecimentoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "areaconhecimento.nm_area_conhecimento LIKE ?",
+                'filter' => "curso.nm_curso LIKE ?",
             ],       
             '6' => NULL,
         ];
         
         
-        $paginator = $this->service->getAreaConhecimentosPaginator($filter, $camposFilter);
+        $paginator = $this->service->getCursosPaginator($filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
@@ -140,17 +140,17 @@ class AreaConhecimentoController extends AbstractCrudController
         return parent::excluir($this->service, $this->form);
     }
 
-    public function autocompleteareaconhecimentoAction()
+    public function autocompletecursoAction()
     {
         $termo = $_GET['term'];
-        $areaconhecimentos = new \AreaConhecimento\Service\AreaConhecimentoService();
-        $arrAreaConhecimentos = $areaconhecimentos->getFiltrarAreaConhecimentoPorNomeToArray($termo);
-        $arrAreaConhecimentosFiltradas = array();
-        foreach($arrAreaConhecimentos as $areaconhecimento){
-            $arrAreaConhecimentosFiltradas[] = $areaconhecimento['nm_area_conhecimento'];
+        $cursos = new \Curso\Service\CursoService();
+        $arrCursos = $cursos->getFiltrarCursoPorNomeToArray($termo);
+        $arrCursosFiltradas = array();
+        foreach($arrCursos as $curso){
+            $arrCursosFiltradas[] = $curso['nm_curso'];
         }
 
-        $valuesJson = new JsonModel( $arrAreaConhecimentosFiltradas );
+        $valuesJson = new JsonModel( $arrCursosFiltradas );
         return $valuesJson;
     }
 

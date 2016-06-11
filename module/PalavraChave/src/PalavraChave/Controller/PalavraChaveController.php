@@ -1,6 +1,6 @@
 <?php
 
-namespace AreaConhecimento\Controller;
+namespace PalavraChave\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
@@ -8,15 +8,15 @@ use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-class AreaConhecimentoController extends AbstractCrudController
+class PalavraChaveController extends AbstractCrudController
 {
     /**
-     * @var \AreaConhecimento\Service\AreaConhecimento
+     * @var \PalavraChave\Service\PalavraChave
      */
     protected $service;
 
     /**
-     * @var \AreaConhecimento\Form\AreaConhecimento
+     * @var \PalavraChave\Form\PalavraChave
      */
     protected $form;
 
@@ -44,13 +44,13 @@ class AreaConhecimentoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "areaconhecimento.nm_area_conhecimento LIKE ?",
+                'filter' => "palavrachave.nm_pala_vrachave LIKE ?",
             ],       
             '6' => NULL,
         ];
         
         
-        $paginator = $this->service->getAreaConhecimentosPaginator($filter, $camposFilter);
+        $paginator = $this->service->getPalavraChavesPaginator($filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
@@ -140,17 +140,17 @@ class AreaConhecimentoController extends AbstractCrudController
         return parent::excluir($this->service, $this->form);
     }
 
-    public function autocompleteareaconhecimentoAction()
+    public function autocompletepalavrachaveAction()
     {
         $termo = $_GET['term'];
-        $areaconhecimentos = new \AreaConhecimento\Service\AreaConhecimentoService();
-        $arrAreaConhecimentos = $areaconhecimentos->getFiltrarAreaConhecimentoPorNomeToArray($termo);
-        $arrAreaConhecimentosFiltradas = array();
-        foreach($arrAreaConhecimentos as $areaconhecimento){
-            $arrAreaConhecimentosFiltradas[] = $areaconhecimento['nm_area_conhecimento'];
+        $palavrachaves = new \palavrachave\Service\PalavraChaveService();
+        $arrPalavraChaves = $palavrachaves->getFiltrarPalavraChavePorNomeToArray($termo);
+        $arrPalavraChavesFiltradas = array();
+        foreach($arrPalavraChaves as $palavrachave){
+            $arrPalavraChavesFiltradas[] = $palavrachave['nm_palavra_chave'];
         }
 
-        $valuesJson = new JsonModel( $arrAreaConhecimentosFiltradas );
+        $valuesJson = new JsonModel( $arrPalavraChavesFiltradas );
         return $valuesJson;
     }
 
