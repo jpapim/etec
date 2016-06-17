@@ -46,7 +46,7 @@ return array(
         #'Telefone',
         #'TipoConta',
         #'TipoTelefone',
-        'Check',
+        'Permissao',
 		'TipoTcc',
 		'AreaConhecimento',
         'PalavraChave',
