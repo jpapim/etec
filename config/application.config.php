@@ -53,6 +53,8 @@ return array(
         'Curso',
         'PeriodoLetivo',
         'DetalhePeriodoLetivo',
+        'Professor',
+        'Titulacao',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
@@ -60,7 +62,7 @@ return array(
             './vendor',
         ),
         'config_glob_paths' => array(
-            'config/autoload/{,*.}{global,' . APPLICATION_ENV . '}.php'            
+            'config/autoload/{,*.}{global,' . APPLICATION_ENV . '}.php'
         ),
-    ) 
+    )
 );
