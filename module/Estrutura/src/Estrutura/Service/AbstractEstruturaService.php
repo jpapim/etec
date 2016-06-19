@@ -218,8 +218,8 @@ class AbstractEstruturaService {
 
             $where = [$field => $this->getId()];
         }
-        #var_dump( $dados );
-        #die;
+        #x( $dados );
+
         $result = $this->getTable()->salvar($dados, $where);
         if (is_string($result)) {
             $this->setId($result);
@@ -238,6 +238,7 @@ class AbstractEstruturaService {
 
     public function excluir() {
         $arr = $this->hydrate();
+        #xd($arr);
         $this->getTable()->delete($arr);
     }
 
