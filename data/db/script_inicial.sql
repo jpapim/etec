@@ -800,6 +800,7 @@ CREATE TABLE `membros_banca` (
   `id_membro_banca` int(11) NOT NULL AUTO_INCREMENT,
   `id_banca_examinadora` int(11) DEFAULT NULL,
   `id_professor` smallint(6) DEFAULT NULL,
+  `cs_orientador` char(1) DEFAULT 'N',
   PRIMARY KEY (`id_membro_banca`),
   KEY `FK_Reference_97` (`id_banca_examinadora`),
   KEY `FK_Reference_98` (`id_professor`),
@@ -1410,4 +1411,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-20 15:43:00
+-- Dump completed on 2016-06-24 10:35:26
