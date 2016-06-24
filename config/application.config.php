@@ -56,6 +56,7 @@ return array(
         'Professor',
         'Titulacao',
         'PerfilControllerAction',
+        'BancaExaminadora'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
