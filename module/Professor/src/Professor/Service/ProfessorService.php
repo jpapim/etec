@@ -33,7 +33,7 @@ class ProfessorService extends Entity {
 		# Setando manualmente os dados do formulario
 		$dados['id_titulacao'] = $post['id_titulacao'];
 		$dados['id_usuario'] = $post['id_usuario'];
-
+		
 		$result = $this->getTable()->salvar($dados, $where);
 		if (is_string($result)) {
 			$this->setId($result);
