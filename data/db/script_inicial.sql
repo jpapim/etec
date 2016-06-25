@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `acl` AS SELECT 
+/*!50001 CREATE VIEW `acl` AS SELECT
  1 AS `id_perfil`,
  1 AS `nm_resource`*/;
 SET character_set_client = @saved_cs_client;
@@ -214,7 +214,7 @@ DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `auth` AS SELECT 
+/*!50001 CREATE VIEW `auth` AS SELECT
  1 AS `id_usuario`,
  1 AS `id_perfil`,
  1 AS `em_email`,
@@ -800,6 +800,7 @@ CREATE TABLE `membros_banca` (
   `id_membro_banca` int(11) NOT NULL AUTO_INCREMENT,
   `id_banca_examinadora` int(11) DEFAULT NULL,
   `id_professor` smallint(6) DEFAULT NULL,
+  `cs_orientador` char(1) DEFAULT 'N',
   PRIMARY KEY (`id_membro_banca`),
   KEY `FK_Reference_97` (`id_banca_examinadora`),
   KEY `FK_Reference_98` (`id_professor`),
@@ -963,7 +964,7 @@ CREATE TABLE `professor` (
   `id_usuario_cadastro` int(11) DEFAULT NULL,
   `nm_professor` varchar(50) DEFAULT NULL,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `cs_orientador` char(1) DEFAULT NULL,
+  `cs_orientador` char(1) DEFAULT 'N',
   `cs_ativo` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_professor`),
   KEY `FK_Reference_90` (`id_titulacao`),
@@ -1334,7 +1335,7 @@ DROP TABLE IF EXISTS `vw_regras_lutas`;
 /*!50001 DROP VIEW IF EXISTS `vw_regras_lutas`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_regras_lutas` AS SELECT 
+/*!50001 CREATE VIEW `vw_regras_lutas` AS SELECT
  1 AS `id_regra_luta`,
  1 AS `nm_regra_luta`,
  1 AS `nm_graduacao_inicial`,
