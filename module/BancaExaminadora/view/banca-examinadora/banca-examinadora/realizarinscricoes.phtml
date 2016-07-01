@@ -1,0 +1,119 @@
+<?php
+/** @var $form \Academia\Form\Academia */
+/** @var $dados_banca \BancaExaminadora\Service\BancaExaminadora[] */
+/** @var $lista_atletas \Atleta\Service\Atleta[] */
+?>
+<div class="page-head">
+    <h2>Participar da Banca Examinadora</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row"
+        <div class="block-flat">
+            <div class="content">
+                <fieldset>
+                    <legend>Dados da Banca</legend>
+                        <?php if(isset($dados_banca) && $dados_banca){ ?>
+                            <div class="bs-callout bs-callout-primary">
+                                <ul class="primary">
+                                    <li><b>Data da banca:</b> <?=Estrutura\Helpers\Data::
+                                      converterDataBancoMySQL2Brazil($dados_banca['dt_banca'])?></li>
+                                      <li><b>Nº de Inscritos:</b> <?=count($lista_inscritos)?></li>
+                                </ul>
+                            </div>
+                        <?php } ?>
+                </fieldset>
+                <form action="#" method="post" id="form_realizar_inscricao">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label for="nm_professor">Escolha o Professor</label>
+                                <input type="text" value="" data-error="Campo é obrigatório." required="required" class="form-control" id="nm_professor" name="nm_professor">
+                                <div id="msg"></div>
+                                <input type="hidden" class="form-control" id="id_banca_examinadora" name="id_banca_examinadora" value="<?= $dados_banca['id_banca_examinadora']?>"><br />
+                                <a id="salvar" class="btn btn-default" href="#" title="Realizar inscrição do Professor">Adicionar Professor</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <table class="table table-bordered dataTable">
+                    <thead>
+                    <tr>
+                        <th>Professor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $professor = new \Professor\Service\ProfessorService(); ?>
+                    <?php $membroBanca = new \MembrosBanca\Service\MembrosBancaService(); ?>
+                    <?php foreach($lista_inscritos as $item){ ?>
+                        <?php $obProfessor = $professor->buscar($item->getIdProfessor()); ?>
+                        <?php
+                          $obMembroBanca = $membroBanca->checarSeProfessorEstaInscritoNaBanca(
+                              $obProfessor->getId(), $dados_banca['id_banca_examinadora']);
+
+                          $tipo = null;
+                          if ($obMembroBanca['cs_orientador'] == 'S') {
+                						$tipo = ' (Orientador(a)) ';
+                					} else if ($obMembroBanca['cs_orientador'] == 'N') {
+                						$tipo =  ' (Professor(a)) ';
+                					}
+                        ?>
+                        <tr>
+                            <td><?=$obProfessor->getNmProfessor() . $tipo ?></td>
+
+                            <td style="width: 180px;">
+                                <?=\Estrutura\Service\HtmlHelper::botaoAlterar(
+                                    $this->url('navegacao',array('controller'=>
+                                      'professor-professor','action'=>'alterarviaacademia','id'=>$obMembroBanca['id_membro_banca'])))?>
+                                <?=\Estrutura\Service\HtmlHelper::botaoExcluir(
+                                    $this->url('navegacao',array('controller'=>
+                                      'membros_banca-membrosbanca','action'=>'excluirviaacademia','id'=>$obMembroBanca['id_membro_banca'] )))?>
+                            </td>
+                        </tr>
+                    <?php }; ?>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Realizar Inscrição de Atletas">Nova Inscrição</a>
+                            <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $( "input#nm_professor" ).autocomplete({
+            minLength: 3,
+            source: "/professor-professor/autocompleteprofessor"
+        });
+
+        $('#salvar').click(function() {
+            var dados = $('#form_realizar_inscricao').serialize();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '',
+                async: true,
+                data: dados,
+                success: function(response) {
+                    $("#nm_professor").val("");
+                    $("#nm_professor").focus();
+                    if(response.sucesso == true){
+                        $('#msg').html( "<p>O Professor " + response.nm_professor + " foi <em>Inscrito(a) com sucesso!</em></p>" );
+                    } else{
+                        $('#msg').html( "<p>O Professor " + response.nm_professor + " já <em> Consta na Base de Dados!</em></p>" );
+                    }
+
+                }
+            });
+
+            return false;
+        });
+
+    });
+</script>

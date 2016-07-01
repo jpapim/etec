@@ -63,7 +63,7 @@
                                 <span class="btn-group" style="width: 200px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao',
                                         array('controller'=>$controller,'action'=>'realizarinscricoes',
-                                            'id'=>Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))),'Realizar Inscrições')?>
+                                            'id'=>Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))),'Participantes')?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',
                                     		array('controller' => $controller, 'action' => 'cadastro',
                                     				'id' => Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))))

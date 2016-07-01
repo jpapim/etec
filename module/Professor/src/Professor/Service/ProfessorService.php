@@ -6,7 +6,7 @@ use \Professor\Entity\ProfessorEntity as Entity;
 
 class ProfessorService extends Entity {
 
-	public function getEventoToArray($id) {
+	public function getProfessorToArray($id) {
 
 			$sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
@@ -33,7 +33,7 @@ class ProfessorService extends Entity {
 		# Setando manualmente os dados do formulario
 		$dados['id_titulacao'] = $post['id_titulacao'];
 		$dados['id_usuario'] = $post['id_usuario'];
-		
+
 		$result = $this->getTable()->salvar($dados, $where);
 		if (is_string($result)) {
 			$this->setId($result);
@@ -111,5 +111,65 @@ class ProfessorService extends Entity {
 		$select->where($where)->order(['nm_professor ASC']);
 
 		return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+	}
+
+	public function getFiltrarProfessorPorNomeToArray($nm_professor) {
+
+			$sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+			$select = $sql->select('professor')
+							->columns(array('nm_professor', 'cs_orientador')) #Colunas a retornar. Basta Omitir que ele traz todas as colunas
+							->where([
+					"professor.nm_professor LIKE ?" => '%' . $nm_professor . '%',
+			]);
+
+			return $sql->prepareStatementForSqlObject($select)->execute();
+	}
+
+	public function getIdProfessorPorNomeToArray($nm_professor) {
+
+			$arNomeProfessor = explode('(', $nm_professor);
+			$nm_professor = $arNomeProfessor[0];
+
+			$sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+			$filter = new \Zend\Filter\StringTrim();
+			$select = $sql->select('professor')
+							->columns(array('id_professor', 'cs_orientador'))
+							->where([
+					'professor.nm_professor = ?' => $filter->filter($nm_professor),
+			]);
+
+			return $sql->prepareStatementForSqlObject($select)->execute()->current();
+	}
+
+	public function salvaralterarviaacademia($post) {
+			$this->preSave();
+			$dados = $this->hydrate();
+			$where = null;
+
+			if($post['id_professor']) {
+				if(!$field = $this->fieldName('id')) {
+					$field = $this->fieldName('Id');
+				}
+				$where = [$field => $post['id_professor']];
+			}
+
+			# Setando manualmente os dados do formulario
+			$dados['id_titulacao'] = $post['id_titulacao'];
+			$dados['id_usuario_cadastro'] = $post['id_usuario'];
+
+			# Mantendo o cs_orientador da tabela 'professor' e alterando somente
+			# o da tabela 'membros_banca'
+			$dados['cs_orientador'] = $post['professor_cs_orientador'];
+			$membroBancaService = new \MembrosBanca\Service\MembrosBancaService();
+			$membroBancaService->alterarCampoCsOrientador($post['id_membro_banca'],
+					$post['membro_cs_orientador']);
+
+			$result = $this->getTable()->salvar($dados, $where);
+			if (is_string($result)) {
+				$this->setId($result);
+			}
+			$this->posSave();
+			return $result;
 	}
 }

@@ -6,6 +6,17 @@ use \BancaExaminadora\Entity\BancaExaminadoraEntity as Entity;
 
 class BancaExaminadoraService extends Entity{
 
+  public function getBancaExaminadoraToArray($id) {
+
+      $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+      $select = $sql->select('banca_examinadora')
+          ->where([
+              'banca_examinadora.id_banca_examinadora = ?' => $id,
+          ]);
+
+      return $sql->prepareStatementForSqlObject($select)->execute()->current();
+  }
 
   	/**
   	 * Busca das bancas
