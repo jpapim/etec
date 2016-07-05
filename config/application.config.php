@@ -57,7 +57,8 @@ return array(
         'Titulacao',
         'PerfilControllerAction',
         'BancaExaminadora',
-        'MembrosBanca'
+        'MembrosBanca',
+        'Infra',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

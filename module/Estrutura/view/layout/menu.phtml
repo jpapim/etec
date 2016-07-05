@@ -82,6 +82,17 @@
         </li>
 
     </ul>
+
+    <?php if ($this->Auth()->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/infra-infra" title="Botão para limpar as pastas Cache automaticamente.">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Limpar
+                </a>
+            </li>
+        </ul>
+    <?php } ?>
+
     <ul class="nav navbar-nav navbar-right">
         <li>
 <!--            <a href="/mcnetwork-index">-->
