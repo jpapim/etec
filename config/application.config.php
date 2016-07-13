@@ -40,12 +40,12 @@ return array(
         //Ronaldo 02/03/2016 - Responsável por melhorar o desempenho da aplicação
         'EdpSuperluminal', //http://dev.etec.com.br/?EDPSUPERLUMINAL_CACHE - Execute isso na URL para compilar os arquivos e ficar mais rapido - em cada requisição, em vês de baixar em tempo de execução cada require do autoload, ele salva um unico arquivo, minificado, com todas as classes dentro
         #'Gerador',
-        #'Login',
+        'Login',
         #'PhpBoletoZf2',
-        #'Situacao',
-        #'Telefone',
+        'Situacao',
+        'Telefone',
         #'TipoConta',
-        #'TipoTelefone',
+        'TipoTelefone',
         'Permissao',
 		'TipoTcc',
 		'AreaConhecimento',
