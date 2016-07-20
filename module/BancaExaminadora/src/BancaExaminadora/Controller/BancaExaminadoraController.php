@@ -145,43 +145,7 @@ class BancaExaminadoraController extends AbstractCrudController
 
     public function realizarinscricoesAction()
     {
-      //Se for a chamada Ajax
-      if ($this->getRequest()->isPost()) {
-          $request = $this->getRequest();
-          $nm_professor = $this->params()->fromPost('nm_professor');
-          $id_banca = $this->params()->fromPost('id_banca_examinadora');
-
-          $professor = new \Professor\Service\ProfessorService();
-          $arrProfessor = $professor->getIdProfessorPorNomeToArray(
-            $this->params()->fromPost('nm_professor'));
-          $realizar_inscricao = new \MembrosBanca\Service\MembrosBancaService();
-
-          //TODO - Implementar Validador para certificar que o Professor ainda nao esta na base.
-          if($realizar_inscricao->checarSeProfessorEstaInscritoNaBanca(
-                $arrProfessor['id_professor'],$id_banca)){
-              $valuesJson = new JsonModel( array('sucesso'=>false,
-                'nm_professor'=>$nm_professor) );
-          }else{
-              $id_inserido = $realizar_inscricao->getTable()->salvar(
-                array('id_banca_examinadora'=>$id_banca,
-                  'id_professor'=>$arrProfessor['id_professor'],
-                    'cs_orientador'=>$arrProfessor['cs_orientador']), null);
-              $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido,
-                'sucesso'=>true, 'nm_professor'=>$nm_professor) );
-          }
-
-          return $valuesJson;
-      } else { //Se for requisição normal
           $id = Cript::dec($this->params('id'));
-          $post = $this->getPost();
-          #Alysson - Se for Alterar
-          if ($id) {
-              #$this->form->setData($this->service->buscar($id)->toArray());
-          }
-          #Alysson - Submissao do Formulario de alteraçao
-          if (!empty($post)) {
-              $this->form->setData($post);
-          }
 
           $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
           $dadosBanca = $banca->getBancaExaminadoraToArray($id);
@@ -201,7 +165,6 @@ class BancaExaminadoraController extends AbstractCrudController
           ];
 
           return new ViewModel($dadosView);
-      }
     }
 
     public function detalhePaginationAction()
