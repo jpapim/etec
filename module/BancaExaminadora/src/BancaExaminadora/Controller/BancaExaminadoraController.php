@@ -111,8 +111,18 @@ class BancaExaminadoraController extends AbstractCrudController
 
           $service->exchangeArray($form->getData());
           $this->addSuccessMessage('Registro Alterado com sucesso');
-          $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-          return $service->salvar();
+
+          $id_banca_examinadora = $service->salvar();
+
+          //Define o redirecionamento
+          if (isset($post['id']) && $post['id']) {
+              $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
+          } else {
+              $this->redirect()->toRoute('navegacao',array('controller'=>$controller,
+                'action'=>'realizarinscricoes','id'=>Cript::enc($id_banca_examinadora)));
+          }
+
+          return $id_banca_examinadora;
 
       } catch (\Exception $e) {
 
@@ -172,14 +182,14 @@ class BancaExaminadoraController extends AbstractCrudController
           if (!empty($post)) {
               $this->form->setData($post);
           }
+
           $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
           $dadosBanca = $banca->getBancaExaminadoraToArray($id);
-
-          $professor = new \Professor\Service\ProfessorService();
 
           $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
           $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
               'id_banca_examinadora' => $dadosBanca['id_banca_examinadora']));
+
 
           $dadosView = [
               'service' => $this->service,
@@ -192,5 +202,24 @@ class BancaExaminadoraController extends AbstractCrudController
 
           return new ViewModel($dadosView);
       }
+    }
+
+    public function detalhePaginationAction()
+    {
+        $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
+
+        $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
+        $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
+            'id_banca_examinadora' => $id_banca_examinadora));
+
+        $dadosView = [
+          'service' => $this->service,
+          'form' => $this->form,
+          'controller' => $this->params('controller'),
+          'id_banca_examinadora' => $id_banca_examinadora,
+          'lista_inscritos' => $dadosInscricoes
+        ];
+
+        return new ViewModel($dadosView);
     }
 }

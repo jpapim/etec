@@ -35,55 +35,10 @@
                         </div>
                     </div>
                 </form>
-                <br />
-                <table class="table table-bordered dataTable">
-                    <thead>
-                    <tr>
-                        <th>Professor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php $professor = new \Professor\Service\ProfessorService(); ?>
-                    <?php $membroBanca = new \MembrosBanca\Service\MembrosBancaService(); ?>
-                    <?php foreach($lista_inscritos as $item){ ?>
-                        <?php $obProfessor = $professor->buscar($item->getIdProfessor()); ?>
-                        <?php
-                          $obMembroBanca = $membroBanca->checarSeProfessorEstaInscritoNaBanca(
-                              $obProfessor->getId(), $dados_banca['id_banca_examinadora']);
-
-                          $tipo = null;
-                          if ($obMembroBanca['cs_orientador'] == 'S') {
-                						$tipo = ' (Orientador(a)) ';
-                					} else if ($obMembroBanca['cs_orientador'] == 'N') {
-                						$tipo =  ' (Professor(a)) ';
-                					}
-                        ?>
-                        <tr>
-                            <td><?=$obProfessor->getNmProfessor() . $tipo ?></td>
-
-                            <td style="width: 180px;">
-                                <?=\Estrutura\Service\HtmlHelper::botaoAlterar(
-                                    $this->url('navegacao',array('controller'=>
-                                      'professor-professor','action'=>'alterarviaacademia','id'=>$obMembroBanca['id_membro_banca'])))?>
-                                <?=\Estrutura\Service\HtmlHelper::botaoExcluir(
-                                    $this->url('navegacao',array('controller'=>
-                                      'membros_banca-membrosbanca','action'=>'excluirviaacademia','id'=>$obMembroBanca['id_membro_banca'] )))?>
-                            </td>
-                        </tr>
-                    <?php }; ?>
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Realizar Inscrição de Atletas">Nova Inscrição</a>
-                            <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
+    <div class="row" id="realizarinscricoes-pagination"></div>
 </div>
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function() {
@@ -92,6 +47,29 @@
             source: "/professor-professor/autocompleteprofessor"
         });
 
+        //Função que faz a listagem ser paginada.
+        function carregarGridPaginadaAjax(){
+                $.ajax({
+                    type: "post",
+                    dataType: "text",
+                    cache: false,
+                    url: '/banca_examinadora-bancaexaminadora/detalhe-pagination',
+                    async: true,
+                    data: { id_banca_examinadora : <?=$dados_banca['id_banca_examinadora']?>},
+                    beforeSend: function () {
+                        $('#realizarinscricoes-pagination').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
+                    },
+                    success: function (data) {
+                        $('#realizarinscricoes-pagination').html(data);
+                    }
+                });
+        }
+
+        carregarGridPaginadaAjax(); //Chama a Paginação da listagem
+
+        /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#salvar').click(function() {
             var dados = $('#form_realizar_inscricao').serialize();
             $.ajax({
@@ -105,13 +83,13 @@
                     $("#nm_professor").focus();
                     if(response.sucesso == true){
                         $('#msg').html( "<p>O Professor " + response.nm_professor + " foi <em>Inscrito(a) com sucesso!</em></p>" );
+                        carregarGridPaginadaAjax();
                     } else{
                         $('#msg').html( "<p>O Professor " + response.nm_professor + " já <em> Consta na Base de Dados!</em></p>" );
                     }
 
                 }
             });
-
             return false;
         });
 

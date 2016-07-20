@@ -20,4 +20,7 @@ INSERT perfil_controller_action (id_controller, id_action, id_perfil)
 
 INSERT perfil_controller_action (id_controller, id_action, id_perfil)
   VALUES ((SELECT id_controller FROM controller WHERE nm_controller LIKE 'banca_examinadora-bancaexaminadora'), 49, 1); /* REALIZAR INSCRIÇÕES */
+  
+INSERT perfil_controller_action (id_controller, id_action, id_perfil)
+  VALUES ((SELECT id_controller FROM controller WHERE nm_controller LIKE 'banca_examinadora-bancaexaminadora'), 53, 1); /* DETALHE PAGINATION */
 	  
