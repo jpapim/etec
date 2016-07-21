@@ -169,12 +169,14 @@ class BancaExaminadoraController extends AbstractCrudController
 
     public function detalhePaginationAction()
     {
+        // busca os inscritos de uma determinada banca a partir do id informado
         $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
-
         $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
         $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
             'id_banca_examinadora' => $id_banca_examinadora));
 
+        // passando os dados service, form, controller, id_banca_examinadora
+        // e lista_incritos para a view
         $dadosView = [
           'service' => $this->service,
           'form' => $this->form,
@@ -182,7 +184,6 @@ class BancaExaminadoraController extends AbstractCrudController
           'id_banca_examinadora' => $id_banca_examinadora,
           'lista_inscritos' => $dadosInscricoes
         ];
-
-        return new ViewModel($dadosView);
+        return (new ViewModel($dadosView))->setTerminal(true);
     }
 }

@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
+<div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered dataTable">
+          <thead>
+          <tr>
+              <th>Professor</th>
+              <th>Ações</th>
+          </tr>
+          </thead>
+          <tbody>
+          <?php $professor = new \Professor\Service\ProfessorService(); ?>
+          <?php $membroBanca = new \MembrosBanca\Service\MembrosBancaService(); ?>
+          <?php foreach($lista_inscritos as $item){ ?>
+              <?php 
+                $obProfessor = $professor->buscar($item->getIdProfessor());
+                $obMembroBanca = $membroBanca->checarSeProfessorEstaInscritoNaBanca(
+                    $obProfessor->getId(), $id_banca_examinadora);
+
+                $tipo = null;
+                if ($obMembroBanca['cs_orientador'] == 'S') {
+                  $tipo = ' (Orientador(a)) ';
+                } else if ($obMembroBanca['cs_orientador'] == 'N') {
+                  $tipo =  ' (Professor(a)) ';
+                }
+              ?>
+              <tr>
+                  <td><?= $obProfessor->getNmProfessor() . $tipo ?></td>
+
+                  <td style="width: 180px;">
+                      <?=\Estrutura\Service\HtmlHelper::botaoAlterar(
+                          $this->url('navegacao',array('controller'=>
+                            'professor-professor','action'=>'alterarviaacademia',
+                              'id'=>$obMembroBanca['id_membro_banca'])))?>
+                      <?=\Estrutura\Service\HtmlHelper::botaoExcluir(
+                          $this->url('navegacao',array('controller'=>
+                            'membros_banca-membrosbanca','action'=>'excluirviaacademia',
+                              'id'=>$obMembroBanca['id_membro_banca'] )))?>
+                  </td>
+              </tr>
+          <?php } ?>
+          </tbody>
+      </table>
+      <div class="row">
+          <div class="form-group">
+              <div class="col-md-10">
+                  <a class="btn btn-default" href="<?=$this->url('navegacao',
+                    ['controller'=>$controller])?>">Lista das Bancas</a>
+                  <a class="btn btn-default" href="<?=$this->url('navegacao',
+                      array('controller'=>$controller,'action'=>'index',
+                          'id'=>Estrutura\Helpers\Cript::enc($id_banca_examinadora)))?>"
+                              title="Voltar">Voltar</a>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
