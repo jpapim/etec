@@ -17,20 +17,20 @@
                                 <ul class="primary">
                                     <li><b>Data da banca:</b> <?=Estrutura\Helpers\Data::
                                       converterDataBancoMySQL2Brazil($dados_banca['dt_banca'])?></li>
-                                      <li><b>Nº de Inscritos:</b> <?=count($lista_inscritos)?></li>
+                                    <li><b>Nº de Inscritos:</b> <text id="count"><?= count($lista_inscritos) ?></text></li>
                                 </ul>
                             </div>
                         <?php } ?>
                 </fieldset>
                 <form action="#" method="post" id="form_realizar_inscricao">
+                    <input type="hidden" class="form-control" id="id_banca_examinadora" name="id_banca_examinadora" value="<?= $dados_banca['id_banca_examinadora']?>">
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-4">
                                 <label for="nm_professor">Escolha o Professor</label>
-                                <input type="text" value="" data-error="Campo é obrigatório." required="required" class="form-control" id="nm_professor" name="nm_professor">
-                                <div id="msg"></div>
-                                <input type="hidden" class="form-control" id="id_banca_examinadora" name="id_banca_examinadora" value="<?= $dados_banca['id_banca_examinadora']?>"><br />
-                                <a id="salvar" class="btn btn-default" href="#" title="Realizar inscrição do Professor">Adicionar Professor</a>
+                                <input type="text" value="" data-error="Campo é obrigatório." required="required" class="form-control" id="nm_professor" name="nm_professor" >
+                                <div id="msg"></div><br />
+                                <a id="adicionar" class="btn btn-default" href="#" title="Realizar inscrição do Professor">Adicionar Professor</a>
                             </div>
                         </div>
                     </div>
@@ -70,8 +70,8 @@
 
         carregarGridPaginadaAjax(); //Chama a Paginação da listagem
 
-        /*Função Ajax que adiciona os encontros ao Banco de dados*/
-        $('#salvar').click(function() {
+        /*Função Ajax que adiciona os professores no Banco de dados*/
+        $('#adicionar').click(function() {
             var dados = $('#form_realizar_inscricao').serialize();
             $.ajax({
                 type: 'POST',
@@ -83,10 +83,13 @@
                     $("#nm_professor").val("");
                     $("#nm_professor").focus();
                     if(response.sucesso == true){
-                        $('#msg').html( "<p>O Professor " + response.nm_professor + " foi <em>Inscrito(a) com sucesso!</em></p>" );
+                        $('#msg').html( "<p>" + response.nm_professor + " foi <em>Inscrito(a) com sucesso!</em></p>" );
+                        $('#count').html(response.qtd_inscritos); // atualizando a quantidade de inscritos
                         carregarGridPaginadaAjax();
-                    } else{
-                        $('#msg').html( "<p>O Professor " + response.nm_professor + " já <em> Consta na Base de Dados!</em></p>" );
+                    } else if (response.sucesso == false && response.nm_professor == null) {
+                        $('#msg').html( "<p><em>Professor não encontrado!</em></p>" );
+                    } else {
+                        $('#msg').html( "<p>" + response.nm_professor + " já <em> está nesta banca!</em></p>" );
                     }
 
                 }

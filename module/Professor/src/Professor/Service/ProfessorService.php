@@ -134,7 +134,7 @@ class ProfessorService extends Entity {
 			$sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 			$filter = new \Zend\Filter\StringTrim();
 			$select = $sql->select('professor')
-							->columns(array('id_professor', 'cs_orientador'))
+							->columns(array('id_professor', 'nm_professor', 'cs_orientador'))
 							->where([
 					'professor.nm_professor = ?' => $filter->filter($nm_professor),
 			]);

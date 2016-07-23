@@ -145,15 +145,65 @@ class BancaExaminadoraController extends AbstractCrudController
 
     public function realizarinscricoesAction()
     {
-          $id = Cript::dec($this->params('id'));
+        //Se for a chamada Ajax
+        if ($this->getRequest()->isPost()) {
 
+          // recebendo o nome do professor e o id da banca  
+          $request = $this->getRequest();
+          $nm_professor = $this->params()->fromPost('nm_professor');
+          $id_banca = $this->params()->fromPost('id_banca_examinadora');
+
+          // buscando o id do professor através de seu nome
+          $professor = new \Professor\Service\ProfessorService();
+          $arrProfessor = $professor->getIdProfessorPorNomeToArray(
+            $this->params()->fromPost('nm_professor'));
+
+          // verifica a existência do professor na base de dados.
+          $membrosService = new \MembrosBanca\Service\MembrosBancaService();
+          $values = [];
+          if (!$arrProfessor) {
+            $values['sucesso'] = false;
+            $values['nm_professor'] = null;
+          } else {
+            // verifica se o professor já está cadastrado na banca examinadora. 
+            // Caso não esteja será efetuado o cadastro.
+            if ($membrosService->checarSeProfessorEstaInscritoNaBanca(
+                  $arrProfessor['id_professor'],$id_banca)) {
+                  $values['sucesso'] = false;
+                  $values['nm_professor'] = $arrProfessor['nm_professor'];
+            } else {
+                $id_inserido = $membrosService->getTable()->salvar(
+                  array('id_banca_examinadora'=>$id_banca,
+                    'id_professor'=>$arrProfessor['id_professor'],
+                      'cs_orientador'=>$arrProfessor['cs_orientador']), null);
+                  $values['sucesso'] = true;
+                  $values['nm_professor'] = $arrProfessor['nm_professor'];
+            }
+          }
+
+          // realiza a contagem dos professores inscritos
+          $inscricoes = $membrosService->fetchAllMembrosBanca(array(
+              'id_banca_examinadora' => $id_banca));
+          $values['qtd_inscritos'] = count($inscricoes);
+
+          $valuesJson = new JsonModel($values);
+          return $valuesJson;
+
+        } else { //Se for requisiÃ§Ã£o normal
+
+          $id = Cript::dec($this->params('id'));
+          $post = $this->getPost();
+
+          if (!empty($post)) {
+              $this->form->setData($post);
+          }
+ 
           $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
           $dadosBanca = $banca->getBancaExaminadoraToArray($id);
 
           $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
           $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
               'id_banca_examinadora' => $dadosBanca['id_banca_examinadora']));
-
 
           $dadosView = [
               'service' => $this->service,
@@ -165,6 +215,7 @@ class BancaExaminadoraController extends AbstractCrudController
           ];
 
           return new ViewModel($dadosView);
+        }        
     }
 
     public function detalhePaginationAction()
