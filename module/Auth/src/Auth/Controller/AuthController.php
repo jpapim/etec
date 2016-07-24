@@ -566,11 +566,14 @@ class AuthController extends AbstractCrudController {
         return FALSE;
     }
 
+    /**
+     * @author: Alysson Vicuña de Oliveira
+     * Verifica se o email existe na base de dados. caso exista, ativa o email para acesso
+     * @return bool
+     */
     public function confirmEmailAction()
     {
-
         $id = base64_decode($this->params('id'));
-
         if (!$id) {
 
             $this->addErrorMessage('Token não informado.');
@@ -601,7 +604,6 @@ class AuthController extends AbstractCrudController {
         }
 
         if ($confirmEmail) {
-
             $this->addSuccessMessage('E-mail confirmado com sucesso.');
             $this->redirect()->toRoute('navegacao', ['controller' => 'auth', 'action' => 'login']);
             return FALSE;

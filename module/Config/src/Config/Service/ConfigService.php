@@ -18,6 +18,7 @@ class ConfigService extends Entity {
              * verificando se existe o cache da lista de produtos
              * o segundo parâmetro retorna true se existir cache ou false se não existir
              */
+            $success = false;
             $queryCache = $cache->getItem('configServiceGetConfigList', $success);
 
             if (!$success) {
