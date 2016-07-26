@@ -15,9 +15,8 @@
                         <?php if(isset($dados_banca) && $dados_banca){ ?>
                             <div class="bs-callout bs-callout-primary">
                                 <ul class="primary">
-                                    <li><b>Data da banca:</b> <?=Estrutura\Helpers\Data::
-                                      converterDataBancoMySQL2Brazil($dados_banca['dt_banca'])?></li>
-                                    <li><b>Nº de Inscritos:</b> <text id="count"><?= count($lista_inscritos) ?></text></li>
+                                    <li><b>Data da Banca:</b> <?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dados_banca['dt_banca'])?></li>
+                                    <li><b>Quant. Professores:</b> <text id="count"><?= count($lista_inscritos) ?></text></li>
                                 </ul>
                             </div>
                         <?php } ?>
@@ -86,16 +85,27 @@
                         $('#msg').html( "<p>" + response.nm_professor + " foi <em>Inscrito(a) com sucesso!</em></p>" );
                         $('#count').html(response.qtd_inscritos); // atualizando a quantidade de inscritos
                         carregarGridPaginadaAjax();
+                        return;
                     } else if (response.sucesso == false && response.nm_professor == null) {
                         $('#msg').html( "<p><em>Professor não encontrado!</em></p>" );
+                        return;
                     } else {
                         $('#msg').html( "<p>" + response.nm_professor + " já <em> está nesta banca!</em></p>" );
+                        return;
                     }
 
                 }
             });
             return false;
         });
+
+        //Aciona o botão ADICIONAR, caso a tecla enter seja pressionada.
+        $("#nm_professor").keypress(function(e) {
+            if(e.which == 13) $("#adicionar").trigger('click');
+        });
+
+        //Colocar o foco no componente.
+        $("#nm_professor").focus();
 
     });
 </script>

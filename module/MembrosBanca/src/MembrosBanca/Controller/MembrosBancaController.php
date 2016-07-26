@@ -32,12 +32,12 @@ class MembrosBancaController extends AbstractCrudController
         return parent::cadastro($this->service, $this->form);
     }
 
-    public function excluirAction()
-    {
-        return parent::excluir($this->service, $this->form);
-    }
+    #public function excluirAction()
+    #{
+    #    return parent::excluir($this->service, $this->form);
+    #}
 
-    public function excluirviaacademiaAction()
+    public function excluirAction()
     {
         try {
             $request = $this->getRequest();
@@ -52,7 +52,7 @@ class MembrosBancaController extends AbstractCrudController
             $dados = $this->service->filtrarObjeto()->current();
 
             if (!$dados) {
-                throw new \Exception('Registro n�o encontrado');
+                throw new \Exception('Registro não encontrado');
             }
 
             $membro_banca = new \MembrosBanca\Service\MembrosBancaService();

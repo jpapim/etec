@@ -143,13 +143,13 @@ class ProfessorController extends AbstractCrudController {
 			$arrProfessores = $professores->getFiltrarProfessorPorNomeToArray($termo);
 			$arrProfessoresFiltrados = array();
 			foreach($arrProfessores as $professor){
-					if ($professor['cs_orientador'] == 'S') {
-						$arrProfessoresFiltrados[] = $professor['nm_professor'] . ' (Orientador(a)) ';
-					} else if ($professor['cs_orientador'] == 'N') {
-						$arrProfessoresFiltrados[] = $professor['nm_professor'] . ' (Professor(a)) ';
-					} else {
+					#if ($professor['cs_orientador'] == 'S') {
+					#	$arrProfessoresFiltrados[] = $professor['nm_professor'] . ' (Orientador(a)) ';
+					#} else if ($professor['cs_orientador'] == 'N') {
+				    #	$arrProfessoresFiltrados[] = $professor['nm_professor'] . ' (Professor(a)) ';
+					#} else {
 						$arrProfessoresFiltrados[] = $professor['nm_professor'];
-					}
+					#}
 			}
 
 			$valuesJson = new JsonModel( $arrProfessoresFiltrados );

@@ -155,8 +155,7 @@ class BancaExaminadoraController extends AbstractCrudController
 
           // buscando o id do professor através de seu nome
           $professor = new \Professor\Service\ProfessorService();
-          $arrProfessor = $professor->getIdProfessorPorNomeToArray(
-            $this->params()->fromPost('nm_professor'));
+          $arrProfessor = $professor->getIdProfessorPorNomeToArray(trim($this->params()->fromPost('nm_professor')));
 
           // verifica a existência do professor na base de dados.
           $membrosService = new \MembrosBanca\Service\MembrosBancaService();
@@ -167,8 +166,7 @@ class BancaExaminadoraController extends AbstractCrudController
           } else {
             // verifica se o professor já está cadastrado na banca examinadora. 
             // Caso não esteja será efetuado o cadastro.
-            if ($membrosService->checarSeProfessorEstaInscritoNaBanca(
-                  $arrProfessor['id_professor'],$id_banca)) {
+            if ($membrosService->checarSeProfessorEstaInscritoNaBanca($arrProfessor['id_professor'],$id_banca)) {
                   $values['sucesso'] = false;
                   $values['nm_professor'] = $arrProfessor['nm_professor'];
             } else {
@@ -182,14 +180,13 @@ class BancaExaminadoraController extends AbstractCrudController
           }
 
           // realiza a contagem dos professores inscritos
-          $inscricoes = $membrosService->fetchAllMembrosBanca(array(
-              'id_banca_examinadora' => $id_banca));
+          $inscricoes = $membrosService->fetchAllMembrosBanca(array('id_banca_examinadora' => $id_banca));
           $values['qtd_inscritos'] = count($inscricoes);
 
           $valuesJson = new JsonModel($values);
           return $valuesJson;
 
-        } else { //Se for requisiÃ§Ã£o normal
+        } else { //Se for requisição normal
 
           $id = Cript::dec($this->params('id'));
           $post = $this->getPost();

@@ -6,6 +6,7 @@
           <thead>
           <tr>
               <th>Professor</th>
+              <th>Papel</th>
               <th>Ações</th>
           </tr>
           </thead>
@@ -20,13 +21,14 @@
 
                 $tipo = null;
                 if ($obMembroBanca['cs_orientador'] == 'S') {
-                  $tipo = ' (Orientador(a)) ';
+                  $tipo = 'Orientador(a)';
                 } else if ($obMembroBanca['cs_orientador'] == 'N') {
-                  $tipo =  ' (Professor(a)) ';
+                  $tipo =  'Professor(a)';
                 }
               ?>
               <tr>
-                  <td><?= $obProfessor->getNmProfessor() . $tipo ?></td>
+                  <td><?= $obProfessor->getNmProfessor() ?></td>
+                  <td><?= $tipo ?></td>
 
                   <td style="width: 180px;">
                       <?=\Estrutura\Service\HtmlHelper::botaoAlterar(
@@ -35,7 +37,7 @@
                               'id'=>$obMembroBanca['id_membro_banca'])))?>
                       <?=\Estrutura\Service\HtmlHelper::botaoExcluir(
                           $this->url('navegacao',array('controller'=>
-                            'membros_banca-membrosbanca','action'=>'excluirviaacademia',
+                            'membros_banca-membrosbanca','action'=>'excluir',
                               'id'=>$obMembroBanca['id_membro_banca'] )))?>
                   </td>
               </tr>
