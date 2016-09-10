@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
+<div class="page-head">
+    <h2>Lista de Alunos Concluintes</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um novo Concluinte">Novo Aluno</a>
+        </div>
+    </div>
+    <br />
+    <div class="row" id="concluinte-pagination"></div>
+</div>
+
+<script>
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/concluinte-concluinte/index-pagination',
+            async: true,
+            data: {
+            },
+            beforeSend: function () {
+
+                $('#concluinte-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
+            },
+            success: function (data) {
+
+                $('#concluinte-pagination').html(data);
+            }
+        });
+
+    })
+</script>
