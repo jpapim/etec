@@ -180,6 +180,17 @@ class AbstractEstruturaService {
         return $resultSet;
     }
 
+    /**
+     * @author Alysson Vicuña de Oliveira
+     * @param $arrayFiltro array('coluna_tabela' => 'valor')
+     * @return array Registros retortnados do Banco de Dados
+     */
+    public function fetchAllById($arrayFiltro)
+    {
+        $arrayResults = $this->select($arrayFiltro)->toArray();
+        return $arrayResults;
+    }
+    
     public function select($where = null) {
         return $this->getTable()->select($where);
     }
@@ -229,17 +240,26 @@ class AbstractEstruturaService {
     }
 
     public function preSave() {
-        
+
     }
 
     public function posSave() {
-        
+
+    }
+
+    public function preDelete() {
+
+    }
+
+    public function posDelete() {
+
     }
 
     public function excluir() {
         $arr = $this->hydrate();
-        #xd($arr);
+        $this->preDelete();
         $this->getTable()->delete($arr);
+        $this->posDelete();
     }
 
     public function load() {
