@@ -5,7 +5,6 @@ return array(
         'Application',
         'Auth',
         'Estrutura', //Tem que vir antes dos demais módulos
-        'Banco',
         'Principal',
         'Email',
         'Usuario',
@@ -34,8 +33,6 @@ return array(
         'PalavraChave',
         'Curso',
         'Tcc',
-        'PeriodoLetivo',
-        'DetalhePeriodoLetivo',
         'Professor',
         'Titulacao',
         'PerfilControllerAction',
@@ -44,6 +41,7 @@ return array(
         'Concluinte',
         'Infra',
         'PalavraChaveTcc',
+        'Titulacao',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
