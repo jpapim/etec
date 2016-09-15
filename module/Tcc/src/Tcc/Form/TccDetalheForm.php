@@ -6,7 +6,7 @@
  * Time: 13:55
  */
 
-namespace PeriodoLetivo\Form;
+namespace Tcc\Form;
 
 
 use Estrutura\Form\AbstractForm;
@@ -14,14 +14,14 @@ use Estrutura\Form\FormObject;
 use Zend\Form\Element;
 use Zend\InputFilter\InputFilter;
 
-class PeriodoLetivoDetalheForm extends  AbstractForm{
+class TccDetalheForm extends  AbstractForm{
 
     public function __construct($options=[]){
-        parent::__construct('detalheperiodoletivoform');
+        parent::__construct('detalhetccform');
 
 
         $this->inputFilter = new InputFilter();
-        $objForm = new FormObject('detalheperiodoletivoform',$this,$this->inputFilter);
+        $objForm = new FormObject('detalhetccform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
         $objForm->hidden("id_periodo_letivo")->required(false)->label("Id");
 
