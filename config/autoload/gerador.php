@@ -4,7 +4,7 @@ return [
     'db' => array(
         'driver' => 'Pdo',
         'username' => 'root',
-        'password' => '',
+        'password' => 'Mysq!@dmin2803',
         'dsn' => 'mysql:dbname=information_schema;host=localhost',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''

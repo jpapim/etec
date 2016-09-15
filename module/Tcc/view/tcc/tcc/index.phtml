@@ -1,0 +1,44 @@
+
+<?php
+
+
+?>
+
+<div class="page-head">
+    <h2>Tcc</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>" title="Novo Tcc">Cadastrar Tcc</a>
+        </div>
+    </div>
+    <br />
+    <div class="row" id="tcc"></div>
+</div>
+
+<script>
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/tcc-tcc/index-pagination',
+            async: true,
+            data: {
+            },
+            beforeSend: function () {
+
+                $('#tcc').html(
+                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                );
+            },
+            success: function (data) {
+
+                $('#tcc').html(data);
+            }
+        });
+
+    })
+</script>
