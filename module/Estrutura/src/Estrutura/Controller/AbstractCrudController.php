@@ -28,18 +28,18 @@ abstract class AbstractCrudController extends AbstractEstruturaController
 
     public function cadastro($service, $form, $atributos = [])
     {
-        $id = Cript::dec($this->params('id'));        
+        $id = Cript::dec($this->params('id'));
         $post = $this->getPost();
-        
+
         if ($id) {
             $form->setData($service->buscar($id)->toArray());
         }
 
         if (!empty($post)) {
-            
+
             $form->setData($post);
         }
-        
+
         $dadosView = [
             'service' => $service,
             'form' => $form,
@@ -61,7 +61,7 @@ abstract class AbstractCrudController extends AbstractEstruturaController
             }
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
-            
+
             $files = $request->getFiles();
             $upload = $this->uploadFile($files);
 
@@ -79,12 +79,12 @@ abstract class AbstractCrudController extends AbstractEstruturaController
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
                 return false;
             }
-            
+
             $service->exchangeArray($form->getData());
             return $service->salvar();
-            
+
         } catch (\Exception $e) {
-            
+
             $this->setPost($post);
             $this->addErrorMessage($e->getMessage());
             $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
@@ -92,11 +92,42 @@ abstract class AbstractCrudController extends AbstractEstruturaController
         }
     }
 
+    public function gravarEmTabelaNaoIdentity($service, $form) {
+        try {
+
+            $controller = $this->params('controller');
+            $request = $this->getRequest();
+
+            if (!$request->isPost()) {
+                throw new \Exception('Dados Inválidos');
+            }
+
+            $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+            $form->setData($post);
+
+            if (!$form->isValid()) {
+                $this->addValidateMessages($form);
+                $this->setPost($post);
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+                return false;
+            }
+            $service->exchangeArray($form->getData());
+            return $service->inserir_nao_identity();
+        } catch (\Exception $e) {
+
+            $this->setPost($post);
+            $this->addErrorMessage($e->getMessage());
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+            return false;
+        }
+    }
+
+
     public function excluir($service, $form, $atributos = [])
     {
         try {
             $request = $this->getRequest();
-            
+
             if ($request->isPost()) {
                 return new JsonModel();
             }

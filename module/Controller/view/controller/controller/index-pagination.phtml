@@ -56,9 +56,8 @@
                     </tr>
                     <?php
                     foreach ($paginator as $key => $my_controller) { ?>
-                        <?php #print_r($academia); die;?>
                         <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($my_controller['nm_controller']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeTudoMinusculo($my_controller['nm_controller']) ?></td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($my_controller['id_controller'])))) ?>

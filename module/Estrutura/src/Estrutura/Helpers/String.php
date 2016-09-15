@@ -7,14 +7,16 @@ namespace Estrutura\Helpers;
  * @author ronaldo
  *
  */
-class String {
+class String
+{
 
     /**
      *
      * @param string $str
      * @return string $str
      */
-    public static function underscore2Camelcase($str) {
+    public static function underscore2Camelcase($str)
+    {
 
         // Split string in words.
         $words = explode('_', ($str));
@@ -28,23 +30,25 @@ class String {
         return $return;
     }
 
-    public static function camelcase2underscore($name) {
+    public static function camelcase2underscore($name)
+    {
 
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name));
     }
 
-    public static function spacify($camel, $glue = ' ') {
+    public static function spacify($camel, $glue = ' ')
+    {
 
         return $camel[0] . substr(
-                        implode(
-                                $glue, array_map(
-                                        'implode', array_chunk(
-                                                preg_split(
-                                                        '/([A-Z])/', ucfirst($camel), -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
-                                                ), 2
-                                        )
-                                )
-                        ), 1
+            implode(
+                $glue, array_map(
+                    'implode', array_chunk(
+                        preg_split(
+                            '/([A-Z])/', ucfirst($camel), -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
+                        ), 2
+                    )
+                )
+            ), 1
         );
     }
 
@@ -53,7 +57,8 @@ class String {
      * @param string $str
      * @return string $str
      */
-    public static function retiraEspacos($str) {
+    public static function retiraEspacos($str)
+    {
 
         // Split string in words.
         $words = explode(' ', strtolower($str));
@@ -72,7 +77,8 @@ class String {
      * @param string $string
      * @return string
      */
-    public static function retiraAcento($string) {
+    public static function retiraAcento($string)
+    {
 
         $a = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßŔàáâãäåæçèéêëìíîïðñòóôõöøùúûýþÿŕ';
         $b = 'AAAAAAACEEEEIIIIDNOOOOOOUUUUYBBRaaaaaaaceeeeiiiidnoooooouuuybyr';
@@ -85,7 +91,8 @@ class String {
      *
      * @param unknown_type $data
      */
-    public static function base64UrlEncode($data) {
+    public static function base64UrlEncode($data)
+    {
         return strtr(rtrim(base64_encode($data), '='), '+/', '-_');
     }
 
@@ -93,7 +100,8 @@ class String {
      *
      * @param unknown_type $base64
      */
-    public static function base64UrlDecode($base64) {
+    public static function base64UrlDecode($base64)
+    {
 
         return base64_decode(strtr($base64, '-_', '+/'));
     }
@@ -104,7 +112,8 @@ class String {
      * @param unknown_type $limite
      * @param unknown_type $quebra
      */
-    public static function limitaCaracteres($texto, $limite, $quebra = true) {
+    public static function limitaCaracteres($texto, $limite, $quebra = true)
+    {
 
         $tamanho = strlen($texto);
         if ($tamanho <= $limite) { //Verifica se o tamanho do texto é menor ou igual ao limite
@@ -127,7 +136,8 @@ class String {
      * @param string $preenchimento
      * @return string
      */
-    private function preencheEsquerda($texto, $tamanho, $preenchimento = ' ') {
+    private function preencheEsquerda($texto, $tamanho, $preenchimento = ' ')
+    {
 
         return \Estrutura\Helpers\Utilities::preencheEsquerda($texto, $tamanho, $preenchimento);
     }
@@ -139,7 +149,8 @@ class String {
      * @param string $preenchimento
      * @return string
      */
-    private function preencheDireita($texto, $tamanho, $preenchimento = ' ') {
+    private function preencheDireita($texto, $tamanho, $preenchimento = ' ')
+    {
 
         return \Estrutura\Helpers\Utilities::preencheDireita($texto, $tamanho, $preenchimento);
     }
@@ -150,7 +161,8 @@ class String {
      * @param string $string
      * @return string
      */
-    public static function mascaraformato($mask, $string) {
+    public static function mascaraformato($mask, $string)
+    {
 
         return \Estrutura\Helpers\Utilities::mascaraformato($mask, $string);
     }
@@ -161,9 +173,27 @@ class String {
      * @param string $string
      * @return string
      */
-    public static function nomeMaiusculo($string) {
+    public static function nomeMaiusculo($string)
+    {
 
         return str_replace(" Da ", " da ", str_replace(" Do ", " do ", str_replace(" De ", " de ", str_replace(" Uma ", " uma ", ucwords(strtolower($string))))));
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
+    public static function nomeTudoMaiusculo($string)
+    {
+        return strtoupper($string);
+    }
+
+    /**
+     * @param $string
+     * @return string
+     */
+    public static function nomeTudoMinusculo($string)
+    {
+        return strtolower($string);
+    }
 }
