@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.9-MariaDB, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.6.26, for Win32 (x86)
 --
 -- Host: localhost    Database: bdetec
 -- ------------------------------------------------------
--- Server version	10.1.9-MariaDB
+-- Server version	5.6.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,17 +24,16 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bdetec` /*!40100 DEFAULT CHARACTER SET
 USE `bdetec`;
 
 --
--- Temporary table structure for view `acl`
+-- Temporary view structure for view `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `acl` (
-  `id_perfil` tinyint NOT NULL,
-  `nm_resource` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `acl` AS SELECT 
+ 1 AS `id_perfil`,
+ 1 AS `nm_resource`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -86,21 +85,20 @@ INSERT INTO `area_conhecimento` VALUES (1,'Engenharia de Software'),(2,'Seguran√
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `auth`
+-- Temporary view structure for view `auth`
 --
 
 DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `auth` (
-  `id_usuario` tinyint NOT NULL,
-  `id_perfil` tinyint NOT NULL,
-  `em_email` tinyint NOT NULL,
-  `pw_senha` tinyint NOT NULL,
-  `nm_usuario` tinyint NOT NULL,
-  `id_contrato` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `auth` AS SELECT 
+ 1 AS `id_usuario`,
+ 1 AS `id_perfil`,
+ 1 AS `em_email`,
+ 1 AS `pw_senha`,
+ 1 AS `nm_usuario`,
+ 1 AS `id_contrato`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -164,14 +162,11 @@ DROP TABLE IF EXISTS `concluinte`;
 CREATE TABLE `concluinte` (
   `id_concluinte` int(11) NOT NULL AUTO_INCREMENT,
   `id_curso` int(11) DEFAULT NULL,
-  `id_tcc` bigint(20) DEFAULT NULL,
   `nm_concluinte` varchar(50) DEFAULT NULL,
   `nr_matricula` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id_concluinte`),
-  KEY `FK_Reference_102` (`id_tcc`),
-  KEY `FK_Reference_92` (`id_curso`),
-  CONSTRAINT `FK_Reference_102` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`),
-  CONSTRAINT `FK_Reference_92` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`)
+  KEY `FK_concluinte_curso` (`id_curso`),
+  CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -730,6 +725,35 @@ LOCK TABLES `tcc` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tcc_concluinte`
+--
+
+DROP TABLE IF EXISTS `tcc_concluinte`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tcc_concluinte` (
+  `id_tcc_concluinte` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tcc` bigint(20) DEFAULT NULL,
+  `id_concluinte` int(11) DEFAULT NULL,
+  `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_tcc_concluinte`),
+  KEY `FK_tcc_concluinte_concluinte` (`id_concluinte`),
+  KEY `FK_tcc_concluinte_tcc` (`id_tcc`),
+  CONSTRAINT `FK_tcc_concluinte_concluinte` FOREIGN KEY (`id_concluinte`) REFERENCES `concluinte` (`id_concluinte`),
+  CONSTRAINT `FK_tcc_concluinte_tcc` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tcc_concluinte`
+--
+
+LOCK TABLES `tcc_concluinte` WRITE;
+/*!40000 ALTER TABLE `tcc_concluinte` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tcc_concluinte` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `telefone`
 --
 
@@ -916,7 +940,6 @@ USE `bdetec`;
 -- Final view structure for view `acl`
 --
 
-/*!50001 DROP TABLE IF EXISTS `acl`*/;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -935,7 +958,6 @@ USE `bdetec`;
 -- Final view structure for view `auth`
 --
 
-/*!50001 DROP TABLE IF EXISTS `auth`*/;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -959,4 +981,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-14 20:43:50
+-- Dump completed on 2016-09-16 11:53:02
