@@ -164,9 +164,12 @@ CREATE TABLE `concluinte` (
   `id_curso` int(11) DEFAULT NULL,
   `nm_concluinte` varchar(50) DEFAULT NULL,
   `nr_matricula` varchar(20) DEFAULT NULL,
+  `id_tcc` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_concluinte`),
   KEY `FK_concluinte_curso` (`id_curso`),
-  CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`)
+  KEY `fk_tcc_concluinte_idx` (`id_tcc`),
+  CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`),
+  CONSTRAINT `fk_tcc_concluinte` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -697,7 +700,7 @@ CREATE TABLE `tcc` (
   `tx_titulo_tcc` varchar(150) DEFAULT NULL,
   `tx_resumo` text,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nr_nota_final` decimal(4,2) DEFAULT NULL,
   PRIMARY KEY (`id_tcc`),
   KEY `FK_Reference_103` (`id_professor_orientador`),
@@ -722,35 +725,6 @@ CREATE TABLE `tcc` (
 LOCK TABLES `tcc` WRITE;
 /*!40000 ALTER TABLE `tcc` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tcc` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tcc_concluinte`
---
-
-DROP TABLE IF EXISTS `tcc_concluinte`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tcc_concluinte` (
-  `id_tcc_concluinte` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tcc` bigint(20) DEFAULT NULL,
-  `id_concluinte` int(11) DEFAULT NULL,
-  `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_tcc_concluinte`),
-  KEY `FK_tcc_concluinte_concluinte` (`id_concluinte`),
-  KEY `FK_tcc_concluinte_tcc` (`id_tcc`),
-  CONSTRAINT `FK_tcc_concluinte_concluinte` FOREIGN KEY (`id_concluinte`) REFERENCES `concluinte` (`id_concluinte`),
-  CONSTRAINT `FK_tcc_concluinte_tcc` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tcc_concluinte`
---
-
-LOCK TABLES `tcc_concluinte` WRITE;
-/*!40000 ALTER TABLE `tcc_concluinte` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tcc_concluinte` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -981,4 +955,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-16 11:53:02
+-- Dump completed on 2016-09-19 10:48:07
