@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.9-MariaDB, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.6.26, for Win32 (x86)
 --
 -- Host: localhost    Database: bdetec
 -- ------------------------------------------------------
--- Server version	10.1.9-MariaDB
+-- Server version	5.6.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,17 +24,16 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bdetec` /*!40100 DEFAULT CHARACTER SET
 USE `bdetec`;
 
 --
--- Temporary table structure for view `acl`
+-- Temporary view structure for view `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `acl` (
-  `id_perfil` tinyint NOT NULL,
-  `nm_resource` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `acl` AS SELECT 
+ 1 AS `id_perfil`,
+ 1 AS `nm_resource`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -86,21 +85,20 @@ INSERT INTO `area_conhecimento` VALUES (1,'Engenharia de Software'),(2,'Seguran√
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `auth`
+-- Temporary view structure for view `auth`
 --
 
 DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `auth` (
-  `id_usuario` tinyint NOT NULL,
-  `id_perfil` tinyint NOT NULL,
-  `em_email` tinyint NOT NULL,
-  `pw_senha` tinyint NOT NULL,
-  `nm_usuario` tinyint NOT NULL,
-  `id_contrato` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `auth` AS SELECT 
+ 1 AS `id_usuario`,
+ 1 AS `id_perfil`,
+ 1 AS `em_email`,
+ 1 AS `pw_senha`,
+ 1 AS `nm_usuario`,
+ 1 AS `id_contrato`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -164,14 +162,14 @@ DROP TABLE IF EXISTS `concluinte`;
 CREATE TABLE `concluinte` (
   `id_concluinte` int(11) NOT NULL AUTO_INCREMENT,
   `id_curso` int(11) DEFAULT NULL,
-  `id_tcc` bigint(20) DEFAULT NULL,
   `nm_concluinte` varchar(50) DEFAULT NULL,
   `nr_matricula` varchar(20) DEFAULT NULL,
+  `id_tcc` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_concluinte`),
-  KEY `FK_Reference_102` (`id_tcc`),
-  KEY `FK_Reference_92` (`id_curso`),
-  CONSTRAINT `FK_Reference_102` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`),
-  CONSTRAINT `FK_Reference_92` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`)
+  KEY `FK_concluinte_curso` (`id_curso`),
+  KEY `fk_tcc_concluinte_idx` (`id_tcc`),
+  CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`),
+  CONSTRAINT `fk_tcc_concluinte` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -702,7 +700,7 @@ CREATE TABLE `tcc` (
   `tx_titulo_tcc` varchar(150) DEFAULT NULL,
   `tx_resumo` text,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nr_nota_final` decimal(4,2) DEFAULT NULL,
   PRIMARY KEY (`id_tcc`),
   KEY `FK_Reference_103` (`id_professor_orientador`),
@@ -916,7 +914,6 @@ USE `bdetec`;
 -- Final view structure for view `acl`
 --
 
-/*!50001 DROP TABLE IF EXISTS `acl`*/;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -935,7 +932,6 @@ USE `bdetec`;
 -- Final view structure for view `auth`
 --
 
-/*!50001 DROP TABLE IF EXISTS `auth`*/;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -959,4 +955,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-14 20:43:50
+-- Dump completed on 2016-09-19 10:48:07
