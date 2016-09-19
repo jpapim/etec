@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: EduFerr
+ * Date: 19/09/2016
+ * Time: 16:17
+ */
 namespace Tcc\Table;
 
 use Estrutura\Table\AbstractEstruturaTable;

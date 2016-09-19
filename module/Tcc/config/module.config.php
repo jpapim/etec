@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: EduFerr
+ * Date: 19/09/2016
+ * Time: 16:13
+ */
 
 return array(
     'router' => array(
@@ -46,7 +52,7 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
-    
+
     'console' => array(
         'router' => array(
             'routes' => array(
