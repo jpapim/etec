@@ -52,15 +52,15 @@
                             if (!is_null($campoFilter)) {
                                 ?>
                                 <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                                <?php
+                            <?php
                             } else {
                                 ?>
                                 &nbsp;
-                                <?php
+                            <?php
                             }
                             ?>
                         </td>
-                        <?php
+                    <?php
                     }
                     ?>
                 </tr>
@@ -80,11 +80,11 @@
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc'])))) ?>
                         </td>
                     </tr>
-                    <?php
+                <?php
                 }
                 ?>
                 </tbody>
-                <?php
+            <?php
             }
             ?>
 

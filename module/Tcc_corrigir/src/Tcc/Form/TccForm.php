@@ -24,8 +24,8 @@ class TccForm extends AbstractForm
         $objForm->combo("id_tipo_tcc",'\TipoTcc\Service\TipoTccService', 'id', 'nm_tipo_tcc')->required(true)->label("Tipo de TCC");
         $objForm->combo("id_area_conhecimento", '\AreaConhecimento\Service\AreaConhecimentoService', 'id', 'nm_area_conhecimento')->required(true)->label("Área de Conhecimento");
 
-        $objForm->combo("id_professor_orientador",'\Professor\Service\ProfessorService', 'id', 'nm_Professor')->required(true)->label("Nome do Professor Orientador");
-//        $objForm->combo("id_professor_orientador", '\Professor\Service\ProfessorService', 'id', 'nm_professor', 'getFilterProfessorOrientador')->required(false)->label("Orientador");
+//        $objForm->combo("id_professor_orientador",'\Professor\Service\ProfessorService', 'id', 'nm_Professor')->required(true)->label("Nome do Professor Orientador");
+        $objForm->combo("id_professor_orientador", '\Professor\Service\ProfessorService', 'id', 'nm_professor', 'getFilterProfessorOrientador')->required(false)->label("Orientador");
 
         $objForm->text("tx_titulo_tcc")->required(true)->label("Título do TCC");
         $objForm->textarea("tx_resumo")->required(true)->label("Resumo");

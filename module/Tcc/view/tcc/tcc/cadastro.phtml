@@ -7,7 +7,7 @@
             <div class="content">
                 <?php
 
-                $form->setAttribute('action', $this->url('navegacao', array('controller'=>$controller,'action' => 'gravar')));
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('method', 'post');
                 $form->setAttribute('data-role', 'form');
@@ -20,48 +20,52 @@
                 echo $this->formHidden($form->get('id'));
                 ?>
 
-                <div class="form-group">
-                    <div class="col-md-7">
 
-                        <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('id_banca')); ?>
+                        <div class="form-group" id="datetimepicker">
+                            <div class="col-md-4">
+                                <?= $this->formRow($form->get('id_banca_examinadora')); ?>
+                            </div>
                         </div>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-7">
 
-                        <div class="input-group" id="datetimepicker">
-                            <?= $this->formRow($form->get('id_area_conhecimento')); ?>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <?= $this->formRow($form->get('id_professor_orientador')) ?>
+                            </div>
                         </div>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('id_professor'))?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('tx_titulo_tcc')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('tx_resumo')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-1">
-                        <?= $this->formRow($form->get('nr_nota_final')) ?>
-                    </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <?= $this->formRow($form->get('id_area_conhecimento')); ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <?= $this->formRow($form->get('id_tipo_tcc')) ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <?= $this->formRow($form->get('tx_titulo_tcc')) ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <?= $this->formRow($form->get('tx_resumo')) ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-1">
+                                <?= $this->formRow($form->get('nr_nota_final')) ?>
+                            </div>
+                         </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                        <button type="submit" class="btn btn-primary">Avançar</button>
+                        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>
@@ -69,7 +73,8 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script type="text/javascript"
+        src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
 <!--<script type="text/javascript" language="javascript" class="init">-->
 <!--    $(document).ready(function() {-->
 <!--        $( "#dt_inicio" ).datepicker(-->

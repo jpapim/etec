@@ -18,7 +18,13 @@ class ProfessorForm extends AbstractForm {
 		$objForm->text("nm_professor")->required(true)->label("Professor");
 		$objForm->combo("id_titulacao", '\Titulacao\Service\TitulacaoService', 'id', 'nm_titulacao')->required(true)->label("Titulação");
 		$objForm->select("cs_ativo", array('A'=>'Ativo', 'I'=>'Inativo'))->required(false)->label("Situação");
-		$objForm->checkbox("cs_orientador", array('N'=>'Não', 'S'=>'Sim'), true)->required(false)->label("Este professor é orientador?");
+//		$objForm->checkbox("cs_orientador", array('N'=>'Não', 'S'=>'Sim'), true)->required(false)->label("Este professor é orientador?");
+
+		$arrOpcoes[] = array('value' => 'S', 'label' => 'Sim');
+		$arrOpcoes[] = array('value' => 'N', 'label' => 'Nao');
+		$objForm->radio("cs_orientador", $arrOpcoes)->required(true)->label("Este professor é orientador?");
+
+
 
 		$this->formObject = $objForm;
 	}

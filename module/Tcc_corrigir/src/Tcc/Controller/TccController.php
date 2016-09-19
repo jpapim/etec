@@ -1,21 +1,27 @@
 <?php
 
+
 namespace Tcc\Controller;
 
+
 use Estrutura\Controller\AbstractCrudController;
-use Zend\View\Model\ViewModel;
-use Estrutura\Helpers\Cript;
+use Estrutura\Helpers\Data;
 use Estrutura\Helpers\Pagination;
+use Zend\View\Model\ViewModel;
+use Zend\Form\Element;
+use Zend\View\Model\JsonModel;
+use Estrutura\Helpers\Cript;
+
 
 class TccController extends AbstractCrudController
 {
 
-    protected $service;
 
+    protected $service;
 
     protected $form;
 
-    public function __construct()
+    public function  __construct()
     {
         parent::init();
     }
@@ -76,7 +82,8 @@ class TccController extends AbstractCrudController
         return $viewModel->setTerminal(true);
     }
 
-    public function gravarAction() {
+    public function gravarAction()
+    {
         try {
             $controller = $this->params('controller');
             $request = $this->getRequest();
@@ -98,11 +105,6 @@ class TccController extends AbstractCrudController
                 $post['id'] = Cript::dec($post['id']);
             }
 
-            #################################################################
-            # Customizaçao dos Valores antes de gravar no banco
-            $post['id_tcc'] = ($post['id_tcc']);
-            #################################################################
-
             $form->setData($post);
 
             if (!$form->isValid()) {
@@ -114,18 +116,8 @@ class TccController extends AbstractCrudController
 
             $service->exchangeArray($form->getData());
             $this->addSuccessMessage('Registro Alterado com sucesso');
-
-            $id_tcc = $service->salvar();
-
-            //Define o redirecionamento
-            if (isset($post['id']) && $post['id']) {
-                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
-            } else {
-                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,
-                    'action'=>'cad-detalhe-concluinte','id'=>Cript::enc($id_tcc)));
-            }
-
-            return $id_tcc;
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+            return $service->salvar();
 
         } catch (\Exception $e) {
 
@@ -136,12 +128,74 @@ class TccController extends AbstractCrudController
         }
     }
 
+    public function excluirAction()
+    {
+        return parent::excluir($this->service, $this->form);
+    }
+
     public function cadastroAction()
     {
-        #x(Cript::dec($this->params('id')));
         return parent::cadastro($this->service, $this->form);
     }
 
+//    public function gravarAction()
+//    {
+//        try {
+//            $controller = $this->params('controller');
+//            $request = $this->getRequest();
+//            $service = $this->service;
+//            $form = $this->form;
+//
+//            if (!$request->isPost()) {
+//                throw new \Exception('Dados Inválidos');
+//            }
+//
+//            $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+//
+//            $files = $request->getFiles();
+//            $upload = $this->uploadFile($files);
+//
+//            $post = array_merge($post, $upload);
+//
+//            if (isset($post['id']) && $post['id']) {
+//                $post['id'] = Cript::dec($post['id']);
+//            }
+////            #################################################################
+////            # Inicio da Customizaçao dos Valores antes de gravar no banco
+////            $post['dt_inicio'] = Data::converterDataHoraBrazil2BancoMySQL($post['dt_']);
+////            $post['dt_fim'] = Data::converterDataHoraBrazil2BancoMySQL($post['dt_fim']);
+////            # Fim da Customizaçao dos Valores antes de gravar no banco
+////            #################################################################
+//
+//            $form->setData($post);
+//
+//            if (!$form->isValid()) {
+//                $this->addValidateMessages($form);
+//                $this->setPost($post);
+//                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+//                return false;
+//            }
+//            $service->exchangeArray($form->getData());
+//            $this->addSuccessMessage('Registro Alterado com sucesso');
+//            $id_tcc = $service->salvar();
+//
+//            //Define o redirecionamento
+//            if (isset($post['id']) && $post['id']) {
+//                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+//            } else {
+//                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastroconcluintedetalhe', 'id' => Cript::enc($id_tcc)));
+//            }
+//
+//            return $id_tcc;
+//
+//        } catch (\Exception $e) {
+//
+//            $this->setPost($post);
+//            $this->addErrorMessage($e->getMessage());
+//            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+//            return false;
+//        }
+//    }
 
 
-}
+} 
