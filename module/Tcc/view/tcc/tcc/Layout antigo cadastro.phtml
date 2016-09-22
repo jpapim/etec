@@ -1,0 +1,69 @@
+<br/>
+<div class="form-group" id="datetimepicker">
+    <div class="col-md-4">
+        <?= $this->formRow($form->get('id_banca_examinadora')); ?>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-4">
+        <?= $this->formRow($form->get('id_professor_orientador')) ?>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-4">
+        <?= $this->formRow($form->get('id_area_conhecimento')); ?>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-4">
+        <?= $this->formRow($form->get('id_tipo_tcc')) ?>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-4">
+        <?= $this->formRow($form->get('tx_titulo_tcc')) ?>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-4">
+        <?= $this->formRow($form->get('tx_resumo')) ?>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-1">
+        <?= $this->formRow($form->get('nr_nota_final')) ?>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-10">
+        <button type="submit" class="btn btn-primary">Avançar</button>
+        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>"
+           class="btn btn-default">Voltar</a></div>
+</div>
+
+
+// Div para recuperar os dados gravados do TCC
+<div class="bs-callout bs-callout-primary">
+    <ul class="primary">
+        <li><b>Registro nº:</b> <?= $dadosTcc->getId() ?></li>
+        <li><b>Data da Banca:</b> <?= $ob_banca_examinadora->getDtBanca() ?></li>
+        <li><b>Titulo:</b> <?= $dadosTcc->getTxTituloTcc() ?></li>
+        <li><b>Tipo:</b> <?= $ob_tipo_tcc->getNmTipoTcc() ?></li>
+        <li><b>Area de Conhecimento:</b> <?= $ob_area_conhecimento->getNmAreaConhecimento() ?></li>
+        <li><b>Professor Orientador:</b> <?= $ob_Prof_orientador->getNmProfessor() ?></li>
+        <li><b>Nota do Trabalho:</b> <?= $dadosTcc->getNrNotaFinal() ?></li>
+    </ul>
+</div>
+
+
+// Padrões antigos de Botões do cadastroDetalheconcluinte
+                <div class="form-group">
+                    <div class="col-md-10">
+                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                        <a class="btn btn-default"
+                           href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($dadosTcc->getId()))) ?>"
+                           title="Voltar">Voltar</a>
+                        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Lista
+                            Tcc</a>
+                    </div>
+                </div>

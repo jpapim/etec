@@ -80,7 +80,7 @@ class ConcluinteController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function gravarAction()
+    public function Backup_gravarAction()
     {
         try {
             $controller = $this->params('controller');
@@ -124,6 +124,12 @@ class ConcluinteController extends AbstractCrudController
             $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
             return false;
         }
+    }
+
+    public function gravarAction(){
+        $this->addSuccessMessage('Registro gravado com sucesso');
+        $this->redirect()->toRoute('navegacao', array('controller' => 'concluinte-concluinte', 'action' => 'index'));
+        return parent::gravar($this->service, $this->form);
     }
 
     public function cadastroAction()

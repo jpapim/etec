@@ -2,99 +2,108 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterProfessores" >
+        <br/>
+        <table class="table table-striped" id="tablesorterDetalhes" >
             <thead>
                 <tr>
-                    <th class="text-center">Data da Banca</th>
+                    <th class="text-center">Título do Tcc</th>
+                    <th class="text-center">Curso</th>
+                    <th class="text-center">Nome do Aluno</th>
+                    <th class="text-center">Matrícula</th>
                     <th class="text-center">Ações</th>
+                  
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                  <th class="text-center">Data da Banca</th>
-                  <th class="text-center">Ações</th>
+                    <th class="text-center">Título do Tcc</th>
+                    <th class="text-center">Curso</th>
+                    <th class="text-center">Nome do Aluno</th>
+                    <th class="text-center">Matrícula</th>
+                    <th class="text-center">Ações</th>
+                
                 </tr>
                 <tr>
                     <th colspan="6" class="ts-pager form-horizontal">
                         <?php
-                        echo $this->paginationControl(
+                    echo $this->paginationControl(
                                 $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/banca_examinadora-bancaexaminadora/index-pagination',
+                            'urlPagination' => '/tcc-tcc/detalhe-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#bancaexaminadora-pagination',
+                            'divData' => '#tccdetalhe-pagination',
                                 ]
                         );
-                        ?>
+                        ?>  
                     </th>
                 </tr>
             </tfoot>
             <?php
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
-            ?>
+                ?>
                 <tbody class="">
                     <tr role="row" class="tablesorter-filter-row">
                         <?php
                         foreach ($camposFilter as $key => $campoFilter) {
-                        ?>
+                            ?>    
                             <td>
                                 <?php
                                 if (!is_null($campoFilter)) {
-                                ?>
+                                    ?>
                                     <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
                                     <?php
                                 } else {
                                     ?>
-                                    &nbsp;
+                                    &nbsp;                                        
                                     <?php
                                 }
                                 ?>
                             </td>
                             <?php
                         }
-                        ?>
+                        ?>                            
                     </tr>
                     <?php
-                    foreach ($paginator as $key => $banca) {
-                    ?>
+                    foreach ($paginator as $key => $detalhe_tcc) { #xd($concluinte);
+                        ?>
                         <tr>
-                            <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($banca['dt_banca'])?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_tcc['tx_titulo_tcc']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['nm_curso']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['nm_concluinte']) ?></td>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['nr_matricula']) ?></td>
                             <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao',
-                                        array('controller'=>$controller,'action'=>'realizarinscricoes',
-                                            'id'=>Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))),'Participantes')?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',
-                                    		array('controller' => $controller, 'action' => 'cadastro',
-                                    				'id' => Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))))
-                                    ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',
-                                    		array('controller' => $controller, 'action' => 'excluir',
-                                    				'id' => Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))))
-                                    ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('detalhe_tcc', array('controller' => 'detalhe_tcc', 'action' => 'excluirvialistagemdetalhetcc', 'id' => Estrutura\Helpers\Cript::enc($detalhe_tcc['id_concluinte']), 'aux' => $id_tcc ))) ?>
                                 </span>
                             </td>
-                        </tr>
-                    <?php
+                        </tr>                    
+                        <?php
                     }
-                        ?>
+
+                    ?>
                 </tbody>
-            <?php
+                <?php
             }
-                ?>
+            ?>
 
         </table>
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar uma Nova Banca">Nova Banca</a>
-            </div>
+                <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Lista
+                    Tcc</a>            </div>
         </div>
     </div>
 </div>
-<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript">
+<!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
+<script src="/assets/js/moment.js" type="text/javascript"></script>
+<script src="/assets/js/validator.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 
-</script>
 <script type="text/javascript" language="javascript" >
     $(function () {
 
@@ -120,7 +129,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterProfessores").tablesorter({
+        $("#tablesorterDetalhes").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
@@ -146,5 +155,7 @@
                 5: {sorter: false}
             }
         });
+
+
     });
 </script>

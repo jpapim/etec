@@ -27,9 +27,9 @@
     color: #f0ad4e;
 }
 .bs-callout-info {
-    background-color: #f0f7fd;
-    border-color: #428BCA;
-    color: #428BCA;
+    background-color: #EAEAEA;
+    border-color: #032a51;
+    color: #032a51;
 }
 .bs-callout-success {    
     background-color: #dff0d8;
@@ -38,7 +38,7 @@
 }
 
 .bs-callout-primary {
-    background-color: #b0e2ff;
-    border-color: #428bca;
-    color: #006699;
+    background-color: #EAEAEA;
+    border-color: #032a51;
+    color: #032a51;
 }

@@ -23,7 +23,7 @@ class TccForm extends AbstractForm
 
         $objForm = new FormObject('tccform', $this, $this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");
-        $objForm->hidden("id_usuario_cadastro")->required(false)->label("UsuÃ¡rio que cadastrou");
+        $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario que cadastrou");
         $objForm->hidden("id_usuario_alteracao")->required(false)->label("Usuario que alterou");
 
         $objForm->combo("id_banca_examinadora",'\BancaExaminadora\Service\BancaExaminadoraService', 'id', 'dt_banca')->required(true)->label("Data da Banca");
@@ -31,7 +31,7 @@ class TccForm extends AbstractForm
         $objForm->combo("id_area_conhecimento", '\AreaConhecimento\Service\AreaConhecimentoService', 'id', 'nm_area_conhecimento')->required(true)->label("Ãrea de Conhecimento");
 
         $objForm->combo("id_professor_orientador",'\Professor\Service\ProfessorService', 'id', 'nm_Professor')->required(true)->label("Nome do Professor Orientador");
-//        $objForm->combo("id_professor_orientador", '\Professor\Service\ProfessorService', 'id', 'nm_professor', 'getFilterProfessorOrientador')->required(false)->label("Orientador");
+//        $objForm->combo("id_professor_orientador", '\tcc\Service\tccService', 'id', 'nm_professor', 'getFilterProfessorOrientador')->required(false)->label("Orientador");
 
         $objForm->text("tx_titulo_tcc")->required(true)->label("Título do TCC");
         $objForm->textarea("tx_resumo")->required(true)->label("Resumo");

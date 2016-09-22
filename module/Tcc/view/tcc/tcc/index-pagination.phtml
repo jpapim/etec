@@ -5,7 +5,7 @@
         <table class="table table-striped" id="tablesorterTcc" >
             <thead>
             <tr>
-                <th class="text-center">ID Tcc</th>
+                <th class="text-center">Código de Registro</th>
                 <th class="text-center">Banca Examinadora</th>
                 <th class="text-center">Área de Conhecimento</th>
                 <th class="text-center">Prof Orientador</th>
@@ -15,7 +15,7 @@
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">ID Tcc</th>
+                <th class="text-center">Código de Registro</th>
                 <th class="text-center">Banca Examinadora</th>
                 <th class="text-center">Área de Conhecimento</th>
                 <th class="text-center">Prof Orientador</th>
@@ -42,7 +42,7 @@
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
             if (!empty($paginator)) {
                 ?>
-                <tbody class="">
+                <tbody class="" align="center">
                 <tr role="row" class="tablesorter-filter-row">
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
@@ -69,14 +69,14 @@
                     ?>
                     <tr>
                         <td><?= $item['id_tcc']?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['dt_banca']) ?></td>
+                        <td class="text-center"><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_banca']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_area_conhecimento']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_professor']) ?></td>
                         <td><?= $item['tx_titulo_tcc']?></td>
 
-                        <td style="width: 150px;">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc'])))) ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastrotccdetalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc'])))) ?>
+                        <td style="width: 180px;">
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar TCC') ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheconcluinte', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar Concluinte') ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc'])))) ?>
                         </td>
                     </tr>

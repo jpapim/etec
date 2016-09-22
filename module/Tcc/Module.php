@@ -32,9 +32,6 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
-    /**
-     *
-     */
     public function getAutoloaderConfig()
     {
         return array(
@@ -46,10 +43,6 @@ class Module
         );
     }
 
-    /**
-     *
-     * @return array
-     */
     public function getServiceConfig()
     {
         return array(

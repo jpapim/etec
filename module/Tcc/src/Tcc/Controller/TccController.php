@@ -1,31 +1,34 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: EduFerr
- * Date: 19/09/2016
- * Time: 16:18
+ * User: IGOR
+ * Date: 30/06/2016
+ * Time: 22:25
  */
 
 namespace Tcc\Controller;
-
+use Concluinte;
+use concluinte\Service\ConcluinteService;
 use Estrutura\Controller\AbstractCrudController;
-use Zend\View\Model\ViewModel;
 use Estrutura\Helpers\Cript;
+use Tcc\Service\TccService;
+use Zend\View\Model\JsonModel;
+use Zend\View\Model\ViewModel;
 use Estrutura\Helpers\Pagination;
 
-class TccController extends AbstractCrudController{
 
-    protected $service;
+class TccController extends  AbstractCrudController {
+
+    protected  $service;
     protected $form;
 
-    public function __construct()
-    {
+    public function  __construct(){
         parent::init();
     }
 
     public function indexAction()
     {
-        return parent::index($this->service, $this->form);
+        return parent::index($this->service,$this->form);
     }
 
     public function indexPaginationAction()
@@ -79,7 +82,15 @@ class TccController extends AbstractCrudController{
         return $viewModel->setTerminal(true);
     }
 
-    public function gravarAction() {
+    /*public function gravarAction(){
+        $controller = $this->params('controller');
+        $this->addSuccessMessage('Registro Alterado com sucesso');
+        $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+        return parent::gravar($this->service, $this->form);
+    }*/
+
+    public function gravarAction()
+    {
         try {
             $controller = $this->params('controller');
             $request = $this->getRequest();
@@ -87,7 +98,7 @@ class TccController extends AbstractCrudController{
             $form = $this->form;
 
             if (!$request->isPost()) {
-                throw new \Exception('Dados InvÃ¡lidos');
+                throw new \Exception('Dados Inválidos');
             }
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
@@ -100,8 +111,6 @@ class TccController extends AbstractCrudController{
             if (isset($post['id']) && $post['id']) {
                 $post['id'] = Cript::dec($post['id']);
             }
-            $post['id_tcc'] = ($post['id_tcc']);
-
 
             $form->setData($post);
 
@@ -111,24 +120,20 @@ class TccController extends AbstractCrudController{
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
                 return false;
             }
-
             $service->exchangeArray($form->getData());
-            $this->addSuccessMessage('Registro Alterado com sucesso');
-
+            $this->addSuccessMessage('Registro alterado com sucesso');
             $id_tcc = $service->salvar();
 
             //Define o redirecionamento
             if (isset($post['id']) && $post['id']) {
-                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
             } else {
-                $this->redirect()->toRoute('navegacao',array('controller'=>$controller,
-                    'action'=>'detalheconcluinte','id'=>Cript::enc($id_tcc)));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheconcluinte', 'id' => Cript::enc($id_tcc)));
             }
 
             return $id_tcc;
 
         } catch (\Exception $e) {
-
             $this->setPost($post);
             $this->addErrorMessage($e->getMessage());
             $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
@@ -138,80 +143,100 @@ class TccController extends AbstractCrudController{
 
     public function cadastroAction()
     {
-        #x(Cript::dec($this->params('id')));
         return parent::cadastro($this->service, $this->form);
     }
 
-    public function detalheconcluinteAction()
+    public function excluirAction()
+    {
+        return parent::excluir($this->service, $this->form);
+    }
+
+    public function cadastrodetalheconcluinteAction()
+    {
+        //recuperar o id do Modulo Tcc
+        $id_tcc = Cript::dec($this->params('id') );
+        #xd($id_tcc);
+        $tcc = new TccService();
+        $dadosTcc = $tcc->buscar($id_tcc);
+
+       
+        $dadosView = [
+            'service' => new \Concluinte\Service\ConcluinteService(),
+            'form' => new \Concluinte\Form\ConcluinteForm(),
+            'controller' => $this->params('controller'),
+            'atributos' => array(),
+            'id_tcc' => $id_tcc,
+            'dadosTcc' => $dadosTcc,
+        ];
+
+        return new ViewModel($dadosView);
+        //}
+    }
+
+    public function adicionardetalheconcluinteAction()
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
+            $id_tcc= $this->params()->fromPost('id');
+            $nm_concluinte = $this->params()->fromPost('nm_concluinte');
+            #xd($id_tcc);
+            $detalhe_concluinte = new ConcluinteService();
 
-            // recebendo o nome do professor e o id da banca
-            $request = $this->getRequest();
-            $nm_professor = $this->params()->fromPost('nm_professor');
-            $id_banca = $this->params()->fromPost('id_banca_examinadora');
+            $id_inserido = $detalhe_concluinte->getTable()->salvar(array('id_tcc'=>$id_tcc,'nm_concluinte'=>$nm_concluinte), null);
+            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'nm_concluinte'=>$nm_concluinte) );
 
-            // buscando o id do professor atravÃ©s de seu nome
-            $professor = new \Professor\Service\ProfessorService();
-            $arrProfessor = $professor->getIdProfessorPorNomeToArray(trim($this->params()->fromPost('nm_professor')));
-
-            // verifica a existÃªncia do professor na base de dados.
-            $membrosService = new \MembrosBanca\Service\MembrosBancaService();
-            $values = [];
-            if (!$arrProfessor) {
-                $values['sucesso'] = false;
-                $values['nm_professor'] = null;
-            } else {
-                // verifica se o professor jÃ¡ estÃ¡ cadastrado na banca examinadora.
-                // Caso nÃ£o esteja serÃ¡ efetuado o cadastro.
-                if ($membrosService->checarSeProfessorEstaInscritoNaBanca($arrProfessor['id_professor'],$id_banca)) {
-                    $values['sucesso'] = false;
-                    $values['nm_professor'] = $arrProfessor['nm_professor'];
-                } else {
-                    $id_inserido = $membrosService->getTable()->salvar(
-                        array('id_banca_examinadora'=>$id_banca,
-                            'id_professor'=>$arrProfessor['id_professor'],
-                            'cs_orientador'=>$arrProfessor['cs_orientador']), null);
-                    $values['sucesso'] = true;
-                    $values['nm_professor'] = $arrProfessor['nm_professor'];
-                }
-            }
-
-            // realiza a contagem dos professores inscritos
-            $inscricoes = $membrosService->fetchAllMembrosBanca(array('id_banca_examinadora' => $id_banca));
-            $values['qtd_inscritos'] = count($inscricoes);
-
-            $valuesJson = new JsonModel($values);
             return $valuesJson;
-
-        } else { //Se for requisiÃ§Ã£o normal
-
-            $id = Cript::dec($this->params('id'));
-            $post = $this->getPost();
-
-            if (!empty($post)) {
-                $this->form->setData($post);
-            }
-
-            $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
-            $dadosBanca = $banca->getBancaExaminadoraToArray($id);
-
-            $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
-            $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
-                'id_banca_examinadora' => $dadosBanca['id_banca_examinadora']));
-
-            $dadosView = [
-                'service' => $this->service,
-                'form' => $this->form,
-                'controller' => $this->params('controller'),
-                'atributos' => array(),
-                'dados_banca' => $dadosBanca,
-                'lista_inscritos' => $dadosInscricoes
-            ];
-
-            return new ViewModel($dadosView);
         }
     }
 
-}
+    public function detalhePaginationAction()
+    {
+        $filter = $this->getFilterPage();
+
+        $id_tcc = $this->params()->fromPost('id_tcc');
+        $camposFilter = [
+            '0' => [
+                'filter' => "tcc.tx_titulo_tcc  LIKE ?"
+            ],
+            '1' => [
+                'filter' => "concluinte.nm_curso  LIKE ?"
+            ],
+            '2' => [
+                'filter' => "concluinte.nm_concluinte  LIKE ?"
+            ],
+            '3' => [
+                'filter' => "concluinte.nr_matricula LIKE ?"
+            ],
+            '4' => NULL,
+        ];
+            #xd($id_tcc = $this->params('id'));
+
+        $paginator = $this->service->getDetalhePaginator( $id_tcc, $filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => new \Concluinte\Form\ConcluinteForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'id_tcc'=>$id_tcc,
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+
+
+} 
