@@ -196,18 +196,15 @@ class TccController extends  AbstractCrudController {
         $id_tcc = $this->params()->fromPost('id_tcc');
         $camposFilter = [
             '0' => [
-                'filter' => "tcc.tx_titulo_tcc  LIKE ?"
-            ],
-            '1' => [
-                'filter' => "concluinte.nm_curso  LIKE ?"
-            ],
-            '2' => [
                 'filter' => "concluinte.nm_concluinte  LIKE ?"
             ],
-            '3' => [
+            '1' => [
                 'filter' => "concluinte.nr_matricula LIKE ?"
             ],
-            '4' => NULL,
+            '2' => [
+                'filter' => "concluinte.nm_curso  LIKE ?"
+            ],
+            '3' => NULL,
         ];
             #xd($id_tcc = $this->params('id'));
 
@@ -240,11 +237,13 @@ class TccController extends  AbstractCrudController {
 
     public function adicionardetalhetccAction()
     {
+
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
 
             #xd('Aqui voce atualiza o codigo para gravar na tabela de Concluiente');
             $id_tcc= $this->params()->fromPost('id');
+            
             $nm_concluinte = $this->params()->fromPost('nm_concluinte');
             #xd($this->params());
             $detalhe_concluinte = new \Concluinte\Service\ConcluinteService();
