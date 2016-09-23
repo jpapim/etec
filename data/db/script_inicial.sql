@@ -705,6 +705,7 @@ CREATE TABLE `tcc` (
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `nr_nota_final` decimal(4,2) DEFAULT NULL,
+  `tx_caminho_arquivo` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id_tcc`),
   KEY `FK_Reference_103` (`id_professor_orientador`),
   KEY `FK_Reference_93` (`id_usuario_cadastro`),
@@ -727,7 +728,7 @@ CREATE TABLE `tcc` (
 
 LOCK TABLES `tcc` WRITE;
 /*!40000 ALTER TABLE `tcc` DISABLE KEYS */;
-INSERT INTO `tcc` VALUES (1,1,1,1,1,1,1,'rrrrr','frgrgrgr','2016-09-23 03:57:20','2016-09-23 03:57:20',45.00);
+INSERT INTO `tcc` VALUES (1,1,1,1,1,1,1,'rrrrr','frgrgrgr','2016-09-23 03:57:20','2016-09-23 03:57:20',45.00,NULL);
 /*!40000 ALTER TABLE `tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -961,4 +962,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-23  1:32:33
+-- Dump completed on 2016-09-23  1:39:11

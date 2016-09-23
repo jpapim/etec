@@ -31,11 +31,11 @@ class TccForm extends AbstractForm
         $objForm->combo("id_area_conhecimento", '\AreaConhecimento\Service\AreaConhecimentoService', 'id', 'nm_area_conhecimento')->required(true)->label("Ãrea de Conhecimento");
 
         $objForm->combo("id_professor_orientador",'\Professor\Service\ProfessorService', 'id', 'nm_Professor')->required(true)->label("Nome do Professor Orientador");
-//        $objForm->combo("id_professor_orientador", '\tcc\Service\tccService', 'id', 'nm_professor', 'getFilterProfessorOrientador')->required(false)->label("Orientador");
 
         $objForm->text("tx_titulo_tcc")->required(true)->label("Título do TCC");
         $objForm->textarea("tx_resumo")->required(true)->label("Resumo");
         $objForm->text("nr_nota_final")->required(true)->label("Nota");
+        #$objForm->file("tx_caminho_arquivo")->required(false)->label("Caminho do arquivo");
 
 
 
