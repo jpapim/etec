@@ -130,12 +130,12 @@ class TccService extends Entity {
             'id_concluinte',
             'nm_concluinte',
             'nr_matricula',
-        ]);
-//            ->join('curso', 'curso.id_curso = concluinte.id_curso', ['nm_curso'])
-//            ->join('tcc', 'tcc.id_tcc = concluinte.id_tcc', ['tx_titulo_tcc']);
+        ])->join('curso', 'curso.id_curso = concluinte.id_curso',
+            ['nm_curso'])->join('tcc', 'tcc.id_tcc = concluinte.id_tcc',
+            ['tx_titulo_tcc']);
 
         $where = [
-            'id_tcc'=>$id_tcc,
+            'tcc.id_tcc'=>$id_tcc,
         ];
 
         if (!empty($filter)) {
