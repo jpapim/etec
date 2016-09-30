@@ -2,8 +2,7 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <br/>
-        <table class="table table-striped" id="tablesorterDetalhes">
+        <table class="table table-striped" id="tablesorterConcluintes">
             <thead>
             <tr>
                 <th class="text-center">Nome do Aluno</th>
@@ -26,9 +25,9 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/tcc-tcc/detalhe-pagination' .\Estrutura\Helpers\Cript::enc($id_tcc),
+                            'urlPagination' => '/tcc-tcc/listar-concluintes' .\Estrutura\Helpers\Cript::enc($id_tcc),
                             'countPerPage' => $countPerPage,
-                            'divData' => '#detalhe-pagination',
+                            'divData' => '#listar-concluintes',
                         ]
                     );
                     ?>
@@ -63,7 +62,7 @@
                     ?>
                 </tr>
                 <?php
-                foreach ($paginator as $key => $detalhe_tcc) { #xd($concluinte);
+                foreach ($paginator as $key => $detalhe_tcc) {
                     ?>
                     <tr>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_tcc['nm_concluinte']) ?></td>
@@ -128,7 +127,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterDetalhes").tablesorter({
+        $("#tablesorterConcluintes").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",

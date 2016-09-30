@@ -1,11 +1,10 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: IGOR
- * Date: 30/06/2016
- * Time: 21:59
+ * User: EduFerr
+ * Date: 19/09/2016
+ * Time: 16:18
  */
-
 namespace Tcc\Service;
 
 use Tcc\Entity\TccEntity as Entity;
@@ -121,7 +120,7 @@ class TccService extends Entity {
         return new Paginator(new DbSelect($select, $this->getAdapter()));
     }
 
-    public function getDetalhePaginator($id_tcc, $filter = NULL, $camposFilter = NULL)
+    public function getConcluintePaginator($id_tcc, $filter = NULL, $camposFilter = NULL)
     {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());

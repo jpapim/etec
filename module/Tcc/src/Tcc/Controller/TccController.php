@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: IGOR
- * Date: 30/06/2016
- * Time: 22:25
+ * User: EduFerr
+ * Date: 19/09/2016
+ * Time: 16:18
  */
 
 namespace Tcc\Controller;
@@ -82,13 +82,6 @@ class TccController extends  AbstractCrudController {
         return $viewModel->setTerminal(true);
     }
 
-    /*public function gravarAction(){
-        $controller = $this->params('controller');
-        $this->addSuccessMessage('Registro Alterado com sucesso');
-        $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-        return parent::gravar($this->service, $this->form);
-    }*/
-
     public function gravarAction()
     {
         try {
@@ -126,9 +119,9 @@ class TccController extends  AbstractCrudController {
 
             //Define o redirecionamento
             if (isset($post['id']) && $post['id']) {
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($post['id'])));
             } else {
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheconcluinte', 'id' => Cript::enc($id_tcc)));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($id_tcc)));
             }
 
             return $id_tcc;
@@ -151,7 +144,9 @@ class TccController extends  AbstractCrudController {
         return parent::excluir($this->service, $this->form);
     }
 
-    public function cadastrodetalheconcluinteAction()
+    // Iniciando ações do Detalhe Concluinte
+
+    public function cadastroDetalheAction()
     {
         //recuperar o id do Modulo Tcc
         $id_tcc = Cript::dec($this->params('id') );
@@ -173,7 +168,7 @@ class TccController extends  AbstractCrudController {
         //}
     }
 
-    public function adicionardetalheconcluinteAction()
+    public function adicionarConcluintesAction()
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
@@ -189,7 +184,7 @@ class TccController extends  AbstractCrudController {
         }
     }
 
-    public function detalhePaginationAction()
+    public function listarConcluintesAction()
     {
         $filter = $this->getFilterPage();
 
@@ -208,7 +203,7 @@ class TccController extends  AbstractCrudController {
         ];
             #xd($id_tcc = $this->params('id'));
 
-        $paginator = $this->service->getDetalhePaginator( $id_tcc, $filter, $camposFilter);
+        $paginator = $this->service->getConcluintePaginator( $id_tcc, $filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 

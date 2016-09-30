@@ -1,0 +1,172 @@
+<div class="page-head">
+    <h2>Dados do TCC cadastrado</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => 'concluinte-concluinte', 'action' => 'gravar')));
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-role', 'form');
+                $form->setAttribute('method', 'post');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosTcc->getId()));
+                $form->get('id_tcc')->setValue($dadosTcc->getId());
+                echo $this->formHidden($form->get('id'));
+                echo $this->formHidden($form->get('id_tcc'));
+
+                //----------------------
+                //Objetos criados para Recuperar o Nomes e Data pelo ID
+                ##
+                $areaBancaExaminadoraService = new \BancaExaminadora\Service\BancaExaminadoraService();
+                $ob_banca_examinadora = $areaBancaExaminadoraService->buscar($dadosTcc->getIdBancaExaminadora());
+                ##
+                $areaTipoTccService = new \TipoTcc\Service\TipoTccService();
+                $ob_tipo_tcc = $areaTipoTccService->buscar($dadosTcc->getIdTipoTcc());
+                ##
+                $areaAreaConhecimentoService = new \Areaconhecimento\Service\AreaConhecimentoService();
+                $ob_area_conhecimento = $areaAreaConhecimentoService->buscar($dadosTcc->getIdAreaConhecimento());
+                ##
+                $areaProfessorOrientadorService = new \Professor\Service\ProfessorService();
+                $ob_Prof_orientador = $areaProfessorOrientadorService->buscar($dadosTcc->getIdProfessorOrientador());
+                //----------------------
+
+                #xd($dadosTcc);
+                ?>
+                <div class="bs-callout bs-callout-primary">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4><b>Registro nº:</b> <?= $dadosTcc->getId() ?></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Data da Banca:</b> <?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($ob_banca_examinadora->getDtBanca()) ?>
+                        </div>
+                        <div class="col-md-4">
+                            <b>Título:</b> <?= $dadosTcc->getTxTituloTcc() ?>
+                        </div>
+                        <div class="col-md-4">
+                            <b>Tipo:</b> <?= $ob_tipo_tcc->getNmTipoTcc() ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>Area de Conhecimento:</b> <?= $ob_area_conhecimento->getNmAreaConhecimento() ?>
+                        </div>
+                        <div class="col-md-4">
+                            <b>Professor Orientador:</b> <?= $ob_Prof_orientador->getNmProfessor() ?>
+                        </div>
+                        <div class="col-md-4">
+                            <b>Nota do Trabalho:</b> <?= $dadosTcc->getNrNotaFinal() ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                $form->setAttribute('action', '#');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('method', 'post');
+
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue($dadosTcc->getId());
+                $form->get('nm_concluinte')->setValue($form->get('nm_concluinte')->getValue());
+                echo $this->formHidden($form->get('id'));
+
+                ?>
+
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border" style="font-size: 200%;">Adicionar Alunos ao TCC</legend>
+                    <div id="mensagem_componente"></div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <?= $this->formRow($form->get('nm_concluinte')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <?= $this->formRow($form->get('nr_matricula')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <?= $this->formRow($form->get('id_curso')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#"
+                               title="Adicionar Alunos">Acicionar Alunos</a>
+                        </div>
+
+                    </div>
+                    <div class="row" id="listar-concluintes"></div>
+                </fieldset>
+                <hr>
+                <?= $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript"
+            src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+    <script type="text/javascript" language="javascript" class="init">
+        $(document).ready(function () {
+            $('#mensagem_concluinte').hide();
+
+            //Função que faz a listagem ser paginada.
+            function carregarGridPaginadaAjax() {
+                $.ajax({
+                    type: "post",
+                    dataType: "text",
+                    cache: false,
+                    url: '/tcc-tcc/listar-concluintes',
+                    async: true,
+                    data: {id_tcc: <?=$dadosTcc->getId()?>},
+                    beforeSend: function () {
+                        $('#listar-concluintes').html(
+                            '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                        );
+                    },
+                    success: function (data) {
+                        $('#listar-concluintes').html(data);
+                    }
+                });
+            }
+
+            carregarGridPaginadaAjax(); //Chama a Paginação da listagem
+
+            /*Função Ajax que adiciona os encontros ao Banco de dados*/
+            $('#adicionar').click(function () {
+                //var dados = $('#concluintesform').serialize();
+                var dados = $('#detalhetccform').serialize();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/tcc-tcc/adicionar-concluintes',
+                    async: true,
+                    data: dados,
+                    success: function (response) {
+                        $('#mensagem_concluinte').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
+                        $("#nm_componente").val("");
+                        if (response.sucesso == true) {
+                            $('#mensagem_concluinte').show();
+                            $('#mensagem_concluinte').html("<p>Aluno adicionado com sucesso!</p>");
+                            carregarConcluintesAjax();
+                            setTimeout(function () {
+                                $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
+                            }, 45000); // O valor é representado em milisegundos.
+                        } else {
+                            $('#mensagem_concluinte').show();
+                            $('#mensagem_concluinte').html("<p>Este Aluno já foi adicionado!</p>");
+                            $('#mensagem_concluinte').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
+                            setTimeout(function () {
+                                $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
+                            }, 4500); // O valor é representado em milisegundos.
+                        }
+                    }
+                });
+
+            });
+
+        });
+    </script>
