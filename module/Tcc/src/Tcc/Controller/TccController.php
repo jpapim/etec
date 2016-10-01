@@ -229,26 +229,5 @@ class TccController extends  AbstractCrudController {
 
         return $viewModel->setTerminal(TRUE);
     }
-
-    public function adicionardetalhetccAction()
-    {
-
-        //Se for a chamada Ajax
-        if ($this->getRequest()->isPost()) {
-
-            #xd('Aqui voce atualiza o codigo para gravar na tabela de Concluiente');
-            $id_tcc= $this->params()->fromPost('id');
-            
-            $nm_concluinte = $this->params()->fromPost('nm_concluinte');
-            #xd($this->params());
-            $detalhe_concluinte = new \Concluinte\Service\ConcluinteService();
-
-            $id_inserido = $detalhe_concluinte->getTable()->salvar(array('id_tcc'=>$id_tcc,'nm_concluinte'=>$nm_concluinte), null);
-            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'nm_concluinte'=>$nm_concluinte) );
-
-            return $valuesJson;
-        }
-    }
-
-
+    
 } 
