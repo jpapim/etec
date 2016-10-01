@@ -26,7 +26,7 @@ class TccForm extends AbstractForm
         $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario que cadastrou");
         $objForm->hidden("id_usuario_alteracao")->required(false)->label("Usuario que alterou");
 
-        $objForm->combo("id_banca_examinadora",'\BancaExaminadora\Service\BancaExaminadoraService', 'id', 'dt_banca')->required(true)->label("Data da Banca");
+        $objForm->combo("id_banca_examinadora",'\BancaExaminadora\Service\BancaExaminadoraService', 'id', 'dt_banca', 'fetchAll')->required(true)->label("Data da Banca");
         $objForm->combo("id_tipo_tcc",'\TipoTcc\Service\TipoTccService', 'id', 'nm_tipo_tcc')->required(true)->label("Tipo de TCC");
         $objForm->combo("id_area_conhecimento", '\AreaConhecimento\Service\AreaConhecimentoService', 'id', 'nm_area_conhecimento')->required(true)->label("Ãrea de Conhecimento");
 

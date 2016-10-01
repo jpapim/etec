@@ -229,5 +229,41 @@ class TccController extends  AbstractCrudController {
 
         return $viewModel->setTerminal(TRUE);
     }
-    
+
+    public function excluirConcluinteViaTccAction()
+    {
+        try {
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+            $id = Cript::dec($this->params('id'));
+            $id_tcc = Cript::dec($this->params('aux'));
+
+            $concluinteService = new \Concluinte\Service\ConcluinteService();
+            $concluinteService->setId($id);
+            $concluinteService->setIdTcc($id_tcc);
+
+            $dados = $concluinteService->filtrarObjeto()->current();
+            if (!$dados) {
+                throw new \Exception('Registro nao encontrado');
+            }
+
+            $concluinteService->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => \Estrutura\Helpers\Cript::enc($id_tcc)]);
+
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+
+    }
 } 

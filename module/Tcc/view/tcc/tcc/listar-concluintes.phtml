@@ -63,6 +63,7 @@
                 </tr>
                 <?php
                 foreach ($paginator as $key => $detalhe_tcc) {
+                    #xd($detalhe_tcc);
                     ?>
                     <tr>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_tcc['nm_concluinte']) ?></td>
@@ -70,7 +71,7 @@
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_tcc['nm_curso']) ?></td>
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('detalhe_tcc', array('controller' => 'detalhe_tcc', 'action' => 'excluirvialistagemdetalhetcc', 'id' => Estrutura\Helpers\Cript::enc($detalhe_tcc['id_concluinte']), 'aux' => $id_tcc))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('tcc-tcc', array('controller' => 'tcc-tcc', 'action' => 'excluir-concluinte-via-tcc', 'id' => Estrutura\Helpers\Cript::enc($detalhe_tcc['id_concluinte']), 'aux' => Estrutura\Helpers\Cript::enc($id_tcc)))) ?>
                                 </span>
                         </td>
                     </tr>

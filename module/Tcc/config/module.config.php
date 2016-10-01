@@ -20,6 +20,17 @@ return array(
                 ),
 
             ),
+            'tcc-tcc' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/tcc-tcc/:action[/:id][/:aux]',
+                    'defaults' => array(
+                        'controller' => 'tcc-tcc',
+                        'action'     => 'index',
+                    ),
+                ),
+
+            ),
         ),
     ),
     'service_manager' => array(

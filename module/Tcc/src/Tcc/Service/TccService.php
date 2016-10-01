@@ -136,7 +136,7 @@ class TccService extends Entity
 //            ->join('tcc', 'tcc.id_tcc = concluinte.id_tcc', ['tx_titulo_tcc']);
 
         $where = [
-            'tcc.id_tcc' => $id_tcc,
+            'id_tcc' => $id_tcc,
         ];
 
         if (!empty($filter)) {
@@ -156,7 +156,7 @@ class TccService extends Entity
         }
 
         $select->where($where)->order(['nm_concluinte DESC']);
-
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 
