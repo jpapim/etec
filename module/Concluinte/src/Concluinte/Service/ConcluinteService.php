@@ -18,31 +18,6 @@ class ConcluinteService extends Entity {
 			return $sql->prepareStatementForSqlObject($select)->execute()->current();
 	}
 
-	public function gravar($post) {
-		$this->preSave();
-		$dados = $this->hydrate();
-		$where = null;
-
-		if($this->getId()) {
-			if(!$field = $this->fieldName('id')) {
-				$field = $this->fieldName('Id');
-			}
-			$where = [$field => $this->getId()];
-		}
-
-		# Setando manualmente os dados do formulario
-		$dados['id_curso'] = $post['id_curso'];
-		$dados['id_tcc'] = $post['id_tcc'];
-
-		$result = $this->getTable()->salvar($dados, $where);
-		if (is_string($result)) {
-			$this->setId($result);
-		}
-		$this->posSave();
-		return $result;
-	}
-
-
 	public function getConcluintesPaginator($filter = NULL, $camposFilter = NULL) {
 
 		$sql = new \Zend\Db\Sql\Sql($this->getAdapter());

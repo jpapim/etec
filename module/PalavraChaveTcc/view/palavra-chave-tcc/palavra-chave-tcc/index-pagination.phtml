@@ -2,16 +2,20 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterPalavraChaves">
+        <table class="table table-striped" id="tablesorterpalavrachavestcc">
             <thead>
             <tr>
-                <th class="text-center">Nome da Palavra Chave</th>
+                <th class="text-center">Localizador</th>
+                <th class="text-center">Titulo TCC</th>
+                <th class="text-center">MPalavra Chave</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Nome da Palavra Chave</th>
+                <th class="text-center">Localizador</th>
+                <th class="text-center">Titulo TCC</th>
+                <th class="text-center">MPalavra Chave</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -19,9 +23,9 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/palavra_chave-palavrachave/index-pagination',
+                            'urlPagination' => '/palavra_chave_tcc-palavrachavetcc/index-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#palavrachave-pagination',
+                            'divData' => '#palavrachavetcc-pagination',
                         ]
                     );
                     ?>
@@ -56,17 +60,18 @@
                     ?>
                 </tr>
                 <?php
-                foreach ($paginator as $key => $palavrachave) {
+                foreach ($paginator as $key => $concluinte) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($palavrachave['nm_palavra_chave']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['id_palavra_chave_tcc']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['tx_titulo_tcc']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['nm_palavra_chave']) ?></td>
+
 
                         <td class="text-center">
                                 <span class="btn-group" style="width: 150px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($palavrachave['id_palavra_chave']))))
-                                    ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($palavrachave['id_palavra_chave']))))
-                                    ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_palavra_chave_tcc'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_palavra_chave_tcc'])))) ?>
                                 </span>
                         </td>
                     </tr>
@@ -85,7 +90,7 @@
                    class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
                 <a class="btn btn-default"
                    href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
-                   title="Adicionar um nova Palavra Chave">Nova Palavra Chave</a>
+                   title="Adicionar um novo Concluinte">Novo Aluno</a>
             </div>
         </div>
     </div>
@@ -120,7 +125,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterPalavraChaves").tablesorter({
+        $("#tablesorterpalavrachavestcc").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
@@ -146,6 +151,5 @@
                 5: {sorter: false}
             }
         });
-
     });
 </script>

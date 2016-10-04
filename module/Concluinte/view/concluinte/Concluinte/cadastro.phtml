@@ -13,33 +13,48 @@
 	            echo $this->form()->openTag($form);
 	            echo $this->formHidden($form->get('id'));
             ?>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('nm_concluinte'))?>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Dados do Aluno Concluinte</div>
+                    <div class="panel-body" style="background-color: #F7F7F7">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <?=$this->formRow($form->get('nm_concluinte'))?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $this->formRow($form->get('nr_matricula')) ?>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <?= $this->formRow($form->get('id_curso')) ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?= $this->formRow($form->get('id_tcc')) ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-10">
+                                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                            <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('nr_matricula')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('id_curso')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('id_tcc')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
-                    </div>
-                </div>
-                <?= $this->form()->closeTag(); ?>
+                  <?= $this->form()->closeTag(); ?>
             </div>
         </div>
     </div>

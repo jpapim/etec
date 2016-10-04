@@ -15,20 +15,33 @@
                 echo $this->formHidden($form->get('id'));
                 ?>
 
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('id_tcc')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('id_palavra_chave')) ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Dados da Palavra Chave TCC</div>
+                    <div class="panel-body" style="background-color: #F7F7F7">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <?= $this->formRow($form->get('id_tcc')) ?>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <?= $this->formRow($form->get('id_palavra_chave')) ?>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-10">
+                                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                            <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Voltar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <?= $this->form()->closeTag(); ?>

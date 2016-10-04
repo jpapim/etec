@@ -4,20 +4,14 @@ namespace Curso\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
 class CursoController extends AbstractCrudController
 {
-    /**
-     * @var \Curso\Service\Curso
-     */
+
     protected $service;
 
-    /**
-     * @var \Curso\Form\Curso
-     */
     protected $form;
 
     public function __construct(){
@@ -38,14 +32,16 @@ class CursoController extends AbstractCrudController
     
     public function indexPaginationAction()
     {
-        //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
-        
+
         $filter = $this->getFilterPage();
 
         $camposFilter = [
             '0' => [
+                'filter' => "curso.id_curso LIKE ?",
+            ],
+            '1' => [
                 'filter' => "curso.nm_curso LIKE ?",
-            ],       
+            ],
             '6' => NULL,
         ];
         

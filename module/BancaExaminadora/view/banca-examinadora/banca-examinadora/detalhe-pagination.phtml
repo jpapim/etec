@@ -47,12 +47,12 @@
       <div class="row">
           <div class="form-group">
               <div class="col-md-10">
-                  <a class="btn btn-default" href="<?=$this->url('navegacao',
-                    ['controller'=>$controller])?>">Lista das Bancas</a>
+                  <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
+                     class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
                   <a class="btn btn-default" href="<?=$this->url('navegacao',
                       array('controller'=>$controller,'action'=>'index',
                           'id'=>Estrutura\Helpers\Cript::enc($id_banca_examinadora)))?>"
-                              title="Voltar">Voltar</a>
+                              title="Voltar">Listar Banca</a>
               </div>
           </div>
       </div>

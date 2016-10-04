@@ -1,55 +1,40 @@
-<?php
-  /** @var $form \PalavraChaveTcc\Form\PalavraChaveTcc */
-  /** @var $lista \PalavraChaveTcc\Service\PalavraChaveTcc[] */
-?>
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
 <div class="page-head">
-    <h2>Lista</h2>
+    <h2>Lista de Alunos Concluintes</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>">Novo</a>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar um novo Concluinte">Novo Aluno</a>
         </div>
     </div>
     <br />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="block-flat">
-                <div class="content">
-
-                    <table class="table table-bordered dataTable">
-                        <thead>
-                            <tr>
-                                <th>Ident.</th>
-                                <th>Tcc</th>
-                                <th>Palavra Chave</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        <?php foreach($lista as $item){ ?>
-                            <?php
-                            $tccService = new \Tcc\Service\TccService();
-                            $ob_tcc = $tccService->buscar($item->getIdTcc());
-
-                            $palavra_chaveService = new \PalavraChave\Service\PalavraChaveService();
-                            $ob_palavra_chave = $palavra_chaveService->buscar($item->getIdPalavraChave());
-                            ?>
-                            <tr>
-                                <td><?=$item->getId()?></td>
-                                <td><?=$ob_tcc->getTxTituloTcc()?></td>
-                                <td><?=$ob_palavra_chave->getNmPalavraChave()?></td>
-                                <td style="width: 150px;">
-                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
-                                    <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>$controller,'action'=>'excluir','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
-                                </td>
-                            </tr>
-                        <?php }; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>    
+    <div class="row" id="palavrachavetcc-pagination"></div>
 </div>
+
+<script>
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/palavra_chave_tcc-palavrachavetcc/index-pagination',
+            async: true,
+            data: {
+            },
+            beforeSend: function () {
+
+                $('#palavrachavetcc-pagination').html(
+                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                );
+            },
+            success: function (data) {
+
+                $('#palavrachavetcc-pagination').html(data);
+            }
+        });
+
+    })
+</script>

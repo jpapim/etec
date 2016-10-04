@@ -3,7 +3,16 @@
 return array(
     'router' => array(
         'routes' => array(
-            'titulacao-home' => array(
+            'navegacao' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route'    => '/:controller[/:action[/:id]]',
+                    'defaults' => array(
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'concluinte-home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
                     'route'    => '/titulacao',
@@ -46,7 +55,6 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
-    // Placeholder for console routes
     'console' => array(
         'router' => array(
             'routes' => array(

@@ -2,16 +2,18 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterPalavraChaves">
+        <table class="table table-striped" id="tablesorterTitulacao">
             <thead>
             <tr>
-                <th class="text-center">Nome da Palavra Chave</th>
+                <th class="text-center">Localizador</th>
+                <th class="text-center">Titulacao</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Nome da Palavra Chave</th>
+                <th class="text-center">Localizador</th>
+                <th class="text-center">Titulacao</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
@@ -19,9 +21,9 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/palavra_chave-palavrachave/index-pagination',
+                            'urlPagination' => '/titulacao-titulacao/index-pagination',
                             'countPerPage' => $countPerPage,
-                            'divData' => '#palavrachave-pagination',
+                            'divData' => '#titulacao-pagination',
                         ]
                     );
                     ?>
@@ -56,17 +58,16 @@
                     ?>
                 </tr>
                 <?php
-                foreach ($paginator as $key => $palavrachave) {
+                foreach ($paginator as $key => $concluinte) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($palavrachave['nm_palavra_chave']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['id_titulacao']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['nm_titulacao']) ?></td>
 
                         <td class="text-center">
                                 <span class="btn-group" style="width: 150px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($palavrachave['id_palavra_chave']))))
-                                    ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($palavrachave['id_palavra_chave']))))
-                                    ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_titulacao'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_titulacao'])))) ?>
                                 </span>
                         </td>
                     </tr>
@@ -79,15 +80,6 @@
             ?>
 
         </table>
-        <div class="row">
-            <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
-                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default"
-                   href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
-                   title="Adicionar um nova Palavra Chave">Nova Palavra Chave</a>
-            </div>
-        </div>
     </div>
 </div>
 <script
@@ -120,7 +112,7 @@
         };
 
         // call the tablesorter plugin and apply the uitheme widget
-        $("#tablesorterPalavraChaves").tablesorter({
+        $("#tablesorterTitulacao").tablesorter({
             // this will apply the bootstrap theme if "uitheme" widget is included
             // the widgetOptions.uitheme is no longer required to be set
             theme: "bootstrap",
@@ -146,6 +138,5 @@
                 5: {sorter: false}
             }
         });
-
     });
 </script>

@@ -6,12 +6,14 @@ use Estrutura\Form\AbstractForm;
 use Estrutura\Form\FormObject;
 use Zend\InputFilter\InputFilter;
 
-class PalavraChaveTccForm extends AbstractForm{
-    public function __construct($options=[]){
+class PalavraChaveTccForm extends AbstractForm
+{
+    public function __construct($options = [])
+    {
         parent::__construct('palavrachavetccform');
 
         $this->inputFilter = new InputFilter();
-        $objForm = new FormObject('palavrachavetccform',$this,$this->inputFilter);
+        $objForm = new FormObject('palavrachavetccform', $this, $this->inputFilter);
 
         $objForm->hidden("id")->required(false)->label("Id");
         $objForm->combo("id_tcc", '\Tcc\Service\TccService', 'id', 'tx_titulo_tcc')->required(false)->label("TCC");

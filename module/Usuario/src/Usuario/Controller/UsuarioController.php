@@ -4,10 +4,7 @@ namespace Usuario\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
-use Zend\Filter\File\Encrypt;
 use Zend\View\Model\ViewModel;
-use Estrutura\Service\HtmlHelper;
 
 
 class UsuarioController extends AbstractCrudController
