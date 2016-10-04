@@ -4,30 +4,25 @@ namespace PalavraChave\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
 class PalavraChaveController extends AbstractCrudController
 {
-    /**
-     * @var \PalavraChave\Service\PalavraChave
-     */
+
     protected $service;
 
-    /**
-     * @var \PalavraChave\Form\PalavraChave
-     */
     protected $form;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::init();
     }
 
     public function indexAction()
     {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
-    
+
         return new ViewModel([
             'service' => $this->service,
             'form' => $this->form,
@@ -35,31 +30,31 @@ class PalavraChaveController extends AbstractCrudController
             'atributos' => array()
         ]);
     }
-    
+
     public function indexPaginationAction()
     {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
-        
+
         $filter = $this->getFilterPage();
 
         $camposFilter = [
             '0' => [
                 'filter' => "palavrachave.nm_pala_vrachave LIKE ?",
-            ],       
+            ],
             '6' => NULL,
         ];
-        
-        
+
+
         $paginator = $this->service->getPalavraChavesPaginator($filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
         $countPerPage = $this->getCountPerPage(
-                current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         );
 
         $paginator->setItemCountPerPage($this->getCountPerPage(
-                        current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
         ))->setCurrentPageNumber($this->getCurrentPage());
 
         $viewModel = new ViewModel([
@@ -75,12 +70,9 @@ class PalavraChaveController extends AbstractCrudController
 
         return $viewModel->setTerminal(TRUE);
     }
-    
-    
-    
-    
 
-    public function gravarAction() {
+    public function gravarAction()
+    {
         try {
             $controller = $this->params('controller');
             $request = $this->getRequest();
@@ -104,7 +96,7 @@ class PalavraChaveController extends AbstractCrudController
 
 
             #################################################################
-           
+
 
             $form->setData($post);
 
@@ -134,7 +126,6 @@ class PalavraChaveController extends AbstractCrudController
         return parent::cadastro($this->service, $this->form);
     }
 
-
     public function excluirAction()
     {
         return parent::excluir($this->service, $this->form);
@@ -146,17 +137,12 @@ class PalavraChaveController extends AbstractCrudController
         $palavrachaves = new \palavrachave\Service\PalavraChaveService();
         $arrPalavraChaves = $palavrachaves->getFiltrarPalavraChavePorNomeToArray($termo);
         $arrPalavraChavesFiltradas = array();
-        foreach($arrPalavraChaves as $palavrachave){
+        foreach ($arrPalavraChaves as $palavrachave) {
             $arrPalavraChavesFiltradas[] = $palavrachave['nm_palavra_chave'];
         }
 
-        $valuesJson = new JsonModel( $arrPalavraChavesFiltradas );
+        $valuesJson = new JsonModel($arrPalavraChavesFiltradas);
         return $valuesJson;
-    }
-
-    public function xxxAction()
-    {
-
     }
 
 

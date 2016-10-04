@@ -42,9 +42,12 @@ class BancaExaminadoraController extends AbstractCrudController
 
       $camposFilter = [
           '0' => [
+              'filter' => "banca_examinadora.id_banca_examinadora LIKE ?",
+          ],
+          '1' => [
               'filter' => "DATE(banca_examinadora.dt_banca) LIKE STR_TO_DATE(?, '%d/%m/%Y') ",
           ],
-          '1' => NULL,
+          '2' => NULL,
       ];
 
       $paginator = $this->service->getBancaExaminadoraPaginator($filter, $camposFilter);

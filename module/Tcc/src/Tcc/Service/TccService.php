@@ -1,11 +1,10 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: IGOR
- * Date: 30/06/2016
- * Time: 21:59
+ * User: EduFerr
+ * Date: 19/09/2016
+ * Time: 16:18
  */
-
 namespace Tcc\Service;
 
 use Tcc\Entity\TccEntity as Entity;
@@ -13,7 +12,8 @@ use Zend\Db\Sql\Sql;
 use \Zend\Paginator\Paginator;
 use \Zend\Paginator\Adapter\DbSelect;
 
-class TccService extends Entity {
+class TccService extends Entity
+{
 
     public function getTccToArray($id)
     {
@@ -121,7 +121,9 @@ class TccService extends Entity {
         return new Paginator(new DbSelect($select, $this->getAdapter()));
     }
 
-    public function getDetalhePaginator($id_tcc, $filter = NULL, $camposFilter = NULL)
+    // Início de Consulta para Detalhes
+
+    public function getConcluintePaginator($id_tcc, $filter = NULL, $camposFilter = NULL)
     {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
@@ -130,12 +132,11 @@ class TccService extends Entity {
             'id_concluinte',
             'nm_concluinte',
             'nr_matricula',
-        ])->join('curso', 'curso.id_curso = concluinte.id_curso',
-            ['nm_curso'])->join('tcc', 'tcc.id_tcc = concluinte.id_tcc',
-            ['tx_titulo_tcc']);
+        ])->join('curso', 'curso.id_curso = concluinte.id_curso', ['nm_curso']);
+//            ->join('tcc', 'tcc.id_tcc = concluinte.id_tcc', ['tx_titulo_tcc']);
 
         $where = [
-            'tcc.id_tcc'=>$id_tcc,
+            'id_tcc' => $id_tcc,
         ];
 
         if (!empty($filter)) {
@@ -155,10 +156,9 @@ class TccService extends Entity {
         }
 
         $select->where($where)->order(['nm_concluinte DESC']);
-
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
-
 
 
 } 

@@ -20,19 +20,35 @@
             echo $this->formHidden($form->get('id_usuario_cadastro'));
 
             ?>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?=$this->formRow($form->get('nm_curso'))?>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Dados da Banca</div>
+                    <div class="panel-body" style="background-color: #F7F7F7">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <?=$this->formRow($form->get('nm_curso'))?>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="col-md-10">
+                                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                            <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-               
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?=$this->url('navegacao', ['controller'=>$controller])?>" class="btn btn-default">Voltar</a>
-                    </div>
-                </div>
                 <?= $this->form()->closeTag(); ?>
             </div>
         </div>

@@ -4,9 +4,7 @@ namespace Concluinte\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
-use Zend\View\Model\JsonModel;
 
 class ConcluinteController extends AbstractCrudController
 {

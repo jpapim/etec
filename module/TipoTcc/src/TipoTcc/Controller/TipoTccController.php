@@ -4,20 +4,13 @@ namespace TipoTcc\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
 class TipoTccController extends AbstractCrudController
 {
-    /**
-     * @var \TipoTcc\Service\TipoTcc
-     */
     protected $service;
 
-    /**
-     * @var \TipoTcc\Form\TipoTcc
-     */
     protected $form;
 
     public function __construct(){
@@ -44,9 +37,12 @@ class TipoTccController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
+                'filter' => "tipotcc.id_tipo_tcc LIKE ?",
+            ],
+            '1' => [
                 'filter' => "tipotcc.nm_tipo_tcc LIKE ?",
-            ],       
-            '6' => NULL,
+            ],
+            '2' => NULL,
         ];
         
         
@@ -76,10 +72,6 @@ class TipoTccController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
     
-    
-    
-    
-
     public function gravarAction() {
         try {
             $controller = $this->params('controller');
@@ -88,7 +80,7 @@ class TipoTccController extends AbstractCrudController
             $form = $this->form;
 
             if (!$request->isPost()) {
-                throw new \Exception('Dados Inv�lidos');
+                throw new \Exception('Dados Inválidos');
             }
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
@@ -134,31 +126,9 @@ class TipoTccController extends AbstractCrudController
         return parent::cadastro($this->service, $this->form);
     }
 
-
     public function excluirAction()
     {
         return parent::excluir($this->service, $this->form);
     }
-
-    public function autocompletetipotccAction()
-    {
-        $termo = $_GET['term'];
-        $tipotccs = new \TipoTcc\Service\TipoTccService();
-        $arrTipoTccs = $tipotccs->getFiltrarTipoTccPorNomeToArray($termo);
-        $arrTipoTccsFiltradas = array();
-        foreach($arrTipoTccs as $tipotcc){
-            $arrTipoTccsFiltradas[] = $tipotcc['nm_tipo_tcc'];
-        }
-
-        $valuesJson = new JsonModel( $arrTipoTccsFiltradas );
-        return $valuesJson;
-    }
-
-    public function xxxAction()
-    {
-
-    }
-
-
 
 }

@@ -25,7 +25,7 @@ class HtmlHelper{
         return self::botaoLink($url, 'glyphicon glyphicon-remove-sign', $attributos, $title);
     }
 
-    public static function botaoAlterar($url, $title='Alterar'){
+    public static function botaoAlterar($url, $title='Modificar'){
         $attributos = ['class'=>'btn-alterar btn-xs', 'id'=>'botaoalterar'];
         return self::botaoLink($url, 'glyphicon glyphicon-edit', $attributos, $title);
     }

@@ -76,7 +76,7 @@
 
                         <td style="width: 180px;">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar TCC') ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheconcluinte', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar Concluinte') ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar Concluinte') ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc'])))) ?>
                         </td>
                     </tr>

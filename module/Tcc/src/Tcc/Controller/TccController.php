@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: IGOR
- * Date: 30/06/2016
- * Time: 22:25
+ * User: EduFerr
+ * Date: 19/09/2016
+ * Time: 16:18
  */
 
 namespace Tcc\Controller;
@@ -82,13 +82,6 @@ class TccController extends  AbstractCrudController {
         return $viewModel->setTerminal(true);
     }
 
-    /*public function gravarAction(){
-        $controller = $this->params('controller');
-        $this->addSuccessMessage('Registro Alterado com sucesso');
-        $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
-        return parent::gravar($this->service, $this->form);
-    }*/
-
     public function gravarAction()
     {
         try {
@@ -126,9 +119,9 @@ class TccController extends  AbstractCrudController {
 
             //Define o redirecionamento
             if (isset($post['id']) && $post['id']) {
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($post['id'])));
             } else {
-                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastrodetalheconcluinte', 'id' => Cript::enc($id_tcc)));
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($id_tcc)));
             }
 
             return $id_tcc;
@@ -151,15 +144,17 @@ class TccController extends  AbstractCrudController {
         return parent::excluir($this->service, $this->form);
     }
 
-    public function cadastrodetalheconcluinteAction()
+    // Iniciando ações do Detalhe Concluinte
+
+    public function cadastroDetalheAction()
     {
         //recuperar o id do Modulo Tcc
         $id_tcc = Cript::dec($this->params('id') );
-        #xd($id_tcc);
-        $tcc = new TccService();
-        $dadosTcc = $tcc->buscar($id_tcc);
 
-       
+        $tcc = new \Tcc\Service\TccService();
+        $dadosTcc = $tcc->buscar($id_tcc);
+        #xd($dadosTcc);
+
         $dadosView = [
             'service' => new \Concluinte\Service\ConcluinteService(),
             'form' => new \Concluinte\Form\ConcluinteForm(),
@@ -170,10 +165,10 @@ class TccController extends  AbstractCrudController {
         ];
 
         return new ViewModel($dadosView);
-        //}
+
     }
 
-    public function adicionardetalheconcluinteAction()
+    public function adicionarConcluintesAction()
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
@@ -189,29 +184,26 @@ class TccController extends  AbstractCrudController {
         }
     }
 
-    public function detalhePaginationAction()
+    public function listarConcluintesAction()
     {
         $filter = $this->getFilterPage();
 
         $id_tcc = $this->params()->fromPost('id_tcc');
         $camposFilter = [
             '0' => [
-                'filter' => "tcc.tx_titulo_tcc  LIKE ?"
-            ],
-            '1' => [
-                'filter' => "concluinte.nm_curso  LIKE ?"
-            ],
-            '2' => [
                 'filter' => "concluinte.nm_concluinte  LIKE ?"
             ],
-            '3' => [
+            '1' => [
                 'filter' => "concluinte.nr_matricula LIKE ?"
             ],
-            '4' => NULL,
+            '2' => [
+                'filter' => "concluinte.nm_curso  LIKE ?"
+            ],
+            '3' => NULL,
         ];
             #xd($id_tcc = $this->params('id'));
 
-        $paginator = $this->service->getDetalhePaginator( $id_tcc, $filter, $camposFilter);
+        $paginator = $this->service->getConcluintePaginator( $id_tcc, $filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
@@ -238,23 +230,40 @@ class TccController extends  AbstractCrudController {
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function adicionardetalhetccAction()
+    public function excluirConcluinteViaTccAction()
     {
-        //Se for a chamada Ajax
-        if ($this->getRequest()->isPost()) {
+        try {
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
 
-            #xd('Aqui voce atualiza o codigo para gravar na tabela de Concluiente');
-            $id_tcc= $this->params()->fromPost('id');
-            $nm_concluinte = $this->params()->fromPost('nm_concluinte');
-            #xd($this->params());
-            $detalhe_concluinte = new \Concluinte\Service\ConcluinteService();
+            $controller = $this->params('controller');
+            $id = Cript::dec($this->params('id'));
+            $id_tcc = Cript::dec($this->params('aux'));
 
-            $id_inserido = $detalhe_concluinte->getTable()->salvar(array('id_tcc'=>$id_tcc,'nm_concluinte'=>$nm_concluinte), null);
-            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'nm_concluinte'=>$nm_concluinte) );
+            $concluinteService = new \Concluinte\Service\ConcluinteService();
+            $concluinteService->setId($id);
+            $concluinteService->setIdTcc($id_tcc);
 
-            return $valuesJson;
+            $dados = $concluinteService->filtrarObjeto()->current();
+            if (!$dados) {
+                throw new \Exception('Registro nao encontrado');
+            }
+
+            $concluinteService->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => \Estrutura\Helpers\Cript::enc($id_tcc)]);
+
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
         }
+
     }
-
-
 } 
