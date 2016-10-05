@@ -18,13 +18,6 @@ class BancaExaminadoraService extends Entity{
       return $sql->prepareStatementForSqlObject($select)->execute()->current();
   }
 
-  	/**
-  	 * Busca das bancas
-  	 *
-  	 * @param unknown $filter
-  	 * @param unknown $camposFilter
-  	 * @return \Zend\Paginator\Paginator
-  	 */
   	public function getBancaExaminadoraPaginator($filter = NULL, $camposFilter = NULL) {
 
   		$sql = new \Zend\Db\Sql\Sql($this->getAdapter());

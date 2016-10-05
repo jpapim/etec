@@ -3,8 +3,6 @@
 namespace TipoTcc\Service;
 
 use \TipoTcc\Entity\TipoTccEntity as Entity;
-use TipoTcc\Table\TipoTccTable;
-use Zend\Db\Sql\Select;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Stdlib\Hydrator\Reflection;
 use Zend\Paginator\Adapter\DbSelect;
@@ -40,14 +38,7 @@ class TipoTccService extends Entity {
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    /*     * *
-     * Metodo customizado que para cadastramento de TipoTccs Atravez da tela de cadastro de academias
-     * @param $post
-     * @return mixed
-     */
-
     public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'nm_tipo_tcc ASC', $like = null, $itensPaginacao = 5) {
-        //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
         // preparar um select para tabela contato com uma ordem
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
         $select = $sql->select('tipo_tcc')->order($ordem);
@@ -58,10 +49,6 @@ class TipoTccService extends Entity {
                     ->like('id_tipo_tcc', "%{$like}%")
                     ->or
                     ->like('nm_tipo_tcc', "%{$like}%")
-            #->or
-            #->like('telefone_principal', "%{$like}%")
-            #->or
-            #->like('data_criacao', "%{$like}%")
             ;
         }
 
@@ -80,7 +67,7 @@ class TipoTccService extends Entity {
 
         # var_dump($paginatorAdapter);
         #die;
-        // resultado da pagina��o
+        // resultado da paginação
         return (new Paginator($paginatorAdapter))
                         // pagina a ser buscada
                         ->setCurrentPageNumber((int) $pagina)
@@ -89,12 +76,6 @@ class TipoTccService extends Entity {
                         ->setPageRange((int) $itensPaginacao);
     }
 
-    /**
-     * 
-     * @param type $dtInicio
-     * @param type $dtFim
-     * @return type
-     */
     public function getTipoTccsPaginator($filter = NULL, $camposFilter = NULL) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
@@ -123,7 +104,7 @@ class TipoTccService extends Entity {
             }
         }
 
-        $select->where($where)->order(['nm_tipo_tcc DESC']);
+        $select->where($where)->order(['id_tipo_tcc DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }

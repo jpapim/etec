@@ -5,13 +5,15 @@
         <table class="table table-striped" id="tablesorterBancaExaminadora" >
             <thead>
                 <tr>
+                    <th class="text-center">Localizador</th>
                     <th class="text-center">Data da Banca</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                  <th class="text-center">Data da Banca</th>
+                    <th class="text-center">Localizador</th>
+                    <th class="text-center">Data da Banca</th>
                   <th class="text-center">Ações</th>
                 </tr>
                 <tr>
@@ -58,20 +60,13 @@
                     foreach ($paginator as $key => $banca) {
                     ?>
                         <tr>
+                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($banca['id_banca_examinadora']) ?></td>
                             <td class="text-center"><?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($banca['dt_banca'])?></td>
                             <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao',
-                                        array('controller'=>$controller,'action'=>'realizarinscricoes',
-                                            'id'=>Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))),'Participantes')?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',
-                                    		array('controller' => $controller, 'action' => 'cadastro',
-                                    				'id' => Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))))
-                                    ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',
-                                    		array('controller' => $controller, 'action' => 'excluir',
-                                    				'id' => Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))))
-                                    ?>
+                                <span class="btn-group" style="width: 180px;">
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao',array('controller'=>$controller,'action'=>'realizarinscricoes', 'id'=>Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))),'Participantes')?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora'])))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($banca['id_banca_examinadora']))))?>
                                 </span>
                             </td>
                         </tr>

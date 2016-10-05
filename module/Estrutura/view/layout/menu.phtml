@@ -6,110 +6,92 @@
         <span class="icon-bar"></span>
     </button>
 
-<!--    <a class="navbar-brand" href="/mcnetwork-index" style="padding-top: 0px;">-->
+    <!--    <a class="navbar-brand" href="/mcnetwork-index" style="padding-top: 0px;">-->
     <a class="navbar-brand" href="/principal-principal" style="padding-top: 0px;">
-        <img src="/assets/img/logo/logo-menu2.png" height="50" width="180" />
+        <img src="/assets/img/logo/logo-menu2.png" height="50" width="180"/>
     </a>
 </div>
 
 <div class="collapse navbar-collapse">
 
     <?= $this->navigation('navigation')
-            ->setAcl($this->acl)
-            ->setRole($this->role)
-            ->menu()
-            ->setPartial(array('partials/menu.phtml', 'default'))
-            ->render(); ?>
+        ->setAcl($this->acl)
+        ->setRole($this->role)
+        ->menu()
+        ->setPartial(array('partials/menu.phtml', 'default'))
+        ->render(); ?>
 
     <?php if ($this->Auth()) { ?>
 
-    <ul class="nav navbar-nav">
-        <li class="active"><a href="/principal-principal">Início</a></li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Cadastros
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="/tcc-tcc">Trabalhos Tcc</a></li>
-                <li><a href="/concluinte-concluinte">Alunos</a></li>
-                <li><a href="/curso-curso">Curso</a></li>
-                <li><a href="/area_conhecimento-areaconhecimento">Assunto</a></li>
-                <li><a href="/professor-professor">Professores</a></li>
-                <li><a href="/banca_examinadora-bancaexaminadora">Bancas Examinadora</a></li>
-                <li><a href="/tipo_tcc-tipotcc">Titulação</a></li>
-                <li><a href="/tipo_tcc-tipotcc">Tipo de Trabalho de Conclusão</a></li>
-                <li><a href="/palavra_chave-palavrachave">Palavra Chave</a></li>
-                <li><a href="/palavra_chave_tcc-palavrachavetcc">Palavra Chave TCC</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Pesquisas</a></li>
-        <?php
-        #Alysson - Exibe este item de menu apenas para administradores
-        $usuario_logado = $this->Auth(); #Pega o Usuario Logado
-        if ($usuario_logado->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/principal-principal">Início</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    Configurações
+                    Cadastros
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/permissao-permissao/cadastro">Gerenciador de Permissões</a></li>
-                    <li><a href="/controller-controller">Cad. Controller</a></li>
-                    <li><a href="/action-action">Cad. Action</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/usuario-usuario">Usuários</a></li>
-                    <li><a href="/perfil-perfil">Perfis</a></li>
-<!--                    <li class="divider"></li>-->
-<!--                    <li><a href="/cidade-cidade">Cidades</a></li>-->
-<!--                    <li><a href="/estado-estado">UF</a></li>-->
+                    <li><a href="/tcc-tcc">Trabalhos Tcc</a></li>
+                    <li><a href="/concluinte-concluinte">Alunos</a></li>
+                    <li><a href="/curso-curso">Curso</a></li>
+                    <li><a href="/area_conhecimento-areaconhecimento">Área de Conhecimento</a></li>
+                    <li><a href="/professor-professor">Professores</a></li>
+                    <li><a href="/banca_examinadora-bancaexaminadora">Bancas Examinadora</a></li>
+                    <li><a href="/titulacao-titulacao">Titulação</a></li>
+                    <li><a href="/tipo_tcc-tipotcc">Tipo de Trabalho de Conclusão</a></li>
+                    <li><a href="/palavra_chave-palavrachave">Palavra Chave</a></li>
+                    <li><a href="/palavra_chave_tcc-palavrachavetcc">Palavra Chave TCC</a></li>
                 </ul>
             </li>
+            <li><a href="#">Pesquisas</a></li>
+            <?php
+            #Alysson - Exibe este item de menu apenas para administradores
+            $usuario_logado = $this->Auth(); #Pega o Usuario Logado
+            if ($usuario_logado->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Configurações
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/permissao-permissao/cadastro">Gerenciador de Permissões</a></li>
+                        <li><a href="/controller-controller">Cad. Controller</a></li>
+                        <li><a href="/action-action">Cad. Action</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/usuario-usuario">Usuários</a></li>
+                        <li><a href="/perfil-perfil">Perfis</a></li>
+                        <!--                    <li class="divider"></li>-->
+                        <!--                    <li><a href="/cidade-cidade">Cidades</a></li>-->
+                        <!--                    <li><a href="/estado-estado">UF</a></li>-->
+                    </ul>
+                </li>
+            <?php } ?>
+
+        </ul>
+
+        <?php if ($this->Auth()->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/infra-infra" title="Botão para limpar as pastas Cache automaticamente.">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Limpar
+                    </a>
+                </li>
+            </ul>
         <?php } ?>
 
-<!--        <li class="dropdown">-->
-<!--            <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-<!--                Básicos-->
-<!--                <b class="caret"></b>-->
-<!--            </a>-->
-<!--            <ul class="dropdown-menu">-->
-<!--                <li><a href="/tipo_tcc-tipotcc">Tipo de Trabalho de Conclusão</a></li>-->
-<!--                <li><a href="/palavra_chave-palavrachave">Palavra Chave</a></li>-->
-<!--                <li><a href="/area_conhecimento-areaconhecimento">Área de Conhecimento</a></li>-->
-<!--                <li class="divider"></li>-->
-<!--                <li><a href="/usuario-usuario">Usuários</a></li>-->
-<!--                <li><a href="/perfil-perfil">Perfis</a></li>-->
-<!--                <li class="divider"></li>-->
-<!--                <li><a href="/cidade-cidade">Cidades</a></li>-->
-<!--                <li><a href="/estado-estado">UF</a></li>-->
-<!--            </ul>-->
-<!--        </li>-->
-
-    </ul>
-
-    <?php if ($this->Auth()->id_perfil == TXT_CONST_PERFIL_ADMINISTRADOR) { ?>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/infra-infra" title="Botão para limpar as pastas Cache automaticamente.">
-                    <span class="glyphicon glyphicon-ban-circle"></span> Limpar
+                <!--            <a href="/mcnetwork-index">-->
+                <a href="/usuario-usuario">
+                    <?= ucwords($this->Auth()->nm_usuario); ?>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="<?= $this->url('logoff') ?>">
+                    <span class="glyphicon glyphicon-log-out"></span> Sair
                 </a>
             </li>
         </ul>
-    <?php } ?>
-
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-<!--            <a href="/mcnetwork-index">-->
-            <a href="/usuario-usuario">
-                <?= ucwords($this->Auth()->nm_usuario); ?>
-            </a>
-        </li>
-        <li class="dropdown">
-            <a href="<?= $this->url('logoff')?>">
-                <span class="glyphicon glyphicon-log-out"></span> Sair
-            </a>
-        </li>
-    </ul>
 
     <?php } ?>
 </div>

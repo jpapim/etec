@@ -1,43 +1,40 @@
-<?php
-  /** @var $form \Titulacao\Form\Titulacao */
-  /** @var $lista \Titulacao\Service\Titulacao[] */
-?>
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+
 <div class="page-head">
-    <h2>Lista</h2>
+    <h2>Lista de Titulações</h2>
 </div>
 <div class="cl-mcont">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro'))?>">Novo</a>
+            <a class="btn btn-default" href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>" title="Adicionar nova titulação">Nova Titulação</a>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="block-flat">
-                <div class="content">
-
-                    <table class="table table-bordered dataTable">
-                        <thead>
-                            <tr>
-                                
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        <?php foreach($lista as $item){ ?>
-                            <tr>
-                                                                
-                                <td style="width: 150px;">
-                                    <?=\Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao',array('controller'=>$controller,'action'=>'cadastro','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
-                                    <?=\Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',array('controller'=>$controller,'action'=>'excluir','id'=>Estrutura\Helpers\Cript::enc($item->getId()))))?>
-                                </td>
-                            </tr>
-                        <?php }; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>    
+    <br />
+    <div class="row" id="titulacao-pagination"></div>
 </div>
+
+<script>
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            cache: false,
+            url: '/titulacao-titulacao/index-pagination',
+            async: true,
+            data: {
+            },
+            beforeSend: function () {
+
+                $('#titulacao-pagination').html(
+                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                );
+            },
+            success: function (data) {
+
+                $('#titulacao-pagination').html(data);
+            }
+        });
+
+    })
+</script>

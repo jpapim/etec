@@ -10,14 +10,9 @@ use Zend\View\Model\JsonModel;
 
 class AreaConhecimentoController extends AbstractCrudController
 {
-    /**
-     * @var \AreaConhecimento\Service\AreaConhecimento
-     */
+
     protected $service;
 
-    /**
-     * @var \AreaConhecimento\Form\AreaConhecimento
-     */
     protected $form;
 
     public function __construct(){
@@ -44,9 +39,12 @@ class AreaConhecimentoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
+                'filter' => "areaconhecimento.id_area_conhecimento LIKE ?",
+            ],
+            '1' => [
                 'filter' => "areaconhecimento.nm_area_conhecimento LIKE ?",
-            ],       
-            '6' => NULL,
+            ],
+            '2' => NULL,
         ];
         
         

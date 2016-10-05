@@ -150,11 +150,11 @@ class TccController extends  AbstractCrudController {
     {
         //recuperar o id do Modulo Tcc
         $id_tcc = Cript::dec($this->params('id') );
-        #xd($id_tcc);
-        $tcc = new TccService();
-        $dadosTcc = $tcc->buscar($id_tcc);
 
-       
+        $tcc = new \Tcc\Service\TccService();
+        $dadosTcc = $tcc->buscar($id_tcc);
+        #xd($dadosTcc);
+
         $dadosView = [
             'service' => new \Concluinte\Service\ConcluinteService(),
             'form' => new \Concluinte\Form\ConcluinteForm(),
@@ -165,7 +165,7 @@ class TccController extends  AbstractCrudController {
         ];
 
         return new ViewModel($dadosView);
-        //}
+
     }
 
     public function adicionarConcluintesAction()

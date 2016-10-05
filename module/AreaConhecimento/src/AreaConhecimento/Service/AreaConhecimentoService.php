@@ -40,12 +40,6 @@ class AreaConhecimentoService extends Entity {
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    /*     * *
-     * Metodo customizado que para cadastramento de AreaConhecimentos Atravez da tela de cadastro de academias
-     * @param $post
-     * @return mixed
-     */
-
     public function fetchPaginator($pagina = 1, $itensPagina = 5, $ordem = 'nm_area_conhecimento ASC', $like = null, $itensPaginacao = 5) {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
         // preparar um select para tabela contato com uma ordem
@@ -89,12 +83,6 @@ class AreaConhecimentoService extends Entity {
                         ->setPageRange((int) $itensPaginacao);
     }
 
-    /**
-     * 
-     * @param type $dtInicio
-     * @param type $dtFim
-     * @return type
-     */
     public function getAreaConhecimentosPaginator($filter = NULL, $camposFilter = NULL) {
 
         $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
@@ -126,6 +114,19 @@ class AreaConhecimentoService extends Entity {
         $select->where($where)->order(['nm_area_conhecimento DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+
+    public function getFiltrarAreaConhecimentoPorNomeToArray($nm_area_conhecimento) {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('area_conhecimento')
+            ->columns(array('id_area_conhecimento', 'nm_area_conhecimento'))
+            ->where([
+                "area_conhecimento.nm_area_conhecimento LIKE ?" => '%' . $nm_area_conhecimento . '%',
+            ]);
+
+        return $sql->prepareStatementForSqlObject($select)->execute();
     }
 
 }

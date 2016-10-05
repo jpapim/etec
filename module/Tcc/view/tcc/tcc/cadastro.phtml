@@ -18,6 +18,7 @@
             echo $this->formHidden($form->get('id'));
             echo $this->formHidden($form->get('id_usuario_cadastro'));
             echo $this->formHidden($form->get('id_usuario_alteracao'));
+
             ?>
 
             <div class="panel panel-primary">
@@ -26,7 +27,7 @@
 
                     <div class="container">
                         <div class="row">
-                            <div class="form-group"  id="datetimepicker">
+                            <div class="form-group" id="datetimepicker">
                                 <div class="col-md-4">
                                     <?= ($this->formRow($form->get('id_banca_examinadora'))); ?>
                                 </div>
@@ -84,6 +85,5 @@
         $( "#id_banca_examinadora" ).datepicker(
             { dateFormat: 'dd/mm/yy' }
         );
-
-    });
+    );
 </script>
