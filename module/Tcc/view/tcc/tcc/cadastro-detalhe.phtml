@@ -133,11 +133,8 @@
                     $("#nr_matricula").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_concluinte').show();
-<<<<<<< HEAD
                         $('#mensagem_concluinte').html("<p>O aluno (" + response.nm_concluinte + ") foi adicionado com sucesso!</p>");
-=======
                         $('#mensagem_concluinte').html("<p>Aluno [" + response.nm_concluinte + "] foi adicionado com sucesso!</p>");
->>>>>>> 7be2e3293cad1421bfb8d7fc0c0cefa4668cf63d
                         carregarGridPaginadaAjax();
                         setTimeout(function () {
                             $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
