@@ -8,7 +8,6 @@
 
 namespace Tcc\Controller;
 use Concluinte;
-use concluinte\Service\ConcluinteService;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Tcc\Service\TccService;
@@ -168,6 +167,26 @@ class TccController extends  AbstractCrudController {
 
     }
 
+    public function adicionarConcluintesAction()
+    {
+        //Se for a chamada Ajax
+        if ($this->getRequest()->isPost()) {
+            $id_tcc = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
+            $nm_concluinte = $this->params()->fromPost('nm_concluinte');
+            $nr_matricula = $this->params()->fromPost('nr_matricula');
+            $id_curso = $this->params()->fromPost('id_curso');
+            $detalhe_concluinte = new Concluinte\Service\ConcluinteService();
+            $id_inserido = $detalhe_concluinte->getTable()->salvar(array(
+                'id_tcc'=>$id_tcc,
+                'nm_concluinte'=>$nm_concluinte,
+                'id_curso'=>$id_curso,
+                'nr_matricula'=>$nr_matricula,
+            ), null);
+            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'nm_concluinte'=>$nm_concluinte) );
+            return $valuesJson;
+        }
+    }
+
     public function listarConcluintesAction()
     {
         $filter = $this->getFilterPage();
@@ -251,31 +270,7 @@ class TccController extends  AbstractCrudController {
 
     }
 
-    public function adicionarConcluintesAction()
-    {
-        //Se for a chamada Ajax
-        if ($this->getRequest()->isPost()) {
-            $id_concluinte = $this->params()->fromPost('id_tcc');
-            $nm_concluinte= $this->params()->fromPost('nm_concluinte');
-            $nr_matricula = $this->params()->fromPost('nr_matricula');
-            $id_curso = $this->params()->fromPost('id_curso');
 
-            if(empty($nm_concluinte) && empty($nr_matricula) && empty($id_curso)){
-                $valuesJson = new JsonModel(array('sucesso' => false, 'mensagem' => 'Todos os campos devem ser preenchidos!'));
-                return $valuesJson;
-            }
-
-            $concluinteService = new \Concluinte\Service\ConcluinteService();
-            $resultConcluintes = $concluinteService->buscarPorArrayAtributos(array('id_plano_mudanca_detalhe' => $id_plano_mudanca_detalhe, 'id_usuario' => $id_usuario, 'ds_etapa_planejamento' => $ds_etapa_planejamento));
-            if (empty($resultConcluintes)) {
-                $id_inserido = $concluinteService->getTable()->salvar(array('id_plano_mudanca_detalhe' => $id_plano_mudanca_detalhe, 'id_usuario' => $id_usuario, 'ds_etapa_planejamento' => $ds_etapa_planejamento, 'dt_inicio_previsto' => $dt_inicio_previsto, 'dt_fim_previsto' => $dt_fim_previsto, 'nr_tempo_demanda' => $tempoEmMinutos, 'nr_uses_previstas' => $nrUsesPrevistas), null);
-                $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'mensagem' => 'Etapa adicionada com sucesso!'));
-            } else {
-                $valuesJson = new JsonModel(array('sucesso' => false, 'mensagem' => 'Esta Etapa já esta cadastrado.'));
-            }
-            return $valuesJson;
-        }
-    }
 
 
 } 

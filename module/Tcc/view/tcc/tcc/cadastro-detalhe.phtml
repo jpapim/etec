@@ -6,6 +6,16 @@
         <div class="block-flat">
             <div class="content">
                 <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => 'concluinte-concluinte', 'action' => 'gravar')));
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('data-role', 'form');
+                $form->setAttribute('method', 'post');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosTcc->getId()));
+                $form->get('id_tcc')->setValue($dadosTcc->getId());
+                echo $this->formHidden($form->get('id'));
+                echo $this->formHidden($form->get('id_tcc'));
                 //----------------------
                 //Objetos criados para Recuperar o Nomes e Data pelo ID
                 ##
@@ -21,7 +31,6 @@
                 $areaProfessorOrientadorService = new \Professor\Service\ProfessorService();
                 $ob_Prof_orientador = $areaProfessorOrientadorService->buscar($dadosTcc->getIdProfessorOrientador());
                 //----------------------
-
                 #xd($dadosTcc);
                 ?>
                 <div class="bs-callout bs-callout-primary">
@@ -55,23 +64,9 @@
                     </div>
                 </div>
 
-                <?php
-                $form->setAttribute('action', '#');
-                $form->setAttribute('class', 'form-horizontal');
-                $form->setAttribute('method', 'post');
-                $form->setAttribute('data-role', 'form');
-                $form->prepare();
-                echo $this->form()->openTag($form);
-
-                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosTcc->getId()));
-                $form->get('id_tcc')->setValue($dadosTcc->getId());
-                echo $this->formHidden($form->get('id'));
-                echo $this->formHidden($form->get('id_tcc'));
-                ?>
 
                 <legend class="scheduler-border" style="font-size: 200%;">Adicionar Alunos ao TCC</legend>
                 <div id="mensagem_concluinte"></div>
-               <fieldset>
                 <div class="form-group">
                     <div class="col-md-4">
                         <?= $this->formRow($form->get('nm_concluinte')) ?>
@@ -86,15 +81,16 @@
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="col-md-2">
-                        <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#">Adicionar Alunos</a>
+                        <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#">Adicionar
+                            Alunos</a>
                     </div>
+
                 </div>
-               </fieldset>
+                <div class="row" id="listar-concluintes"></div>
 
                 <?= $this->form()->closeTag(); ?>
             </div>
         </div>
-        <div class="row" id="listar-concluintes"></div>
     </div>
 </div>
 <script type="text/javascript"
@@ -102,7 +98,6 @@
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function () {
         $('#mensagem_concluinte').hide();
-
         //Função que faz a listagem ser paginada.
         function carregarGridPaginadaAjax() {
             $.ajax({
@@ -122,12 +117,9 @@
                 }
             });
         }
-
         carregarGridPaginadaAjax(); //Chama a Paginação da listagem
-
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_concluinte').click(function () {
-            //var dados = $('#concluintesform').serialize();
             var dados = $('#concluinteform').serialize();
             $.ajax({
                 type: 'POST',
@@ -138,10 +130,11 @@
                 success: function (response) {
                     $('#mensagem_concluinte').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
                     $("#nm_concluinte").val("");
+                    $("#nr_matricula").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_concluinte').show();
-                        $('#mensagem_concluinte').html("<p>Aluno adicionado com sucesso!</p>");
-                        carregarConcluintesAjax();
+                        $('#mensagem_concluinte').html("<p>O aluno (" + response.nm_concluinte + ") foi adicionado com sucesso!</p>");
+                        carregarGridPaginadaAjax();
                         setTimeout(function () {
                             $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
                         }, 45000000); // O valor é representado em milisegundos.
@@ -155,8 +148,6 @@
                     }
                 }
             });
-
         });
-
     });
 </script>
