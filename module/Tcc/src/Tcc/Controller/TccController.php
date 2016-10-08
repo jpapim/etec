@@ -8,7 +8,6 @@
 
 namespace Tcc\Controller;
 use Concluinte;
-use concluinte\Service\ConcluinteService;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Tcc\Service\TccService;
@@ -172,12 +171,19 @@ class TccController extends  AbstractCrudController {
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
-            $id_tcc= $this->params()->fromPost('id');
-            $nm_concluinte = $this->params()->fromPost('nm_concluinte');
-            #xd($id_tcc);
-            $detalhe_concluinte = new ConcluinteService();
 
-            $id_inserido = $detalhe_concluinte->getTable()->salvar(array('id_tcc'=>$id_tcc,'nm_concluinte'=>$nm_concluinte), null);
+            $id_tcc = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
+            $nm_concluinte = $this->params()->fromPost('nm_concluinte');
+            $nr_matricula = $this->params()->fromPost('nr_matricula');
+            $id_curso = $this->params()->fromPost('id_curso');
+            $detalhe_concluinte = new Concluinte\Service\ConcluinteService();
+
+            $id_inserido = $detalhe_concluinte->getTable()->salvar(array(
+                'id_tcc'=>$id_tcc,
+                'nm_concluinte'=>$nm_concluinte,
+                'id_curso'=>$id_curso,
+                'nr_matricula'=>$nr_matricula,
+            ), null);
             $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'nm_concluinte'=>$nm_concluinte) );
 
             return $valuesJson;

@@ -69,7 +69,7 @@
 
 
                 <legend class="scheduler-border" style="font-size: 200%;">Adicionar Alunos ao TCC</legend>
-                <div id="mensagem_componente"></div>
+                <div id="mensagem_concluinte"></div>
                 <div class="form-group">
                     <div class="col-md-4">
                         <?= $this->formRow($form->get('nm_concluinte')) ?>
@@ -126,8 +126,7 @@
 
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_concluinte').click(function () {
-            //var dados = $('#concluintesform').serialize();
-            var dados = $('#detalheform').serialize();
+            var dados = $('#concluinteform').serialize();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -137,10 +136,11 @@
                 success: function (response) {
                     $('#mensagem_concluinte').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
                     $("#nm_concluinte").val("");
+                    $("#nr_matricula").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_concluinte').show();
-                        $('#mensagem_concluinte').html("<p>Aluno adicionado com sucesso!</p>");
-                        carregarConcluintesAjax();
+                        $('#mensagem_concluinte').html("<p>Aluno [" + response.nm_concluinte + "] foi adicionado com sucesso!</p>");
+                        carregarGridPaginadaAjax();
                         setTimeout(function () {
                             $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
                         }, 45000000); // O valor é representado em milisegundos.
