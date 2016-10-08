@@ -171,11 +171,19 @@ class TccController extends  AbstractCrudController {
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7be2e3293cad1421bfb8d7fc0c0cefa4668cf63d
             $id_tcc = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
             $nm_concluinte = $this->params()->fromPost('nm_concluinte');
             $nr_matricula = $this->params()->fromPost('nr_matricula');
             $id_curso = $this->params()->fromPost('id_curso');
             $detalhe_concluinte = new Concluinte\Service\ConcluinteService();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7be2e3293cad1421bfb8d7fc0c0cefa4668cf63d
             $id_inserido = $detalhe_concluinte->getTable()->salvar(array(
                 'id_tcc'=>$id_tcc,
                 'nm_concluinte'=>$nm_concluinte,
