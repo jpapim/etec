@@ -6,18 +6,6 @@
         <div class="block-flat">
             <div class="content">
                 <?php
-                $form->setAttribute('action', $this->url('navegacao', array('controller' => 'concluinte-concluinte', 'action' => 'gravar')));
-                $form->setAttribute('class', 'form-horizontal');
-                $form->setAttribute('data-role', 'form');
-                $form->setAttribute('method', 'post');
-                $form->prepare();
-                echo $this->form()->openTag($form);
-
-                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosTcc->getId()));
-                $form->get('id_tcc')->setValue($dadosTcc->getId());
-                echo $this->formHidden($form->get('id'));
-                echo $this->formHidden($form->get('id_tcc'));
-
                 //----------------------
                 //Objetos criados para Recuperar o Nomes e Data pelo ID
                 ##
@@ -67,9 +55,23 @@
                     </div>
                 </div>
 
+                <?php
+                $form->setAttribute('action', '#');
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('data-role', 'form');
+                $form->prepare();
+                echo $this->form()->openTag($form);
+
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosTcc->getId()));
+                $form->get('id_tcc')->setValue($dadosTcc->getId());
+                echo $this->formHidden($form->get('id'));
+                echo $this->formHidden($form->get('id_tcc'));
+                ?>
 
                 <legend class="scheduler-border" style="font-size: 200%;">Adicionar Alunos ao TCC</legend>
-                <div id="mensagem_componente"></div>
+                <div id="mensagem_concluinte"></div>
+               <fieldset>
                 <div class="form-group">
                     <div class="col-md-4">
                         <?= $this->formRow($form->get('nm_concluinte')) ?>
@@ -84,16 +86,15 @@
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="col-md-2">
-                        <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#">Adicionar
-                            Alunos</a>
+                        <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#">Adicionar Alunos</a>
                     </div>
-
                 </div>
-                <div class="row" id="listar-concluintes"></div>
+               </fieldset>
 
                 <?= $this->form()->closeTag(); ?>
             </div>
         </div>
+        <div class="row" id="listar-concluintes"></div>
     </div>
 </div>
 <script type="text/javascript"
@@ -127,7 +128,7 @@
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_concluinte').click(function () {
             //var dados = $('#concluintesform').serialize();
-            var dados = $('#detalheform').serialize();
+            var dados = $('#concluinteform').serialize();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
