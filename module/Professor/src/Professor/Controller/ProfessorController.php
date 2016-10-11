@@ -2,6 +2,7 @@
 
 namespace Professor\Controller;
 
+use DOMPDFModule\View\Model\PdfModel;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Zend\View\Model\ViewModel;
@@ -150,6 +151,25 @@ class ProfessorController extends AbstractCrudController
 
         $valuesJson = new JsonModel($arrProfessoresFiltrados);
         return $valuesJson;
+    }
+
+    public function gerarRelatorioPdfAction()
+    {
+        $catequizandoService = new \Professor\Service\ProfessorService();
+        $arteste = $catequizandoService->fetchAll()->toArray();
+        $pdf = new PdfModel();
+        $pdf->setVariables(array(
+            'caminho_imagem'=>__DIR__,
+            'inicio_contador'=>3,
+            'teste' => $arteste,
+
+        ));
+        $pdf->setOption('filename', 'ordem_serviço_'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption("paperSize", "a4"); //Defaults to 8x11
+        $pdf->setOption("basePath", __DIR__); //Defaults to 8x11
+        #$pdf->setOption("paperOrientation", "landscape"); //Defaults to portrait
+        return $pdf;
+
     }
 
 }
