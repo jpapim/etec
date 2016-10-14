@@ -64,6 +64,31 @@
                     </div>
                 </div>
 
+                <!-- Concluintes -->
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border" style="font-size: 200%;">Adicionar Alunos ao TCC</legend>
+                    <div id="mensagem_concluinte"></div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <?= $this->formRow($form->get('nm_concluinte')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <?= $this->formRow($form->get('nr_matricula')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <?= $this->formRow($form->get('id_curso')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#">Adicionar
+                                Alunos</a>
+                        </div>
+                    </div>
+                    <div class="row" id="listar-concluintes"></div>
+                </fieldset>
+                
                 <!-- Palavra Chave -->
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border" style="font-size: 200%;">Adicionar Palavra Chave</legend>
@@ -80,31 +105,7 @@
                     </div>
                     <div class="row" id="listar-palavra-chave-tcc"></div>
                 </fieldset>
-<hr>
-                <!-- Concluintes -->
-                <fieldset class="scheduler-border">
-                <legend class="scheduler-border" style="font-size: 200%;">Adicionar Alunos ao TCC</legend>
-                <div id="mensagem_concluinte"></div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('nm_concluinte')) ?>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <?= $this->formRow($form->get('nr_matricula')) ?>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="col-md-4">
-                        <?= $this->formRow($form->get('id_curso')) ?>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="col-md-2">
-                        <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#">Adicionar
-                            Alunos</a>
-                    </div>
-                </div>
-                <div class="row" id="listar-concluintes"></div>
-                </fieldset>
+
 
                 <?= $this->form()->closeTag(); ?>
             </div>
@@ -136,6 +137,7 @@
                 }
             });
         }
+
         //Função que faz a listagem ser paginada.
         function carregarConcluinteAjax() {
             $.ajax({
