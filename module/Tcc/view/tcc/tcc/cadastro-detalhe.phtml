@@ -20,16 +20,16 @@
                 //Objetos criados para Recuperar o Nomes e Data pelo ID
                 ##
                 $areaBancaExaminadoraService = new \BancaExaminadora\Service\BancaExaminadoraService();
-                $ob_banca_examinadora = $areaBancaExaminadoraService->buscar($dadosTcc->getIdBancaExaminadora());
+                $obj_banca_examinadora = $areaBancaExaminadoraService->buscar($dadosTcc->getIdBancaExaminadora());
                 ##
                 $areaTipoTccService = new \TipoTcc\Service\TipoTccService();
-                $ob_tipo_tcc = $areaTipoTccService->buscar($dadosTcc->getIdTipoTcc());
+                $obj_tipo_tcc = $areaTipoTccService->buscar($dadosTcc->getIdTipoTcc());
                 ##
                 $areaAreaConhecimentoService = new \Areaconhecimento\Service\AreaConhecimentoService();
-                $ob_area_conhecimento = $areaAreaConhecimentoService->buscar($dadosTcc->getIdAreaConhecimento());
+                $obj_area_conhecimento = $areaAreaConhecimentoService->buscar($dadosTcc->getIdAreaConhecimento());
                 ##
                 $areaProfessorOrientadorService = new \Professor\Service\ProfessorService();
-                $ob_Prof_orientador = $areaProfessorOrientadorService->buscar($dadosTcc->getIdProfessorOrientador());
+                $obj_Prof_orientador = $areaProfessorOrientadorService->buscar($dadosTcc->getIdProfessorOrientador());
                 //----------------------
                 #xd($dadosTcc);
                 ?>
@@ -40,23 +40,24 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <b>Data da
-                                Banca:</b> <?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($ob_banca_examinadora->getDtBanca()) ?>
+                                Banca:</b> <?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($obj_banca_examinadora->getDtBanca()) ?>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <b>Título:</b> <?= $dadosTcc->getTxTituloTcc() ?>
                         </div>
                         <div class="col-md-4">
-                            <b>Tipo:</b> <?= $ob_tipo_tcc->getNmTipoTcc() ?>
+                            <b>Area de Conhecimento:</b> <?= $obj_area_conhecimento->getNmAreaConhecimento() ?>
+
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <b>Area de Conhecimento:</b> <?= $ob_area_conhecimento->getNmAreaConhecimento() ?>
+                        <div class="col-md-3">
+                            <b>Tipo:</b> <?= $obj_tipo_tcc->getNmTipoTcc() ?>
                         </div>
-                        <div class="col-md-4">
-                            <b>Professor Orientador:</b> <?= $ob_Prof_orientador->getNmProfessor() ?>
+                        <div class="col-md-5">
+                            <b>Professor Orientador:</b> <?= $obj_Prof_orientador->getNmProfessor() ?>
                         </div>
                         <div class="col-md-4">
                             <b>Nota do Trabalho:</b> <?= $dadosTcc->getNrNotaFinal() ?>
