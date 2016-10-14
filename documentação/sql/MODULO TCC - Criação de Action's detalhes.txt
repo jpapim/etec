@@ -1,0 +1,11 @@
+cadastro-detalhe
+
+adicionar-palavrachavetcc
+listar-palavrachavetcc
+excluir-palavrachavetcc-via-tcc
+
+
+adicionar-concluintes
+listar-concluintes
+excluir-concluinte-via-tcc
+

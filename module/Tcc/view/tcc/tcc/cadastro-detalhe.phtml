@@ -88,7 +88,7 @@
                     </div>
                     <div class="row" id="listar-concluintes"></div>
                 </fieldset>
-                
+
                 <!-- Palavra Chave -->
                 <fieldset class="scheduler-border">
                     <legend class="scheduler-border" style="font-size: 200%;">Adicionar Palavra Chave</legend>
@@ -103,7 +103,7 @@
                             <a style="margin-top: 25px;" id="adicionar_palavra_chave" class="btn btn-primary" href="#">Adicionar</a>
                         </div>
                     </div>
-                    <div class="row" id="listar-palavra-chave-tcc"></div>
+                    <div class="row" id="listar-palavrachavetcc"></div>
                 </fieldset>
 
 
@@ -124,16 +124,16 @@
                 type: "post",
                 dataType: "text",
                 cache: false,
-                url: '/tcc-tcc/listar-palavra-chave-tcc',
+                url: '/tcc-tcc/listar-palavrachavetcc',
                 async: true,
                 data: {id_tcc: <?=$dadosTcc->getId()?>},
                 beforeSend: function () {
-                    $('#listar-palavra-chave-tcc').html(
+                    $('#listar-palavrachavetcc').html(
                         '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                     );
                 },
                 success: function (data) {
-                    $('#listar-palavra-chave-tcc').html(data);
+                    $('#listar-palavrachavetcc').html(data);
                 }
             });
         }

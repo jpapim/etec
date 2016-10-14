@@ -21,9 +21,9 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/tcc-tcc/listar-palavra-chave-tcc'.\Estrutura\Helpers\Cript::enc($id_tcc),
+                            'urlPagination' => '/tcc-tcc/listar-palavrachavetcc'.\Estrutura\Helpers\Cript::enc($id_tcc),
                             'countPerPage' => $countPerPage,
-                            'divData' => '#listar-palavra-chave',
+                            'divData' => '#listar-palavrachavetcc',
                         ]
                     );
                     ?>
@@ -67,7 +67,7 @@
                                 <span class="btn-group" style="width: 100px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('tcc-tcc',
                                         array('controller' => 'palavra_chave_tcc-palavrachavetcc',
-                                            'action' => 'excluir-palavra-chave-via-tcc', 'id'
+                                            'action' => 'excluir-palavrachavetcc-via-tcc', 'id'
                                         => Estrutura\Helpers\Cript::enc($detalhe_tcc['id_palavra_chave_tcc']), 'aux'
                                         => Estrutura\Helpers\Cript::enc($id_tcc)))) ?>
                                 </span>

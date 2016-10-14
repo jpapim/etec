@@ -227,7 +227,7 @@ class TccController extends  AbstractCrudController {
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function excluirPalavraChaveViaTccAction()
+    public function excluirPalavraChaveTccViaTccAction()
     {
         try {
             $request = $this->getRequest();
