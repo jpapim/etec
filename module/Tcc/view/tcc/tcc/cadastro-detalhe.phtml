@@ -12,12 +12,10 @@
                 $form->setAttribute('method', 'post');
                 $form->prepare();
                 echo $this->form()->openTag($form);
-
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosTcc->getId()));
                 $form->get('id_tcc')->setValue($dadosTcc->getId());
                 echo $this->formHidden($form->get('id'));
                 echo $this->formHidden($form->get('id_tcc'));
-
                 //----------------------
                 //Objetos criados para Recuperar o Nomes e Data pelo ID
                 ##
@@ -33,7 +31,6 @@
                 $areaProfessorOrientadorService = new \Professor\Service\ProfessorService();
                 $ob_Prof_orientador = $areaProfessorOrientadorService->buscar($dadosTcc->getIdProfessorOrientador());
                 //----------------------
-
                 #xd($dadosTcc);
                 ?>
                 <div class="bs-callout bs-callout-primary">
@@ -101,7 +98,6 @@
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function () {
         $('#mensagem_concluinte').hide();
-
         //Função que faz a listagem ser paginada.
         function carregarGridPaginadaAjax() {
             $.ajax({
@@ -121,9 +117,7 @@
                 }
             });
         }
-
         carregarGridPaginadaAjax(); //Chama a Paginação da listagem
-
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_concluinte').click(function () {
             var dados = $('#concluinteform').serialize();
@@ -139,6 +133,7 @@
                     $("#nr_matricula").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_concluinte').show();
+                        $('#mensagem_concluinte').html("<p>O aluno (" + response.nm_concluinte + ") foi adicionado com sucesso!</p>");
                         $('#mensagem_concluinte').html("<p>Aluno [" + response.nm_concluinte + "] foi adicionado com sucesso!</p>");
                         carregarGridPaginadaAjax();
                         setTimeout(function () {
@@ -154,8 +149,6 @@
                     }
                 }
             });
-
         });
-
     });
 </script>

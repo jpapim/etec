@@ -185,7 +185,6 @@ class TccController extends  AbstractCrudController {
                 'nr_matricula'=>$nr_matricula,
             ), null);
             $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'nm_concluinte'=>$nm_concluinte) );
-
             return $valuesJson;
         }
     }
@@ -207,7 +206,7 @@ class TccController extends  AbstractCrudController {
             ],
             '3' => NULL,
         ];
-            #xd($id_tcc = $this->params('id'));
+        #xd($id_tcc = $this->params('id'));
 
         $paginator = $this->service->getConcluintePaginator( $id_tcc, $filter, $camposFilter);
 
@@ -272,4 +271,8 @@ class TccController extends  AbstractCrudController {
         }
 
     }
+
+
+
+
 } 

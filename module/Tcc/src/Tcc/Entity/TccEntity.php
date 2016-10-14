@@ -23,6 +23,6 @@ class TccEntity extends AbstractEstruturaService{
         protected $dt_cadastro;
         protected $dt_alteracao;
         protected $nr_nota_final;
-        protected $tx_caminho_arquivo;
+        #protected $tx_caminho_arquivo;
 
 }

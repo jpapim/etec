@@ -48,6 +48,7 @@ return array(
         'Infra',
         'PalavraChaveTcc',
         'Titulacao',
+        'Pesquisar',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
