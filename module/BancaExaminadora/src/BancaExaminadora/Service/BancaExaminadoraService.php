@@ -60,4 +60,10 @@ class BancaExaminadoraService extends Entity{
   		return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
   	}
 
+    public function retornaDataDasBancasFormatoBrazil()
+    {
+        $colecaoBancaExaminadora = $this->select();
+        return $colecaoBancaExaminadora;
+    }
+
 }

@@ -70,6 +70,26 @@ class AbstractEstruturaService {
         return $this->table;
     }
 
+    /**
+     * Transforma um array em Objeto
+     * @param $d
+     * @return object
+     */
+    function arrayToObject($arr) {
+        if (is_array($arr)) {
+            /*
+            * Return array converted to object
+            * Using __FUNCTION__ (Magic constant)
+            * for recursive call
+            */
+            return (object) array_map(__FUNCTION__, $arr);
+        }
+        else {
+            // Return object
+            return $arr;
+        }
+    }
+
     public function toArray() {
         $classe = new \ReflectionClass($this);
         $item = [];
@@ -197,17 +217,25 @@ class AbstractEstruturaService {
      * @param $arrayFiltro array('coluna_tabela' => 'valor')
      * @return array Registros retortnados do Banco de Dados
      */
-
     public function fetchAllByArrayAtributo($arrayFiltro)
     {
         $arrayResults = $this->select($arrayFiltro)->toArray();
         return $arrayResults;
     }
 
+    /**
+     * Filtra os registros que atendam aos filtros passados por array
+     * @author Alysson Vicuña de Oliveira
+     * @param $arrayEhere array('coluna_tabela' => 'valor')
+     * @return object Registros retortnados do Banco de Dados em Forma de Objeto
+     */
     public function select($where = null) {
         return $this->getTable()->select($where);
     }
 
+    /**
+     * @return object
+     */
     public function filtrarObjeto() {
         $where = $this->hydrate();
         $wTratado = new Where();
