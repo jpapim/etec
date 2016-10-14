@@ -117,21 +117,13 @@ class ProfessorService extends Entity
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
+    /**
+     * Método Responsavel por retornar Apenas os professores Orientadores
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
     public function retornaOrientadores()
     {
-
-        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
-
-        $select = $sql->select('professor')
-            ->columns(array(
-                'id_professor',
-                'nm_professor',
-            ))#Colunas a retornar. Basta Omitir que ele traz todas as colunas
-            ->where([
-                "professor.cs_orientador = ?" => 'S',
-            ]);
-
-        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
-        return $sql->prepareStatementForSqlObject($select)->execute();
+        $resultado = $this->select(['cs_orientador'=> 'S']);
+        return $resultado;
     }
 }
