@@ -176,8 +176,6 @@ class TccController extends  AbstractCrudController {
 
             $id_tcc = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
             $id_palavra_chave = $this->params()->fromPost('id_palavra_chave');
-//            $nr_matricula = $this->params()->fromPost('nr_matricula');
-//            $id_curso = $this->params()->fromPost('id_curso');
             $detalhe_palavraChaveTcc = new PalavraChaveTcc\Service\PalavraChaveTccService();
 
             $id_inserido = $detalhe_palavraChaveTcc->getTable()->salvar(array(

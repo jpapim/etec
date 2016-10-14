@@ -170,7 +170,7 @@
                 data: dados,
                 success: function (response) {
                     $('#mensagem_palavra_chave').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
-                    $("#nm_palavra_chave").val("");
+                    $("#id_palavra_chave").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_palavra_chave').show();
                         $('#mensagem_palavra_chave').html("<p>Palavra chave adicionada com sucesso!</p>");
