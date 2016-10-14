@@ -123,6 +123,41 @@ class TccService extends Entity
 
     // Início de Consulta para Detalhes
 
+    public function getPalavraChaveTccPaginator($id_tcc, $filter = NULL, $camposFilter = NULL)
+    {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('palavra_chave_tcc')->columns([
+            'id_palavra_chave_tcc',
+
+        ])->join('palavra_chave', 'palavra_chave.id_palavra_chave = palavra_chave_tcc.id_palavra_chave', ['nm_palavra_chave']);
+
+        $where = [
+            'id_tcc' => $id_tcc,
+        ];
+
+        if (!empty($filter)) {
+
+            foreach ($filter as $key => $value) {
+
+                if ($value) {
+
+                    if (isset($camposFilter[$key]['mascara'])) {
+
+                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+                    }
+
+                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+                }
+            }
+        }
+
+        $select->where($where)->order(['id_palavra_chave_tcc DESC']);
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+
     public function getConcluintePaginator($id_tcc, $filter = NULL, $camposFilter = NULL)
     {
 
@@ -133,7 +168,6 @@ class TccService extends Entity
             'nm_concluinte',
             'nr_matricula',
         ])->join('curso', 'curso.id_curso = concluinte.id_curso', ['nm_curso']);
-//            ->join('tcc', 'tcc.id_tcc = concluinte.id_tcc', ['tx_titulo_tcc']);
 
         $where = [
             'id_tcc' => $id_tcc,

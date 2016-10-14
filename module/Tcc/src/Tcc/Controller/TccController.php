@@ -8,9 +8,9 @@
 
 namespace Tcc\Controller;
 use Concluinte;
+use PalavraChaveTcc;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
-use Tcc\Service\TccService;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Estrutura\Helpers\Pagination;
@@ -143,7 +143,7 @@ class TccController extends  AbstractCrudController {
         return parent::excluir($this->service, $this->form);
     }
 
-    // Iniciando ações do Detalhe Concluinte
+    // Iniciando ações do Cadastro Detalhe
 
     public function cadastroDetalheAction()
     {
@@ -155,8 +155,8 @@ class TccController extends  AbstractCrudController {
         #xd($dadosTcc);
 
         $dadosView = [
-            'service' => new \Concluinte\Service\ConcluinteService(),
-            'form' => new \Concluinte\Form\ConcluinteForm(),
+            'service' => new \Tcc\Service\TccService(),
+            'form' => new \Tcc\Form\TccDetalheForm(),
             'controller' => $this->params('controller'),
             'atributos' => array(),
             'id_tcc' => $id_tcc,
@@ -167,6 +167,106 @@ class TccController extends  AbstractCrudController {
 
     }
 
+
+    // Iniciando ações para Palavra Chave TCC
+    public function adicionarPalavraChaveTccAction()
+    {
+        //Se for a chamada Ajax
+        if ($this->getRequest()->isPost()) {
+
+            $id_tcc = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
+            $id_palavra_chave = $this->params()->fromPost('id_palavra_chave');
+//            $nr_matricula = $this->params()->fromPost('nr_matricula');
+//            $id_curso = $this->params()->fromPost('id_curso');
+            $detalhe_palavraChaveTcc = new PalavraChaveTcc\Service\PalavraChaveTccService();
+
+            $id_inserido = $detalhe_palavraChaveTcc->getTable()->salvar(array(
+                'id_tcc'=>$id_tcc,
+                'id_palavra_chave'=>$id_palavra_chave,
+            ), null);
+            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'id_palavra_chave'=>$id_palavra_chave) );
+            return $valuesJson;
+        }
+    }
+
+    public function listarPalavraChaveTccAction()
+    {
+        $filter = $this->getFilterPage();
+
+        $id_tcc = $this->params()->fromPost('id_tcc');
+        $camposFilter = [
+            '0' => [
+                'filter' => "palavra_chave_tcc.nm_palavra_chave LIKE ?"
+            ],
+            '1' => NULL,
+        ];
+        #xd($id_tcc = $this->params('id'));
+
+        $paginator = $this->service->getPalavraChaveTccPaginator( $id_tcc, $filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => new \PalavraChaveTcc\Form\PalavraChaveTccForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'id_tcc'=>$id_tcc,
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+
+    public function excluirPalavraChaveViaTccAction()
+    {
+        try {
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+            $id = Cript::dec($this->params('id'));
+            $id_tcc = Cript::dec($this->params('aux'));
+
+            $palavrachaveService = new \PalavraChaveTcc\Service\PalavraChaveTccService();
+            $palavrachaveService->setId($id);
+            $palavrachaveService->setIdTcc($id_tcc);
+
+            $dados = $palavrachaveService->filtrarObjeto()->current();
+            if (!$dados) {
+                throw new \Exception('Registro nao encontrado');
+            }
+
+            $palavrachaveService->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => \Estrutura\Helpers\Cript::enc($id_tcc)]);
+
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+
+    }
+
+    // Iniciando ações para Aluno Concluinte
     public function adicionarConcluintesAction()
     {
         //Se for a chamada Ajax

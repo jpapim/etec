@@ -64,7 +64,25 @@
                     </div>
                 </div>
 
+                <!-- Palavra Chave -->
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border" style="font-size: 200%;">Adicionar Palavra Chave</legend>
+                    <div id="mensagem_palavra_chave"></div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <?= $this->formRow($form->get('id_palavra_chave')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
 
+                        <div class="col-md-2">
+                            <a style="margin-top: 25px;" id="adicionar_palavra_chave" class="btn btn-primary" href="#">Adicionar</a>
+                        </div>
+                    </div>
+                    <div class="row" id="listar-palavra-chave-tcc"></div>
+                </fieldset>
+<hr>
+                <!-- Concluintes -->
+                <fieldset class="scheduler-border">
                 <legend class="scheduler-border" style="font-size: 200%;">Adicionar Alunos ao TCC</legend>
                 <div id="mensagem_concluinte"></div>
                 <div class="form-group">
@@ -84,9 +102,9 @@
                         <a style="margin-top: 25px;" id="adicionar_concluinte" class="btn btn-primary" href="#">Adicionar
                             Alunos</a>
                     </div>
-
                 </div>
                 <div class="row" id="listar-concluintes"></div>
+                </fieldset>
 
                 <?= $this->form()->closeTag(); ?>
             </div>
@@ -97,9 +115,29 @@
         src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function () {
+        $('#mensagem_palavra_chave').hide();
         $('#mensagem_concluinte').hide();
         //Função que faz a listagem ser paginada.
-        function carregarGridPaginadaAjax() {
+        function carregarPalavraChaveTccAjax() {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/tcc-tcc/listar-palavra-chave-tcc',
+                async: true,
+                data: {id_tcc: <?=$dadosTcc->getId()?>},
+                beforeSend: function () {
+                    $('#listar-palavra-chave-tcc').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#listar-palavra-chave-tcc').html(data);
+                }
+            });
+        }
+        //Função que faz a listagem ser paginada.
+        function carregarConcluinteAjax() {
             $.ajax({
                 type: "post",
                 dataType: "text",
@@ -117,10 +155,44 @@
                 }
             });
         }
-        carregarGridPaginadaAjax(); //Chama a Paginação da listagem
+
+        carregarPalavraChaveTccAjax(); //Chama a Paginação da listagem
+        carregarConcluinteAjax(); //Chama a Paginação da listagem
+
+        /*Função Ajax que adiciona os encontros ao Banco de dados*/
+        $('#adicionar_palavra_chave').click(function () {
+            var dados = $('#tccdetalheform').serialize();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/tcc-tcc/adicionar-palavrachavetcc',
+                async: true,
+                data: dados,
+                success: function (response) {
+                    $('#mensagem_palavra_chave').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
+                    $("#nm_palavra_chave").val("");
+                    if (response.sucesso == true) {
+                        $('#mensagem_palavra_chave').show();
+                        $('#mensagem_palavra_chave').html("<p>Palavra chave adicionada com sucesso!</p>");
+                        carregarPalavraChaveTccAjax();
+                        setTimeout(function () {
+                            $('#mensagem_palavra_chave').hide(); // "mensagem_palavra_chave" é o id do elemento que seja manipular.
+                        }, 45000000); // O valor é representado em milisegundos.
+                    } else {
+                        $('#mensagem_palavra_chave').show();
+                        $('#mensagem_palavra_chave').html("<p>A Palavra chave já foi adicionada!</p>");
+                        $('#mensagem_palavra_chave').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
+                        setTimeout(function () {
+                            $('#mensagem_palavra_chave').hide(); // "mensagem_palavra_chave" é o id do elemento que seja manipular.
+                        }, 45000000); // O valor é representado em milisegundos.
+                    }
+                }
+            });
+        });
+
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_concluinte').click(function () {
-            var dados = $('#concluinteform').serialize();
+            var dados = $('#tccdetalheform').serialize();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -133,9 +205,8 @@
                     $("#nr_matricula").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_concluinte').show();
-                        $('#mensagem_concluinte').html("<p>O aluno (" + response.nm_concluinte + ") foi adicionado com sucesso!</p>");
                         $('#mensagem_concluinte').html("<p>Aluno [" + response.nm_concluinte + "] foi adicionado com sucesso!</p>");
-                        carregarGridPaginadaAjax();
+                        carregarConcluinteAjax();
                         setTimeout(function () {
                             $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
                         }, 45000000); // O valor é representado em milisegundos.
@@ -150,5 +221,7 @@
                 }
             });
         });
+
+
     });
 </script>
