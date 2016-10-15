@@ -123,7 +123,7 @@ class ProfessorService extends Entity
      */
     public function retornaOrientadores()
     {
-        $colecaoProfessor = $this->select(['cs_orientador'=> 'S']);
+        $colecaoProfessor = $this->select(['cs_orientador'=> 'S', 'cs_ativo'=> 'A']);
         return $colecaoProfessor;
     }
 }

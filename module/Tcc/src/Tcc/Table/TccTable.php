@@ -14,7 +14,6 @@ class TccTable extends AbstractEstruturaTable
 
     public $table = 'tcc';
     public $campos = [
-
         'id_tcc' => 'id',
         'id_usuario_cadastro' => 'id_usuario_cadastro',
         'id_usuario_alteracao' => 'id_usuario_alteracao',
@@ -28,7 +27,6 @@ class TccTable extends AbstractEstruturaTable
         'dt_alteracao' => 'dt_alteracao',
         'nr_nota_final' => 'nr_nota_final',
         #'tx_caminho_arquivo' => 'tx_caminho_arquivo',
-
     ];
 
 
