@@ -14,6 +14,8 @@ use Estrutura\Helpers\Cript;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Estrutura\Helpers\Pagination;
+use Zend\Http\Headers;
+use Zend\Http\Response\Stream;
 
 
 class TccController extends  AbstractCrudController {
@@ -52,6 +54,7 @@ class TccController extends  AbstractCrudController {
                 'filter' => "tcc.tx_titulo_tcc LIKE ?"
             ],
             '5' => NULL,
+            '6' => NULL,
 
         ];
 
@@ -95,8 +98,20 @@ class TccController extends  AbstractCrudController {
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
 
+            $local = BASE_PATCH . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'arquivos';
+            if (!file_exists($local)) {
+                mkdir($local, 0755);
+            }
+
             $files = $request->getFiles();
-            $upload = $this->uploadFile($files);
+            $upload = $this->uploadFile($files, $local);
+
+            foreach ($upload as $file) {
+                #xd($file);
+                if (isset($file['tmp_name'])) {
+                    $upload['ar_arquivo'] = str_replace(BASE_PATCH, '', $file['name']);
+                }
+            }
 
             $post = array_merge($post, $upload);
 
@@ -370,7 +385,28 @@ class TccController extends  AbstractCrudController {
 
     }
 
+    /**
+     * @return Stream
+     */
+    public function downloadArquivoAction()
+    {
+        $obTcc = new \Tcc\Service\TccService();
+        $resultado = $obTcc->buscar(Cript::dec($this->params()->fromRoute('id')));
+        $file = './data/arquivos/'.$resultado->getArArquivo();
+        $response = new Stream();
+        $response->setStream(fopen($file, 'r'));
+        $response->setStatusCode(200);
+        $response->setStreamName(basename($file));
+        $headers = new Headers();
+        $headers->addHeaders(array(
+            'Content-Disposition' => 'attachment; filename="' . basename($file) . '"',
+            'Content-Type' => 'application/octet-stream',
+            'Content-Length' => filesize($file)
+        ));
+        $response->setHeaders($headers);
+        return $response;
 
+    }
 
 
 } 

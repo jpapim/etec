@@ -10,6 +10,7 @@
                 <th class="text-center">Área de Conhecimento</th>
                 <th class="text-center">Prof Orientador</th>
                 <th class="text-center">Título do Tcc</th>
+                <th class="text-center">Download</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
@@ -20,10 +21,11 @@
                 <th class="text-center">Área de Conhecimento</th>
                 <th class="text-center">Prof Orientador</th>
                 <th class="text-center">Título do Tcc</th>
+                <th class="text-center">Download</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
-                <th colspan="6" class="ts-pager form-horizontal">
+                <th colspan="7" class="ts-pager form-horizontal">
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
@@ -73,7 +75,19 @@
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_area_conhecimento']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_professor']) ?></td>
                         <td><?= $item['tx_titulo_tcc']?></td>
-
+                        <td class="text-center">
+                            <?php if(is_null($item['ar_arquivo'])) { ?>
+                                &nbsp;
+                            <?php } else {  ?>
+                                <?= \Estrutura\Service\HtmlHelper::botaoDownload(
+                                    $this->url('navegacao', array('controller' => $controller, 'action' => 'download-arquivo', 'id' => \Estrutura\Helpers\Cript::enc($item['id_tcc']))),
+                                    'Download',
+                                    'enviar_para_download',
+                                    'glyphicon glyphicon-cloud-download',
+                                    'btn-alterar btn-xs btn-alterar-customizado'
+                                ) ?>
+                            <?php } ?>
+                        </td>
                         <td style="width: 180px;">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar TCC') ?>
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar Concluinte') ?>

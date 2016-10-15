@@ -96,6 +96,7 @@ class TccService extends Entity
             'dt_cadastro',
             'dt_alteracao',
             'nr_nota_final',
+            'ar_arquivo',
         ])
             // Buscando dados das Fks
             ->join('banca_examinadora', 'banca_examinadora.id_banca_examinadora = tcc.id_banca_examinadora', ['dt_banca'])
@@ -217,6 +218,7 @@ class TccService extends Entity
             'dt_cadastro',
             'dt_alteracao',
             'nr_nota_final',
+            'ar_arquivo',
         ])
             // Buscando dados das Fks
             ->join('banca_examinadora', 'banca_examinadora.id_banca_examinadora = tcc.id_banca_examinadora', ['dt_banca'])

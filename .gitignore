@@ -8,5 +8,6 @@ config/autoload/gerador.php
 config/autoload/global.php
 nbproject/*
 data/cache/*
+data/arquivos/*
 public/assets/cache/*
 documentacao/dev-igor/*

@@ -26,7 +26,7 @@ class TccTable extends AbstractEstruturaTable
         'dt_cadastro' => 'dt_cadastro',
         'dt_alteracao' => 'dt_alteracao',
         'nr_nota_final' => 'nr_nota_final',
-        #'tx_caminho_arquivo' => 'tx_caminho_arquivo',
+            'ar_arquivo' => 'ar_arquivo',
     ];
 
 
