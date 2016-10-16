@@ -106,10 +106,10 @@ class TccController extends  AbstractCrudController {
             $files = $request->getFiles();
             $upload = $this->uploadFile($files, $local);
 
+            $local_relativo = DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'arquivos'.DIRECTORY_SEPARATOR;
             foreach ($upload as $file) {
-                #xd($file);
                 if (isset($file['tmp_name'])) {
-                    $upload['ar_arquivo'] = str_replace(BASE_PATCH, '', $file['name']);
+                    $upload['ar_arquivo'] = str_replace($local_relativo,'',str_replace(BASE_PATCH, '', $file['tmp_name']));
                 }
             }
 
@@ -390,18 +390,28 @@ class TccController extends  AbstractCrudController {
      */
     public function downloadArquivoAction()
     {
+        define('DIR_DOWNLOAD', '.'.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'arquivos'.DIRECTORY_SEPARATOR);
         $obTcc = new \Tcc\Service\TccService();
         $resultado = $obTcc->buscar(Cript::dec($this->params()->fromRoute('id')));
-        $file = './data/arquivos/'.$resultado->getArArquivo();
-        $response = new Stream();
+        $file = DIR_DOWNLOAD.$resultado->getArArquivo();
+        $file = filter_var($file, FILTER_SANITIZE_STRING);
+
+        $response = new \Zend\Http\Response\Stream();
         $response->setStream(fopen($file, 'r'));
         $response->setStatusCode(200);
         $response->setStreamName(basename($file));
-        $headers = new Headers();
+        $headers = new \Zend\Http\Headers();
+
         $headers->addHeaders(array(
             'Content-Disposition' => 'attachment; filename="' . basename($file) . '"',
+            'Content-Type' => 'application/pdf',
+            'Content-Type' => 'application/msword',
             'Content-Type' => 'application/octet-stream',
-            'Content-Length' => filesize($file)
+            'Content-Type' => 'image/jpg',
+            'Expires' => '@0', // @0, because zf2 parses date as string to \DateTime() object
+            'Content-Length' => filesize($file),
+            'Cache-Control' => 'must-revalidate',
+            'Pragma' => 'public'
         ));
         $response->setHeaders($headers);
         return $response;
