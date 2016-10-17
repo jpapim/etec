@@ -98,7 +98,7 @@ class TccController extends  AbstractCrudController {
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
 
-            $local = BASE_PATCH . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'arquivos';
+            $local = TXT_CONST_LOCAL_COMPLETO_UPLOAD;
             if (!file_exists($local)) {
                 mkdir($local, 0755);
             }
@@ -106,7 +106,7 @@ class TccController extends  AbstractCrudController {
             $files = $request->getFiles();
             $upload = $this->uploadFile($files, $local);
 
-            $local_relativo = DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'arquivos'.DIRECTORY_SEPARATOR;
+            $local_relativo = TXT_CONST_LOCAL_RELATIVO_UPLOAD;
             foreach ($upload as $file) {
                 if (isset($file['tmp_name'])) {
                     $upload['ar_arquivo'] = str_replace($local_relativo,'',str_replace(BASE_PATCH, '', $file['tmp_name']));
