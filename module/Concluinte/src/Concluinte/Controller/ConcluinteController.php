@@ -140,4 +140,22 @@ class ConcluinteController extends AbstractCrudController
         return parent::excluir($this->service, $this->form);
     }
 
+    /**
+     * Método Responsável pelo auto-complete do Concluinte
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
+
+    public function autocompleteconcluinteAction()
+    {
+        $nm_concluinte = $_GET['term'];
+        $concluintes = new \Concluinte\Service\ConcluinteService();
+        $arrConcluintes = $concluintes->getFiltrarConcluintePorNomeToArray($nm_concluinte);
+        $arrConcluintesFiltrados = array();
+        foreach ($arrConcluintes as $concluinte) {
+            $arrConcluintesFiltrados[] = $concluinte['nm_concluinte'];
+        }
+
+        $valuesJson = new JsonModel($arrConcluintesFiltrados);
+        return $valuesJson;
+    }
 }

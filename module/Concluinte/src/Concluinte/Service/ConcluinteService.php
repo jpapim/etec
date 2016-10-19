@@ -59,7 +59,7 @@ class ConcluinteService extends Entity {
 			$sql = new \Zend\Db\Sql\Sql($this->getAdapter());
 
 			$select = $sql->select('concluinte')
-							->columns(array('nm_concluinte', 'nr_matricula'))
+							->columns(array('nm_concluinte', 'nr_matricula')) #Colunas a retornar. Basta Omitir que ele traz todas as colunas
 							->where([
 					"concluinte.nm_concluinte LIKE ?" => '%' . $nm_concluinte . '%',
 			]);

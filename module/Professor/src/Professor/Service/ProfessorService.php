@@ -126,4 +126,14 @@ class ProfessorService extends Entity
         $colecaoProfessor = $this->select(['cs_orientador'=> 'S', 'cs_ativo'=> 'A']);
         return $colecaoProfessor;
     }
+    /**
+     * Método Responsavel por retornar Apenas os professores Ativos
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
+
+    public function retornaProfessoresAtivo()
+    {
+        $colecaoProfessor = $this->select(['cs_ativo'=> 'A']);
+        return $colecaoProfessor;
+    }
 }

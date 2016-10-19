@@ -111,6 +111,7 @@ class UsuarioService extends Entity {
                     ->like('id_usuario', "%{$like}%")
                     ->or
                     ->like('nm_usuario', "%{$like}%")
+
             ;
         }
 
@@ -129,11 +130,11 @@ class UsuarioService extends Entity {
 
         # var_dump($paginatorAdapter);
         #die;
-        // resultado da paginação
+        // resultado da pagina��o
         return (new Paginator($paginatorAdapter))
                         // pagina a ser buscada
                         ->setCurrentPageNumber((int) $pagina)
-                        // quantidade de itens na página
+                        // quantidade de itens na p�gina
                         ->setItemCountPerPage((int) $itensPagina)
                         ->setPageRange((int) $itensPaginacao);
     }
@@ -151,10 +152,9 @@ class UsuarioService extends Entity {
         $select = $sql->select('usuario')->columns([
             'id_usuario',
             'nm_usuario',
-
         ])
-        ->join('email', 'email.id_email = usuario.id_email', ['em_email'])//adicionado - Nathália
-        ->join('tipo_usuario', 'tipo_usuario.id_tipo_usuario = usuario.id_tipo_usuario', ['nm_tipo_usuario']);//adicionado - Eduardo Ferreira
+        ->join('email', 'email.id_email = usuario.id_email', ['em_email'])
+        ->join('tipo_usuario', 'tipo_usuario.id_tipo_usuario = usuario.id_tipo_usuario', ['nm_tipo_usuario']);
 
         $where = [
         ];

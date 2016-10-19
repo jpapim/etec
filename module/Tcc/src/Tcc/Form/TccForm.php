@@ -40,8 +40,8 @@ class TccForm extends AbstractForm
 
         $objForm->text("tx_titulo_tcc")->required(true)->label("Título do TCC");
         $objForm->textarea("tx_resumo")->required(true)->label("Resumo");
-        $objForm->float("nr_nota_final")->required(true)->label("Nota");
-        $objForm->file("ar_arquivo")->required(false)->label("Upload do Trabalho");
+        $objForm->text("nr_nota_final")->required(true)->label("Nota");
+        $objForm->file("ar_arquivo")->required(true)->label("Upload do Trabalho");
 
         $this->formObject = $objForm;
     }

@@ -125,7 +125,7 @@ class TccService extends Entity
         return new Paginator(new DbSelect($select, $this->getAdapter()));
     }
 
-    // Início de Consulta para Detalhes
+    /** Início de Consulta para Detalhes */
 
     public function getPalavraChaveTccPaginator($id_tcc, $filter = NULL, $camposFilter = NULL)
     {

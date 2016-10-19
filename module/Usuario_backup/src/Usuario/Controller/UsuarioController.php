@@ -23,23 +23,7 @@ class UsuarioController extends AbstractCrudController
      */
 
     protected $form;
-    protected $camposPendencia = [
-        'nm_estado',
-        'nm_cidade',
-        'nu_rg',
-        'nu_cpf',
-        'nm_profissao',
-        'nm_estado_civil',
-        'nm_nacionalidade',
-        'nr_agencia',
-        'id_banco',
-        'nm_logradouro',
-        'nr_numero',
-        'nm_bairro',
-        'nm_cidade',
-        'nm_estado',
-        'nr_cep',
-    ];
+
 
     public function __construct()
     {
@@ -50,9 +34,6 @@ class UsuarioController extends AbstractCrudController
     {
         return parent::index($this->service, $this->form);
     }
-
-
-//ALTERAR AQUI OS FILTER
 
     public function indexPaginationAction()
     {
@@ -121,26 +102,6 @@ class UsuarioController extends AbstractCrudController
             $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
             return FALSE;
         }
-
-
-        #/* @var $UsuarioService \Usuario\Service\UsuarioService */
-        #$usuarioService = new \Usuario\Service\UsuarioService();
-        #$usuarioService->setNuCpf(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')));
-
-        #Alysson - Verifica se já existe este cpf cadastrado para um usuário
-        #if ($usuarioService->filtrarObjeto()->count()) {
-
-        #    $this->addErrorMessage('Cpf já cadastrado. Faça seu login.');
-        #    $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-        #    return FALSE;
-        #}
-
-        #$validatorCpf = new \Estrutura\Validator\Cpf();
-        #if (!$validatorCpf->isValid(\Estrutura\Helpers\Cpf::cpfFilter($this->getRequest()->getPost()->get('nu_cpf')))) {
-        #    $this->addErrorMessage('Cpf inválido.');
-        #    $this->redirect()->toRoute('cadastro', array('id' => $this->getRequest()->getPost()->get('id_usuario_pai')));
-        #    return FALSE;
-        #}
 
         $dateNascimento = \DateTime::createFromFormat('d/m/Y', $this->getRequest()->getPost()->get('dt_nascimento'));
         $dataMaioridade = new \Datetime();
