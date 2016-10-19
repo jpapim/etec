@@ -85,7 +85,7 @@
                                 <span class="btn-group" style="width: 150px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao',
                                         array('controller' => $controller, 'action' => 'cadastro',
-                                            'id' => Estrutura\Helpers\Cript::enc($professor['id_professor']))))
+                                            'id' => Estrutura\Helpers\Cript::enc($professor['id_professor']))), 'Modificar dados do Professor')
                                     ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',
                                         array('controller' => $controller, 'action' => 'excluir',
@@ -106,10 +106,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
-                   class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default"
-                   href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
-                   title="Adicionar um novo Professor">Novo Professor</a>
+                   class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
             </div>
         </div>
     </div>

@@ -1,4 +1,0 @@
-Modulo Usuário
-
-Conceder permissão de Excluir
-Verificar erro: Para excluir a academia voce deve excluir todos os atletas da academia. Verifique!

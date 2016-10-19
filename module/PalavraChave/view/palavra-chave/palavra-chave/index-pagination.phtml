@@ -63,7 +63,7 @@
 
                         <td class="text-center">
                                 <span class="btn-group" style="width: 150px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($palavrachave['id_palavra_chave']))))
+                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($palavrachave['id_palavra_chave']))), 'Modificar palavra chave')
                                     ?>
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($palavrachave['id_palavra_chave']))))
                                     ?>
@@ -83,9 +83,6 @@
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
                    class="btn btn-primary" title="Retorna para a Página Principal">Home</a>
-                <a class="btn btn-default"
-                   href="<?= $this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro')) ?>"
-                   title="Adicionar um nova Palavra Chave">Nova Palavra Chave</a>
             </div>
         </div>
     </div>
