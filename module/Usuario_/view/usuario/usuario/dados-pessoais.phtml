@@ -49,10 +49,10 @@ if ($temPendenciaCadastral) {
             <td><h6><b class="pull-right">Estado civil: </b></h6></td><td><h6><?= ucwords($usuario['nm_estado_civil']) ?></h6></td>
         </tr>
         <?php
-        $trClass = $usuario['nm_funcao'] ? '' : 'class="danger"';
+        $trClass = $usuario['nm_profissao'] ? '' : 'class="danger"';
         ?>
         <tr <?= $trClass ?>>
-            <td><h6><b class="pull-right">Profissão: </b></h6></td><td><h6><?= ucwords($usuario['nm_funcao']) ?></h6></td>
+            <td><h6><b class="pull-right">Profissão: </b></h6></td><td><h6><?= ucwords($usuario['nm_profissao']) ?></h6></td>
         </tr>
         <?php
         $trClass = $usuario['nu_cpf'] ? '' : 'class="danger"';

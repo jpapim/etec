@@ -114,7 +114,7 @@ CREATE TABLE `banca_examinadora` (
   `id_banca_examinadora` int(11) NOT NULL AUTO_INCREMENT,
   `dt_banca` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_banca_examinadora`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,7 @@ CREATE TABLE `banca_examinadora` (
 
 LOCK TABLES `banca_examinadora` WRITE;
 /*!40000 ALTER TABLE `banca_examinadora` DISABLE KEYS */;
-INSERT INTO `banca_examinadora` VALUES (1,'2016-07-22 03:00:00'),(2,'2016-10-14 03:00:00'),(3,'2016-10-15 03:00:00');
+INSERT INTO `banca_examinadora` VALUES (1,'2016-07-22 03:00:00'),(2,'2016-10-14 03:00:00'),(3,'2016-10-15 03:00:00'),(4,'2016-10-19 02:00:00');
 /*!40000 ALTER TABLE `banca_examinadora` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +172,7 @@ CREATE TABLE `concluinte` (
   KEY `fk_tcc_concluinte_idx` (`id_tcc`),
   CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`),
   CONSTRAINT `fk_tcc_concluinte` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +181,7 @@ CREATE TABLE `concluinte` (
 
 LOCK TABLES `concluinte` WRITE;
 /*!40000 ALTER TABLE `concluinte` DISABLE KEYS */;
-INSERT INTO `concluinte` VALUES (1,1,'Eduardo ','545485',2),(2,1,'Elias Jose','2332',1);
+INSERT INTO `concluinte` VALUES (1,1,'Eduardo ','545485',2),(2,1,'Elias Jose','2332',1),(3,1,'jdvsvydjww','fefefe',4),(4,1,'fgegefgief','efefe',4);
 /*!40000 ALTER TABLE `concluinte` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,7 +438,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,'e10adc3949ba59abbe56e057f20f883e',1,'2014-08-27 21:53:33','2014-08-27 21:53:37',1,1,1,1),(2,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-01-30 15:01:11',2,2,1,2),(3,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:55',3,3,1,2),(4,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:57',4,4,1,2),(5,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:53',5,5,1,2),(6,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:20',6,6,1,2),(7,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:34',7,7,1,2),(8,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:44',8,8,1,2),(9,'25f9e794323b453885f5181f1b624d0b',NULL,NULL,'2016-07-13 15:07:26',10,13,2,2),(10,'25f9e794323b453885f5181f1b624d0b',NULL,NULL,'2016-07-13 16:07:00',11,14,2,2),(11,'25f9e794323b453885f5181f1b624d0b',NULL,NULL,'2016-07-13 17:07:40',12,15,1,2);
+INSERT INTO `login` VALUES (1,'e10adc3949ba59abbe56e057f20f883e',1,'2014-08-27 21:53:33','2014-08-27 21:53:37',1,1,1,1),(2,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-01-30 15:01:11',2,2,1,2),(3,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:55',3,3,1,2),(4,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:57',4,4,1,2),(5,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:53',5,5,1,2),(6,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:20',6,6,1,2),(7,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:34',7,7,1,2),(8,'d04cbb637213179e1f8269f75d5d7cfc',NULL,NULL,'2015-02-20 17:02:44',8,8,1,2),(9,'25f9e794323b453885f5181f1b624d0b',NULL,NULL,'2016-07-13 15:07:26',10,13,2,2),(10,'25f9e794323b453885f5181f1b624d0b',NULL,NULL,'2016-07-13 16:07:00',11,14,2,2),(11,'3f9595aff804894be2600b3de2856ea4',NULL,NULL,'2016-07-13 17:07:40',12,15,1,2);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,7 +459,7 @@ CREATE TABLE `membros_banca` (
   KEY `FK_Reference_98` (`id_professor`),
   CONSTRAINT `FK_Reference_97` FOREIGN KEY (`id_banca_examinadora`) REFERENCES `banca_examinadora` (`id_banca_examinadora`),
   CONSTRAINT `FK_Reference_98` FOREIGN KEY (`id_professor`) REFERENCES `professor` (`id_professor`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -468,7 +468,7 @@ CREATE TABLE `membros_banca` (
 
 LOCK TABLES `membros_banca` WRITE;
 /*!40000 ALTER TABLE `membros_banca` DISABLE KEYS */;
-INSERT INTO `membros_banca` VALUES (1,1,1,'N'),(2,1,2,'S'),(3,2,1,'N'),(4,2,2,'S'),(5,3,1,'N'),(6,3,2,'S'),(7,3,5,'S');
+INSERT INTO `membros_banca` VALUES (1,1,1,'N'),(2,1,2,'S'),(3,2,1,'N'),(4,2,2,'S'),(5,3,1,'N'),(6,3,2,'S'),(7,3,5,'S'),(8,4,1,'N'),(9,4,2,'S'),(10,4,3,'N');
 /*!40000 ALTER TABLE `membros_banca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -512,7 +512,7 @@ CREATE TABLE `palavra_chave_tcc` (
   KEY `FK_Reference_101` (`id_palavra_chave`),
   CONSTRAINT `FK_Reference_100` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`),
   CONSTRAINT `FK_Reference_101` FOREIGN KEY (`id_palavra_chave`) REFERENCES `palavra_chave` (`id_palavra_chave`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -521,7 +521,7 @@ CREATE TABLE `palavra_chave_tcc` (
 
 LOCK TABLES `palavra_chave_tcc` WRITE;
 /*!40000 ALTER TABLE `palavra_chave_tcc` DISABLE KEYS */;
-INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1);
+INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1),(5,4,1),(6,4,2);
 /*!40000 ALTER TABLE `palavra_chave_tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -720,7 +720,7 @@ CREATE TABLE `tcc` (
   CONSTRAINT `FK_Reference_95` FOREIGN KEY (`id_banca_examinadora`) REFERENCES `banca_examinadora` (`id_banca_examinadora`),
   CONSTRAINT `FK_Reference_96` FOREIGN KEY (`id_area_conhecimento`) REFERENCES `area_conhecimento` (`id_area_conhecimento`),
   CONSTRAINT `FK_Reference_99` FOREIGN KEY (`id_tipo_tcc`) REFERENCES `tipo_tcc` (`id_tipo_tcc`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -729,7 +729,7 @@ CREATE TABLE `tcc` (
 
 LOCK TABLES `tcc` WRITE;
 /*!40000 ALTER TABLE `tcc` DISABLE KEYS */;
-INSERT INTO `tcc` VALUES (1,1,1,1,2,1,5,'Teste','aqaqaq','2016-10-14 19:42:31','2016-10-16 20:16:20',10.00,NULL),(2,1,1,2,1,3,2,'Teste do Salinas','deded','2016-10-14 19:45:49','2016-10-16 20:16:20',99.99,NULL),(3,1,1,1,2,3,5,'Teste de Arquivo','swswswsw','2016-10-15 15:01:42','2016-10-16 20:16:20',99.99,NULL);
+INSERT INTO `tcc` VALUES (1,1,1,1,2,1,5,'Teste','aqaqaq','2016-10-14 19:42:31','2016-10-16 20:16:20',10.00,NULL),(2,1,1,2,1,3,2,'Teste do Salinas','deded','2016-10-14 19:45:49','2016-10-16 20:16:20',99.99,NULL),(3,1,1,1,2,3,5,'Teste de Arquivo','swswswsw','2016-10-15 15:01:42','2016-10-16 20:16:20',99.99,NULL),(4,1,1,1,2,2,2,'rgrgrg','fbfvbfbfbfbfb','2016-10-19 00:03:56','2016-10-19 00:03:56',3.00,'Alysson Vicuña de Oliveira Curriculum Vitae - Gerencial_5806b86ccfed0.pdf');
 /*!40000 ALTER TABLE `tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -873,7 +873,7 @@ CREATE TABLE `usuario` (
   `dt_nascimento` datetime NOT NULL COMMENT '{"label":"Data de nascimento"}',
   `nu_rg` varchar(20) DEFAULT NULL COMMENT '{"label":"RG"}',
   `nu_cpf` varchar(11) DEFAULT NULL COMMENT '{"label":"CPF"}',
-  `nm_profissao` varchar(200) DEFAULT NULL COMMENT '{"label":"Profissão"}',
+  `nm_funcao` varchar(200) DEFAULT NULL COMMENT '{"label":"Profissão"}',
   `nm_nacionalidade` varchar(200) DEFAULT NULL COMMENT '{"label":"Nacionalidade"}',
   `id_sexo` int(11) DEFAULT NULL,
   `id_estado_civil` int(11) DEFAULT NULL,
@@ -882,6 +882,7 @@ CREATE TABLE `usuario` (
   `id_email` int(11) DEFAULT NULL,
   `id_telefone` int(11) DEFAULT NULL,
   `id_endereco` int(11) DEFAULT NULL,
+  `id_perfil` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `ix_usuarios_sexo` (`id_sexo`),
   KEY `ix_usuarios_estado_civil` (`id_estado_civil`),
@@ -890,9 +891,11 @@ CREATE TABLE `usuario` (
   KEY `ix_usuarios_emails` (`id_email`),
   KEY `ix_usuarios_telefones` (`id_telefone`),
   KEY `ix_usuarios_endereco` (`id_endereco`),
+  KEY `ix_usuarios_perfil` (`id_perfil`),
   CONSTRAINT `fk_usuarios_emails` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_estado_civil` FOREIGN KEY (`id_estado_civil`) REFERENCES `estado_civil` (`id_estado_civil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuarios_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_sexo` FOREIGN KEY (`id_sexo`) REFERENCES `sexo` (`id_sexo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_situacao_usuario` FOREIGN KEY (`id_situacao_usuario`) REFERENCES `situacao_usuario` (`id_situacao_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_telefones` FOREIGN KEY (`id_telefone`) REFERENCES `telefone` (`id_telefone`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -906,7 +909,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Alysson Vicuña de Oliveira','1983-12-20 21:47:08','14558545','06999233365','Administrador','Brasileira',1,2,1,1,1,1,1),(2,'Ronaldo Rodrigues de Melo','1983-12-20 00:00:00',NULL,'99494469100',NULL,NULL,NULL,NULL,2,1,2,2,NULL),(3,'teste001','1980-03-05 00:00:00',NULL,'49883749716',NULL,NULL,NULL,NULL,2,1,3,3,NULL),(4,'teste002','1988-02-20 00:00:00',NULL,'93892257523',NULL,NULL,NULL,NULL,2,1,4,4,NULL),(5,'teste003','1990-12-12 00:00:00',NULL,'48728040155',NULL,NULL,NULL,NULL,2,1,5,5,NULL),(6,'teste004','1990-02-20 00:00:00',NULL,'38415710186',NULL,NULL,NULL,NULL,2,1,6,6,NULL),(7,'teste005','1990-02-20 00:00:00',NULL,'56060098460',NULL,NULL,NULL,NULL,2,1,7,7,NULL),(8,'teste006','1990-02-20 00:00:00',NULL,'',NULL,NULL,NULL,NULL,2,1,8,8,NULL),(9,'Nome Teste','1981-08-16 00:00:00',NULL,NULL,NULL,NULL,1,NULL,2,1,12,13,NULL),(10,'Mais um teste','1981-08-16 00:00:00',NULL,NULL,NULL,NULL,1,NULL,2,1,13,14,NULL),(11,'Yuri Marques','1983-02-10 00:00:00',NULL,NULL,NULL,NULL,1,NULL,1,1,14,15,NULL),(12,'Heron Bonfim','1994-06-18 00:00:00',NULL,NULL,NULL,NULL,1,NULL,2,1,15,16,NULL);
+INSERT INTO `usuario` VALUES (1,'Alysson Vicuña de Oliveira','1983-12-20 21:47:08','14558545','06999233365','Administrador','Brasileira',1,2,1,1,1,1,1,1),(2,'Ronaldo Rodrigues de Melo','1983-12-20 00:00:00',NULL,'99494469100',NULL,NULL,NULL,NULL,2,1,2,2,NULL,2),(3,'teste001','1980-03-05 00:00:00',NULL,'49883749716',NULL,NULL,NULL,NULL,2,1,3,3,NULL,2),(4,'teste002','1988-02-20 00:00:00',NULL,'93892257523',NULL,NULL,NULL,NULL,2,1,4,4,NULL,2),(5,'teste003','1990-12-12 00:00:00',NULL,'48728040155',NULL,NULL,NULL,NULL,2,1,5,5,NULL,2),(6,'teste004','1990-02-20 00:00:00',NULL,'38415710186',NULL,NULL,NULL,NULL,2,1,6,6,NULL,2),(7,'teste005','1990-02-20 00:00:00',NULL,'56060098460',NULL,NULL,NULL,NULL,2,1,7,7,NULL,2),(8,'teste006','1990-02-20 00:00:00',NULL,'',NULL,NULL,NULL,NULL,2,1,8,8,NULL,2),(9,'Nome Teste','1981-08-16 00:00:00',NULL,NULL,NULL,NULL,1,NULL,2,1,12,13,NULL,2),(10,'Mais um teste','1981-08-16 00:00:00',NULL,NULL,NULL,NULL,1,NULL,2,1,13,14,NULL,2),(11,'Yuri Marques','1983-02-10 00:00:00',NULL,NULL,NULL,NULL,1,NULL,1,1,14,15,NULL,2),(12,'Heron Bonfim','1994-06-18 00:00:00',NULL,NULL,'Testador',NULL,1,NULL,2,1,15,16,NULL,2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -963,4 +966,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-16 18:16:52
+-- Dump completed on 2016-10-20  0:22:59

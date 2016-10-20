@@ -1,9 +1,10 @@
-<div class="page-head">
-    <h2>Cadastro do Usuário</h2>
-</div>
+<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" >           
 <div class="row row-offcanvas row-offcanvas-right">
-    <div class="col-xs-12 col-sm-12">
+    <div class="col-xs-12 col-sm-9">
         <div class="well">
+            <div class="page-head">
+                <h2>Cadastro</h2>
+            </div>
 
             <?php
             $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'gravar')));
@@ -13,64 +14,74 @@
             $form->prepare();
             echo $this->form()->openTag($form);
             ?>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('id_perfil')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nm_usuario')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('id_sexo')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nm_funcao')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('nr_telefone')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('em_email')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('em_email_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('pw_senha')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
+            <div class="form-group">
+                <div class="col-md-7">
+                    <?= $this->formRow($form->get('pw_senha_confirm')) ?>
+                    <div class="help-block with-errors"></div>
+                </div>                    
+            </div>
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">Dados do Novo Usuário</div>
-                <div class="panel-body" style="background-color: #F7F7F7">
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    <?= $this->formRow($form->get('id_tipo_usuario')); ?>
-                                </div>
-                            </div>
+<!--            <div class="form-group">-->
+<!--                <div class="col-md-7">-->
+<!--                    --><?//= $this->formRow($form->get('id_situacao_usuario')) ?>
+<!--                    <div class="help-block with-errors"></div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('nm_usuario')) ?>
-                                </div>
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('id_sexo')) ?>
-                                </div>
 
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('em_email')); ?>
-                                </div>
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('em_email_confirm')) ?>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('pw_senha')) ?>
-                                </div>
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('pw_senha_confirm')) ?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
-                                    <a href="<?= $this->url('navegacao', ['controller' => 'usuario-usuario', 'action' => 'index']) ?>" class="btn btn-default">Voltar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="<?= $this->url('navegacao', ['controller' => 'auth', 'action' => 'login']) ?>" class="btn btn-default">Voltar</a>                    
                 </div>
             </div>
             <?= $this->form()->closeTag(); ?>
