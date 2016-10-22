@@ -12,9 +12,9 @@ return array(
             'pesquisar' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/pesquisar',
+                    'route'    => '/pesquisar-pesquisar/:action[/:id][/:aux ]',
                     'defaults' => array(
-                        'controller' => 'pesquisar',
+                        'controller' => 'pesquisar-pesquisar',
                         'action'     => 'index',
                     ),
                 ),

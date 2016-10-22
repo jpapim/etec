@@ -1,41 +1,60 @@
-<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
-
-
+<?php
+/** @var $lista \Pesquisar\Service\Pesquisar[] */
+?>
 <div class="page-head">
-    <h2>Campo para Pesquisar TCC</h2>
-</div>
-<div class="cl-mcont">
-    <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-default" href="<?=$this->url('navegacao',array('controller'=>$controller,'action'=>'pesquisar'))?>" >Pesquisar</a>
+    <br/>
+    <div class="block-flat">
+        <div class="content">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Dados para Pesquisa</div>
+                <div class="panel-body" style="background-color: #F7F7F7">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <?= $this->formRow($form->get('id_banca_examinadora')) ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <?= $this->formRow($form->get('nm_curso')) ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <?= $this->formRow($form->get('nm_area_conhecimento')) ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <?= $this->formRow($form->get('nm_tipo_tcc')) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <?=$this->formRow($form->get('nm_professor'))?>
+                                </div>
+                                <div class="col-md-4">
+                                    <?= $this->formRow($form->get('nm_concluinte')) ?>
+                                </div>
+                                <div class="col-md-4">
+                                    <?= $this->formRow($form->get('nm_palavra_chave ')) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="detalhesfiltros-pagination"></div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="col-md-10">
+                                        <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <?= $this->form()->closeTag(); ?>
     </div>
-    <br />
-    <div class="row" id="pesquisar"></div>
 </div>
 
-<script>
-    $(function () {
 
-        $.ajax({
-            type: "post",
-            dataType: "text",
-            cache: false,
-            url: '/pesquisar-pesquisar/index-pagination',
-            async: true,
-            data: {
-            },
-            beforeSend: function () {
-
-                $('#pesquisar').html(
-                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                );
-            },
-            success: function (data) {
-
-                $('#pesquisar').html(data);
-            }
-        });
-
-    })
-</script>

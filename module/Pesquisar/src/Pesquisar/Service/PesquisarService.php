@@ -9,7 +9,10 @@
 
 namespace Pesquisar\Service;
 
-class PesquisarService
+use Estrutura\Service\AbstractEstruturaService;
+use Zend\Db\Sql\Sql;
+
+class PesquisarService extends AbstractEstruturaService
 {
 
     public function pesquisarTcc($where = NULL)
@@ -46,6 +49,49 @@ class PesquisarService
         $select->where($where)->order(['id_tcc DESC']);
 
         #xd($select->getSqlString($this->getAdapter()->getPlatform()));
-        return $sql->prepareStatementForSqlObject($select)->execute();
+        #return $sql->prepareStatementForSqlObject($select)->execute();
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
+    }
+
+    public function getDetalhesFiltrosPaginator($id_prova, $filter = NULL, $camposFilter = NULL)
+    {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        $select = $sql->select('filtro_prova')->columns([
+            'id_filtro_prova',
+            'id_prova',
+            'id_tipo_questao',
+            'id_fonte_questao',
+            'id_assunto_materia',
+            'id_nivel_dificuldade',
+            'id_classificacao_semestre',
+            'nr_questoes',
+        ]);
+
+        $where = [
+            'id_prova'=>$id_prova,
+        ];
+
+        if (!empty($filter)) {
+
+            foreach ($filter as $key => $value) {
+
+                if ($value) {
+
+                    if (isset($camposFilter[$key]['mascara'])) {
+
+                        eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
+                    }
+
+                    $where[$camposFilter[$key]['filter']] = '%' . $value . '%';
+                }
+            }
+        }
+
+        $select->where($where)->order(['id_prova DESC']);
+
+        #xd($select->getSqlString($this->getAdapter()->getPlatform()));
+        return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
 }

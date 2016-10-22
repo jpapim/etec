@@ -41,18 +41,11 @@ class PesquisarController extends AbstractCrudController
             '4' => [
                 'filter' => "pesquisar.nm_professor LIKE ?",
             ],
-            '5' => [
-                'filter' => "pesquisar.nm_concluinte LIKE ?",
-            ],
-            '6' => [
-                'filter' => "pesquisar.nm_palavra_chave LIKE ?",
-            ],
-            '7' => NULL,
+            '5' =>  NULL,
         ];
 
-
+        $this->service = new \Pesquisar\Service\PesquisarService();
         $paginator = $this->service->pesquisarTcc($filter, $camposFilter);
-
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
         $countPerPage = $this->getCountPerPage(
@@ -71,6 +64,52 @@ class PesquisarController extends AbstractCrudController
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+
+    public function detalhesFiltrosPaginationAction()
+    {
+        #$this->params()->fromPost('paramname');   // From POST
+        #$this->params()->fromQuery('paramname');  // From GET
+        #$this->params()->fromRoute('paramname');  // From RouteMatch
+        #$this->params()->fromHeader('paramname'); // From header
+        #$this->params()->fromFiles('paramname');  // From file being uploaded
+        $filter = $this->getFilterPage();
+
+        $request = $this->getRequest();
+        $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+        $id_prova = $post['id_prova'];
+
+        $camposFilter = [
+            '0' => [
+                //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
+            ],
+
+        ];
+
+        $paginator = $this->service->getDetalhesFiltrosPaginator($id_prova, $filter, $camposFilter);
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => new \Prova\Form\QuestaoAleatoriaForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'id_prova' => $id_prova,
             'atributos' => array()
         ]);
 

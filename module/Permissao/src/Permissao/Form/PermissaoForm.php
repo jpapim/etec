@@ -32,7 +32,7 @@ class PermissaoForm extends AbstractForm
 
             #carrego aqui todos os Actions existentes na base de dados e marco somente as que ja possuem permissao
             $obAction = new \Action\Service\ActionService();
-            $colecaoActions = $obAction->fetchAll();
+            $colecaoActions = $obAction->fetchAllActions();
             $arrTodasActions= [];
             foreach ($colecaoActions as $key => $ob_action) {
                 $arrTodasActions[] = [

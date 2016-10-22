@@ -48,7 +48,7 @@ CREATE TABLE `action` (
   `id_action` int(11) NOT NULL AUTO_INCREMENT,
   `nm_action` varchar(200) DEFAULT NULL COMMENT '{"label":"Ação"}',
   PRIMARY KEY (`id_action`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'listar-permissoes-acoes'),(58,'autocompleteprofessor'),(59,'gerar-relatorio-pdf'),(60,'cadastro-detalhe'),(61,'adicionar-palavrachavetcc'),(62,'listar-palavrachavetcc'),(63,'excluir-palavrachavetcc-via-tcc'),(64,'adicionar-concluintes'),(65,'listar-concluintes'),(66,'excluir-concluinte-via-tcc'),(67,'download-arquivo');
+INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'listar-permissoes-acoes'),(58,'autocompleteprofessor'),(59,'gerar-relatorio-pdf'),(60,'cadastro-detalhe'),(61,'adicionar-palavrachavetcc'),(62,'listar-palavrachavetcc'),(63,'excluir-palavrachavetcc-via-tcc'),(64,'adicionar-concluintes'),(65,'listar-concluintes'),(66,'excluir-concluinte-via-tcc'),(67,'download-arquivo'),(68,'pesquisar');
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -461,7 +461,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=473 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=485 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -470,7 +470,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (3,3,1,1),(4,4,1,1),(20,3,7,1),(24,3,14,1),(27,3,17,1),(32,3,1,2),(33,4,1,2),(49,3,7,2),(53,3,14,2),(59,3,15,2),(62,3,15,1),(81,3,36,1),(82,3,36,2),(83,3,37,1),(84,3,37,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(89,3,6,1),(93,11,1,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(164,23,1,1),(169,23,6,1),(170,23,7,1),(171,23,8,1),(172,23,9,1),(177,23,14,1),(178,23,15,1),(180,23,17,1),(190,23,27,1),(193,23,30,1),(198,23,35,1),(199,23,36,1),(200,23,37,1),(214,23,51,1),(215,24,1,1),(220,24,6,1),(221,24,7,1),(222,24,8,1),(223,24,9,1),(228,24,14,1),(229,24,15,1),(231,24,17,1),(241,24,27,1),(244,24,30,1),(249,24,35,1),(250,24,36,1),(251,24,37,1),(265,24,51,1),(266,3,51,1),(267,3,51,2),(268,23,1,1),(269,23,6,1),(270,23,7,1),(271,23,8,1),(272,23,51,1),(273,25,1,1),(274,25,6,1),(275,25,7,1),(276,25,8,1),(277,25,51,1),(278,26,1,1),(279,26,6,1),(280,26,7,1),(281,26,8,1),(282,26,51,1),(283,27,1,1),(284,27,6,1),(285,27,7,1),(286,27,8,1),(287,27,51,1),(288,27,52,1),(289,27,53,1),(290,27,54,1),(291,28,55,1),(313,29,1,1),(315,29,6,1),(316,29,7,1),(317,29,8,1),(318,29,51,1),(319,29,56,1),(351,31,1,1),(352,31,6,1),(353,31,7,1),(354,31,8,1),(355,31,51,1),(384,36,1,1),(385,36,6,1),(386,36,7,1),(387,36,8,1),(388,36,51,1),(389,37,1,1),(390,11,1,2),(391,11,1,3),(392,11,1,4),(393,32,1,1),(394,32,6,1),(395,32,7,1),(396,32,8,1),(398,32,51,1),(399,32,53,1),(400,32,58,1),(401,38,1,1),(402,38,6,1),(403,38,7,1),(404,38,8,1),(405,38,9,1),(406,38,51,1),(407,39,1,1),(408,39,6,1),(409,39,7,1),(410,39,8,1),(411,39,51,1),(418,30,1,1),(419,30,6,1),(420,30,7,1),(421,30,8,1),(422,30,51,1),(423,30,58,1),(424,30,59,1),(438,40,1,1),(439,40,6,1),(440,40,7,1),(441,40,8,1),(442,40,9,1),(443,40,51,1),(444,40,60,1),(445,40,61,1),(446,40,62,1),(447,40,63,1),(448,40,64,1),(449,40,65,1),(450,40,66,1),(451,40,67,1),(452,41,1,1),(453,41,6,1),(454,41,7,1),(455,41,8,1),(456,41,51,1),(457,41,1,2),(458,41,6,2),(459,41,7,2),(460,41,8,2),(461,41,9,2),(462,41,51,2),(463,42,1,1),(464,42,6,1),(465,42,7,1),(466,42,8,1),(467,42,51,1),(468,42,1,2),(469,42,6,2),(470,42,7,2),(471,42,8,2),(472,42,51,2);
+INSERT INTO `perfil_controller_action` VALUES (3,3,1,1),(4,4,1,1),(20,3,7,1),(24,3,14,1),(27,3,17,1),(32,3,1,2),(33,4,1,2),(49,3,7,2),(53,3,14,2),(59,3,15,2),(62,3,15,1),(81,3,36,1),(82,3,36,2),(83,3,37,1),(84,3,37,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(89,3,6,1),(93,11,1,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(164,23,1,1),(169,23,6,1),(170,23,7,1),(171,23,8,1),(172,23,9,1),(177,23,14,1),(178,23,15,1),(180,23,17,1),(190,23,27,1),(193,23,30,1),(198,23,35,1),(199,23,36,1),(200,23,37,1),(214,23,51,1),(215,24,1,1),(220,24,6,1),(221,24,7,1),(222,24,8,1),(223,24,9,1),(228,24,14,1),(229,24,15,1),(231,24,17,1),(241,24,27,1),(244,24,30,1),(249,24,35,1),(250,24,36,1),(251,24,37,1),(265,24,51,1),(266,3,51,1),(267,3,51,2),(268,23,1,1),(269,23,6,1),(270,23,7,1),(271,23,8,1),(272,23,51,1),(273,25,1,1),(274,25,6,1),(275,25,7,1),(276,25,8,1),(277,25,51,1),(278,26,1,1),(279,26,6,1),(280,26,7,1),(281,26,8,1),(282,26,51,1),(283,27,1,1),(284,27,6,1),(285,27,7,1),(286,27,8,1),(287,27,51,1),(288,27,52,1),(289,27,53,1),(290,27,54,1),(291,28,55,1),(313,29,1,1),(315,29,6,1),(316,29,7,1),(317,29,8,1),(318,29,51,1),(319,29,56,1),(351,31,1,1),(352,31,6,1),(353,31,7,1),(354,31,8,1),(355,31,51,1),(384,36,1,1),(385,36,6,1),(386,36,7,1),(387,36,8,1),(388,36,51,1),(389,37,1,1),(390,11,1,2),(391,11,1,3),(392,11,1,4),(393,32,1,1),(394,32,6,1),(395,32,7,1),(396,32,8,1),(398,32,51,1),(399,32,53,1),(400,32,58,1),(401,38,1,1),(402,38,6,1),(403,38,7,1),(404,38,8,1),(405,38,9,1),(406,38,51,1),(407,39,1,1),(408,39,6,1),(409,39,7,1),(410,39,8,1),(411,39,51,1),(418,30,1,1),(419,30,6,1),(420,30,7,1),(421,30,8,1),(422,30,51,1),(423,30,58,1),(424,30,59,1),(438,40,1,1),(439,40,6,1),(440,40,7,1),(441,40,8,1),(442,40,9,1),(443,40,51,1),(444,40,60,1),(445,40,61,1),(446,40,62,1),(447,40,63,1),(448,40,64,1),(449,40,65,1),(450,40,66,1),(451,40,67,1),(452,41,1,1),(453,41,6,1),(454,41,7,1),(455,41,8,1),(456,41,51,1),(457,41,1,2),(458,41,6,2),(459,41,7,2),(460,41,8,2),(461,41,9,2),(462,41,51,2),(473,42,1,1),(474,42,6,1),(475,42,7,1),(476,42,8,1),(477,42,51,1),(478,42,68,1),(479,42,1,2),(480,42,6,2),(481,42,7,2),(482,42,8,2),(483,42,51,2),(484,42,68,2);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -846,4 +846,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-22 11:57:38
+-- Dump completed on 2016-10-22 13:36:07
