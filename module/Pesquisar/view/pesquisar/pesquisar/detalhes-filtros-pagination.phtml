@@ -1,18 +1,20 @@
-    <link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
+<link rel="stylesheet" href="/assets/compact-css/jquery.tablesorter.theme.bootstrap.css,jquery.tablesorter.pager.css">
 
 <div class="col-md-12">
     <div class="table-responsive">
         <table class="table table-striped" id="tablesorterDetalhes">
             <thead>
             <tr>
-                <th class="text-center">Prova</th>
+                <th class="text-center">Identificador</th>
+                <th class="text-center">Titulo</th>
                 <th class="text-center">Ações</th>
 
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Prova</th>
+                <th class="text-center">Identificador</th>
+                <th class="text-center">Titulo</th>
                 <th class="text-center">Ações</th>
 
             </tr>
@@ -21,7 +23,7 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/prova-prova/detalhes-filtros-pagination/'.$id_prova,
+                            'urlPagination' => '/pesquisar-pesquisar/detalhes-filtros-pagination',
                             'countPerPage' => $countPerPage,
                             'divData' => '#detalhesfiltros-pagination',
                         ]
@@ -45,15 +47,15 @@
                                 ?>
                                 <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
                                        value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                            <?php
+                                <?php
                             } else {
                                 ?>
                                 &nbsp;
-                            <?php
+                                <?php
                             }
                             ?>
                         </td>
-                    <?php
+                        <?php
                     }
                     ?>
                 </tr>
@@ -61,20 +63,20 @@
                 foreach ($paginator as $key => $item) {
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['id_prova']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['id_tcc']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['tx_titulo_tcc']) ?></td>
                         </td>
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('rota_prova_aleatoria', array('controller' => 'prova-prova', 'action' => 'excluir-filtro-questao', 'id' => Estrutura\Helpers\Cript::enc($item['id_filtro_prova']), 'aux' => $id_prova))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('pesquisar', array('controller' => 'prova-prova', 'action' => 'excluir-filtro-questao'))) ?>
                                 </span>
                         </td>
                     </tr>
-                <?php
+                    <?php
                 }
-
                 ?>
                 </tbody>
-            <?php
+                <?php
             }
             ?>
 
@@ -82,15 +84,9 @@
 
     </div>
 </div>
-<!--<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>-->
-<script src="/assets/js/moment.js" type="text/javascript"></script>
-<script src="/assets/js/validator.min.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.ui.widget.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.tablesorter.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>
-<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
-
+<script
+    src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js"
+    type="text/javascript"></script>
 <script type="text/javascript" language="javascript">
     $(function () {
 

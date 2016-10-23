@@ -119,7 +119,7 @@ class PesquisarController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    /*
+
     public function detalhesFiltrosPaginationAction()
     {
         #$this->params()->fromPost('paramname');   // From POST
@@ -128,10 +128,8 @@ class PesquisarController extends AbstractCrudController
         #$this->params()->fromHeader('paramname'); // From header
         #$this->params()->fromFiles('paramname');  // From file being uploaded
         $filter = $this->getFilterPage();
-
         $request = $this->getRequest();
         $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
-        $id_prova = $post['id_prova'];
 
         $camposFilter = [
             '0' => [
@@ -140,7 +138,7 @@ class PesquisarController extends AbstractCrudController
 
         ];
 
-        $paginator = $this->service->getDetalhesFiltrosPaginator($id_prova, $filter, $camposFilter);
+        $paginator = $this->service->getDetalhesFiltrosPaginator($post, $filter, $camposFilter);
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
         $countPerPage = $this->getCountPerPage(
@@ -153,17 +151,16 @@ class PesquisarController extends AbstractCrudController
 
         $viewModel = new ViewModel([
             'service' => $this->service,
-            'form' => new \Prova\Form\QuestaoAleatoriaForm(),
+            'form' => new \Pesquisar\Form\PesquisarForm(),
             'paginator' => $paginator,
             'filter' => $filter,
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
-            'id_prova' => $id_prova,
             'atributos' => array()
         ]);
 
         return $viewModel->setTerminal(TRUE);
     }
-    */
+
 }
