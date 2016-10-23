@@ -2,59 +2,98 @@
 /** @var $lista \Pesquisar\Service\Pesquisar[] */
 ?>
 <div class="page-head">
-    <br/>
-    <div class="block-flat">
-        <div class="content">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Dados para Pesquisa</div>
-                <div class="panel-body" style="background-color: #F7F7F7">
+    <h2>Cadastro do TCC</h2>
+</div>
+<div class="row row-offcanvas row-offcanvas-right">
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    <?= $this->formRow($form->get('id_banca_examinadora')) ?>
-                                </div>
-                                <div class="col-md-3">
-                                    <?= $this->formRow($form->get('nm_curso')) ?>
-                                </div>
-                                <div class="col-md-3">
-                                    <?= $this->formRow($form->get('nm_area_conhecimento')) ?>
-                                </div>
-                                <div class="col-md-3">
-                                    <?= $this->formRow($form->get('nm_tipo_tcc')) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <?=$this->formRow($form->get('nm_professor'))?>
-                                </div>
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('nm_concluinte')) ?>
-                                </div>
-                                <div class="col-md-4">
-                                    <?= $this->formRow($form->get('nm_palavra_chave ')) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="detalhesfiltros-pagination"></div>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="col-md-10">
-                                        <button type="submit" class="btn btn-primary">Pesquisar</button>
+    <div class="col-xs-12 col-sm-12">
+        <div class="well">
+            <div class="page-head">
+                <br/>
+
+                <div class="block-flat">
+                    <div class="content">
+                        <?php
+                        $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'realizar-pesquisa-tcc')));
+                        $form->setAttribute('class', 'form-horizontal');
+                        $form->setAttribute('method', 'post');
+                        $form->setAttribute('data-role', 'form');
+                        $form->prepare();
+                        echo $this->form()->openTag($form);
+                        ?>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">Dados para Pesquisa</div>
+                            <div class="panel-body" style="background-color: #F7F7F7">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <?= $this->formRow($form->get('dt_inicio')) ?>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <?= $this->formRow($form->get('dt_final')) ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?= $this->formRow($form->get('id_tipo_tcc')) ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?= $this->formRow($form->get('id_area_conhecimento')) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <?=$this->formRow($form->get('id_professor_orientador'))?>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <?= $this->formRow($form->get('tx_titulo_tcc')) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <?=$this->formRow($form->get('id_curso'))?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?= $this->formRow($form->get('nm_concluinte')) ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?= $this->formRow($form->get('tx_palavra_chave')) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="col-md-10">
+                                                    <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <?= $this->form()->closeTag(); ?>
                 </div>
             </div>
+            <div class="row" id="detalhesfiltros-pagination"></div>
         </div>
-        <?= $this->form()->closeTag(); ?>
     </div>
 </div>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function () {
+        $("#dt_inicio").datepicker(
+            {dateFormat: 'dd/mm/yy'}
+        );
+        $("#dt_final").datepicker(
+            {dateFormat: 'dd/mm/yy'}
+        );
+    });
+</script>
 
 
