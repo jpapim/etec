@@ -14,7 +14,7 @@
                 <div class="block-flat">
                     <div class="content">
                         <?php
-                        $form->setAttribute('action', $this->url('navegacao', array('controller' => $controller, 'action' => 'realizar-pesquisa-tcc')));
+                        $form->setAttribute('action', '#');
                         $form->setAttribute('class', 'form-horizontal');
                         $form->setAttribute('method', 'post');
                         $form->setAttribute('data-role', 'form');
@@ -69,7 +69,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <div class="col-md-10">
-                                                    <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                                    <button id="pesquisar" type="submit" class="btn btn-primary">Pesquisar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,8 +77,8 @@
                                 </div>
                             </div>
                         </div>
+                        <?= $this->form()->closeTag(); ?>
                     </div>
-                    <?= $this->form()->closeTag(); ?>
                 </div>
             </div>
             <div class="row" id="detalhesfiltros-pagination"></div>
@@ -94,23 +94,39 @@
             {dateFormat: 'dd/mm/yy'}
         );
 
-        $.ajax({
-            type: "post",
-            dataType: "text",
-            cache: false,
-            url: '/pesquisar-pesquisar/detalhes-filtros-pagination',
-            async: true,
-            data: {
-            },
-            beforeSend: function () {
-                $('#detalhesfiltros-pagination').html(
-                    '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
-                );
-            },
-            success: function (data) {
+        function carregarGridPaginadaAjax() {
 
-                $('#detalhesfiltros-pagination').html(data);
-            }
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/pesquisar-pesquisar/detalhes-filtros-pagination',
+                async: true,
+                data: {
+                    dt_inicio: $('#dt_inicio').val(),
+                    dt_final: $('#dt_final').val(),
+                    id_tipo_tcc: $('#id_tipo_tcc').val(),
+                    id_area_conhecimento: $('#id_area_conhecimento').val(),
+                    id_professor_orientador: $('#id_professor_orientador').val(),
+                    tx_titulo_tcc: $('#tx_titulo_tcc').val(),
+                    id_curso: $('#id_curso').val(),
+                    nm_concluinte: $('#nm_concluinte').val(),
+                    tx_palavra_chave: $('#tx_palavra_chave').val()
+                },
+                beforeSend: function () {
+                    $('#detalhesfiltros-pagination').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#detalhesfiltros-pagination').html(data);
+                }
+            });
+        }
+
+        $('#pesquisar').click(function() {
+            carregarGridPaginadaAjax()
+            return false;
         });
 
     });

@@ -74,12 +74,13 @@ class PesquisarService extends AbstractEstruturaService
             ->join('tipo_tcc', 'tipo_tcc.id_tipo_tcc = tcc.id_tipo_tcc', ['nm_tipo_tcc'])
             ->join('professor', 'professor.id_professor = tcc.id_professor_orientador', ['nm_professor']);
 
+
         $whereBruto = [];
         if (isset($arrFiltro['dt_inicio']) && $arrFiltro['dt_inicio']) {
-            $whereBruto['dt_inicio = ?'] = $arrFiltro['dt_inicio'];
+            $whereBruto['dt_banca >= ?'] = \Estrutura\Helpers\Data::converterDataBrazil2BancoMySQL($arrFiltro['dt_inicio']);
         }
         if (isset($arrFiltro['dt_final']) && $arrFiltro['dt_final']) {
-            $whereBruto['dt_final = ?'] = $arrFiltro['dt_final'];
+            $whereBruto['dt_banca <= ?'] = \Estrutura\Helpers\Data::converterDataBrazil2BancoMySQL($arrFiltro['dt_final']);
         }
         if (isset($arrFiltro['id_tipo_tcc']) && $arrFiltro['id_tipo_tcc']) {
             $whereBruto['tcc.id_tipo_tcc = ?'] =  $arrFiltro['id_tipo_tcc'];
@@ -91,17 +92,22 @@ class PesquisarService extends AbstractEstruturaService
             $whereBruto['id_professor_orientador = ?'] = $arrFiltro['id_professor_orientador'];
         }
         if (isset($arrFiltro['tx_titulo_tcc']) && $arrFiltro['tx_titulo_tcc']) {
-            $whereBruto['tx_titulo_tcc LIKE ?'] = '%' . $arrFiltro['tx_titulo_tcc'] . '%';
+            $whereBruto['UPPER(tx_titulo_tcc) LIKE UPPER(?)'] = '%' . $arrFiltro['tx_titulo_tcc'] . '%';
         }
         if (isset($arrFiltro['id_curso']) && $arrFiltro['id_curso']) {
-            $whereBruto['id_curso = ?'] = $arrFiltro['id_curso'];
+            $select->join('concluinte', 'concluinte.id_tcc = tcc.id_tcc', ['nm_concluinte']);
+            $select->join('curso', 'curso.id_curso = concluinte.id_curso', ['nm_curso']);
+            $whereBruto['curso.id_curso = ?'] = $arrFiltro['id_curso'];
         }
-        #if (isset($arrFiltro['nm_concluinte']) && $arrFiltro['nm_concluinte']) {
-        #    $whereBruto['nm_concluinte LIKE ?'] = '%' . $arrFiltro['nm_concluinte'] . '%';
-        #}
-        #if (isset($arrFiltro['tx_palavra_chave']) && $arrFiltro['tx_palavra_chave']) {
-        #    $whereBruto['tx_palavra_chave LIKE ?'] = '%' . $arrFiltro['tx_palavra_chave'] . '%';
-        #}
+        if (isset($arrFiltro['nm_concluinte']) && $arrFiltro['nm_concluinte']) {
+            $select->join('concluinte', 'concluinte.id_tcc = tcc.id_tcc', ['nm_concluinte']);
+            $whereBruto['UPPER(nm_concluinte) LIKE UPPER(?)'] = '%' . $arrFiltro['nm_concluinte'] . '%';
+        }
+        if (isset($arrFiltro['tx_palavra_chave']) && $arrFiltro['tx_palavra_chave']) {
+            $select->join('palavra_chave_tcc', 'palavra_chave_tcc.id_tcc = tcc.id_tcc', ['id_palavra_chave']);
+            $select->join('palavra_chave', 'palavra_chave.id_palavra_chave = palavra_chave_tcc.id_palavra_chave', ['nm_palavra_chave']);
+            $whereBruto['UPPER(nm_palavra_chave) LIKE UPPER(?)'] = '%' . $arrFiltro['tx_palavra_chave'] . '%';
+        }
 
         if (!empty($filter)) {
             foreach ($filter as $key => $value) {
@@ -114,6 +120,7 @@ class PesquisarService extends AbstractEstruturaService
             }
         }
 
+        $select->quantifier('DISTINCT');
         $select->where($whereBruto)->order(['dt_cadastro DESC']);
 
         #xd($select->getSqlString($this->getAdapter()->getPlatform()));

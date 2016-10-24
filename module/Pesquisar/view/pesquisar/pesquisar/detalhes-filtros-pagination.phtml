@@ -5,17 +5,21 @@
         <table class="table table-striped" id="tablesorterDetalhes">
             <thead>
             <tr>
-                <th class="text-center">Identificador</th>
+                <th class="text-center">Ident</th>
+                <th class="text-center">Area</th>
                 <th class="text-center">Titulo</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">Download</th>
 
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Identificador</th>
+                <th class="text-center">Ident</th>
+                <th class="text-center">Area</th>
                 <th class="text-center">Titulo</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">Download</th>
 
             </tr>
             <tr>
@@ -64,12 +68,21 @@
                     ?>
                     <tr>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['id_tcc']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_area_conhecimento']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['tx_titulo_tcc']) ?></td>
-                        </td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_tipo_tcc']) ?></td>
                         <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('pesquisar', array('controller' => 'prova-prova', 'action' => 'excluir-filtro-questao'))) ?>
-                                </span>
+                            <?php if(is_null($item['ar_arquivo'])) { ?>
+                                &nbsp;
+                            <?php } else {  ?>
+                                <?= \Estrutura\Service\HtmlHelper::botaoDownload(
+                                    $this->url('navegacao', array('controller' => 'tcc-tcc', 'action' => 'download-arquivo', 'id' => \Estrutura\Helpers\Cript::enc($item['id_tcc']))),
+                                    'Download',
+                                    'enviar_para_download',
+                                    'glyphicon glyphicon-cloud-download',
+                                    'btn-alterar btn-xs btn-alterar-customizado'
+                                ) ?>
+                            <?php } ?>
                         </td>
                     </tr>
                     <?php

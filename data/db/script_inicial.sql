@@ -145,7 +145,7 @@ CREATE TABLE `concluinte` (
   KEY `fk_tcc_concluinte_idx` (`id_tcc`),
   CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`),
   CONSTRAINT `fk_tcc_concluinte` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +154,7 @@ CREATE TABLE `concluinte` (
 
 LOCK TABLES `concluinte` WRITE;
 /*!40000 ALTER TABLE `concluinte` DISABLE KEYS */;
-INSERT INTO `concluinte` VALUES (1,1,'Eduardo ','545485',2),(2,1,'Elias Jose','2332',1),(3,1,'jdvsvydjww','fefefe',4),(4,1,'fgegefgief','efefe',4);
+INSERT INTO `concluinte` VALUES (1,1,'Eduardo ','545485',2),(2,1,'Elias Jose','2332',1),(3,2,'jdvsvydjww','fefefe',4),(4,2,'fgegefgief','efefe',4),(5,1,'Jose','e3e3e3e',2);
 /*!40000 ALTER TABLE `concluinte` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +220,7 @@ CREATE TABLE `curso` (
   `id_curso` int(11) NOT NULL AUTO_INCREMENT,
   `nm_curso` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_curso`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +229,7 @@ CREATE TABLE `curso` (
 
 LOCK TABLES `curso` WRITE;
 /*!40000 ALTER TABLE `curso` DISABLE KEYS */;
-INSERT INTO `curso` VALUES (1,'Bacharel em Sistema de Informação');
+INSERT INTO `curso` VALUES (1,'Bacharel em Sistema de Informação'),(2,'TADS');
 /*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +405,7 @@ CREATE TABLE `palavra_chave_tcc` (
   KEY `FK_Reference_101` (`id_palavra_chave`),
   CONSTRAINT `FK_Reference_100` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`),
   CONSTRAINT `FK_Reference_101` FOREIGN KEY (`id_palavra_chave`) REFERENCES `palavra_chave` (`id_palavra_chave`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +414,7 @@ CREATE TABLE `palavra_chave_tcc` (
 
 LOCK TABLES `palavra_chave_tcc` WRITE;
 /*!40000 ALTER TABLE `palavra_chave_tcc` DISABLE KEYS */;
-INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1),(5,4,1),(6,4,2);
+INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1),(5,4,1),(6,4,2),(7,3,2);
 /*!40000 ALTER TABLE `palavra_chave_tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -622,7 +622,7 @@ CREATE TABLE `tcc` (
 
 LOCK TABLES `tcc` WRITE;
 /*!40000 ALTER TABLE `tcc` DISABLE KEYS */;
-INSERT INTO `tcc` VALUES (1,1,1,1,2,1,5,'Teste','aqaqaq','2016-10-14 19:42:31','2016-10-16 20:16:20',10.00,NULL),(2,1,1,2,1,3,2,'Teste do Salinas','deded','2016-10-14 19:45:49','2016-10-16 20:16:20',99.99,NULL),(3,1,1,1,2,3,5,'Teste de Arquivo','swswswsw','2016-10-15 15:01:42','2016-10-16 20:16:20',99.99,NULL),(4,1,1,1,2,2,2,'rgrgrg','fbfvbfbfbfbfb','2016-10-19 00:03:56','2016-10-19 00:03:56',3.00,'Alysson Vicuña de Oliveira Curriculum Vitae - Gerencial_5806b86ccfed0.pdf');
+INSERT INTO `tcc` VALUES (1,1,1,1,2,1,5,'Teste','aqaqaq','2016-10-14 19:42:31','2016-10-16 20:16:20',10.00,NULL),(2,1,1,2,1,3,2,'Teste do Salinas','deded','2016-10-14 19:45:49','2016-10-16 20:16:20',99.99,NULL),(3,1,1,1,2,3,5,'Teste de Arquivo','swswswsw','2016-10-15 15:01:42','2016-10-16 20:16:20',99.99,NULL),(4,1,1,1,2,2,2,'rgrgrg','fbfvbfbfbfbfb','2016-10-19 00:03:56','2016-10-23 22:11:41',3.00,NULL);
 /*!40000 ALTER TABLE `tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -846,4 +846,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-23  2:31:17
+-- Dump completed on 2016-10-24  1:07:40

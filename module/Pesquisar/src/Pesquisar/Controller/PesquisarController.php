@@ -76,50 +76,6 @@ class PesquisarController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function realizarPesquisaTccAction()
-    {
-        #$this->params()->fromPost('paramname');   // From POST
-        #$this->params()->fromQuery('paramname');  // From GET
-        #$this->params()->fromRoute('paramname');  // From RouteMatch
-        #$this->params()->fromHeader('paramname'); // From header
-        #$this->params()->fromFiles('paramname');  // From file being uploaded
-        $filter = $this->getFilterPage();
-        $request = $this->getRequest();
-        $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
-
-        $camposFilter = [
-            '0' => [
-                //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
-            ],
-
-        ];
-
-        $paginator = $this->service->getDetalhesFiltrosPaginator($post, $filter, $camposFilter);
-        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
-
-        $countPerPage = $this->getCountPerPage(
-            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
-        );
-
-        $paginator->setItemCountPerPage($this->getCountPerPage(
-            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
-        ))->setCurrentPageNumber($this->getCurrentPage());
-
-        $viewModel = new ViewModel([
-            'service' => $this->service,
-            'form' => new \Pesquisar\Form\PesquisarForm(),
-            'paginator' => $paginator,
-            'filter' => $filter,
-            'countPerPage' => $countPerPage,
-            'camposFilter' => $camposFilter,
-            'controller' => $this->params('controller'),
-            'atributos' => array()
-        ]);
-
-        return $viewModel->setTerminal(TRUE);
-    }
-
-
     public function detalhesFiltrosPaginationAction()
     {
         #$this->params()->fromPost('paramname');   // From POST
@@ -132,10 +88,6 @@ class PesquisarController extends AbstractCrudController
         $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
 
         $camposFilter = [
-            '0' => [
-                //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
-            ],
-
         ];
 
         $paginator = $this->service->getDetalhesFiltrosPaginator($post, $filter, $camposFilter);
