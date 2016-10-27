@@ -3,6 +3,7 @@
 namespace BancaExaminadora\Controller;
 
 use Professor;
+use MembrosBanca;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
 use Estrutura\Helpers\Data;
@@ -214,68 +215,59 @@ class BancaExaminadoraController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-//    public function adicionarbancaexaminadoradetalheAction()
-//    {
-//        //Se for a chamada Ajax
-//        if ($this->getRequest()->isPost()) {
-//            $id_banca_examinadora = $this->params()->fromPost('id');
-//            $dt_encontro = $this->params()->fromPost('dt_encontro');
-//
-//            $dt_encontro = Data::converterDataHoraBrazil2BancoMySQL($dt_encontro);
-//            $detalhe_periodo_letivo = new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
-//
-//            $id_inserido = $detalhe_periodo_letivo->getTable()->salvar(array('id_periodo_letivo' => $id_periodo_letivo, 'dt_encontro' => $dt_encontro), null);
-//            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'dt_encontro' => $dt_encontro));
-//
-//            return $valuesJson;
-//        }
-//    }
-//
-//    public function detalhePaginationAction()
-//    {
-//        #$this->params()->fromPost('paramname');   // From POST
-//        #$this->params()->fromQuery('paramname');  // From GET
-//        #$this->params()->fromRoute('paramname');  // From RouteMatch
-//        #$this->params()->fromHeader('paramname'); // From header
-//        #$this->params()->fromFiles('paramname');  // From file being uploaded
-//
-//        $filter = $this->getFilterPage();
-//
-//        $id_periodo_letivo = $this->params()->fromPost('id_periodo_letivo');
-//        $id_periodo_letivo = isset($id_periodo_letivo) && $id_periodo_letivo ? $id_periodo_letivo : $this->params()->fromRoute('id');
-//
-//        $camposFilter = [
-//            '0' => [
-//                //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
-//            ],
-//
-//        ];
-//
-//        $paginator = $this->service->getPeriodoLetivoDetalhePaginator($id_periodo_letivo, $filter, $camposFilter);
-//
-//        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
-//
-//        $countPerPage = $this->getCountPerPage(
-//            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
-//        );
-//
-//        $paginator->setItemCountPerPage($this->getCountPerPage(
-//            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
-//        ))->setCurrentPageNumber($this->getCurrentPage());
-//
-//        $viewModel = new ViewModel([
-//            'service' => $this->service,
-//            'form' => new \DetalhePeriodoLetivo\Form\DetalhePeriodoLetivoForm(),
-//            'paginator' => $paginator,
-//            'filter' => $filter,
-//            'countPerPage' => $countPerPage,
-//            'camposFilter' => $camposFilter,
-//            'controller' => $this->params('controller'),
-//            'id_periodo_letivo' => $id_periodo_letivo,
-//            'atributos' => array()
-//        ]);
-//
-//        return $viewModel->setTerminal(TRUE);
-//    }
+    public function adicionarProfessoresAction()
+    {
+        //Se for a chamada Ajax
+        if ($this->getRequest()->isPost()) {
+
+            $id_banca_examinadora = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
+            $id_membro_banca = $this->params()->fromPost('id_membro_banca');
+            $detalhe_banca = new MembrosBanca\Service\MembrosBancaService();
+
+            $id_inserido = $detalhe_banca->getTable()->salvar(array(
+                'id_banca_examinadora'=>$id_banca_examinadora,
+                'id_membro_banca'=>$id_membro_banca,
+            ), null);
+            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'id_membro_banca'=>$id_membro_banca) );
+            return $valuesJson;
+        }
+    }
+
+    public function excluirMembroBancaViaBancaAction()
+    {
+        try {
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+            $id = Cript::dec($this->params('id'));
+            $id_banca_examinadora = Cript::dec($this->params('aux'));
+
+            $MembrobancaService = new \MembrosBanca\Service\MembrosBancaService();
+            $MembrobancaService->setId($id);
+            $MembrobancaService->setIdBancaExaminadora();
+
+            $dados = $MembrobancaService->filtrarObjeto()->current();
+            if (!$dados) {
+                throw new \Exception('Registro nao encontrado');
+            }
+
+            $MembrobancaService->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => \Estrutura\Helpers\Cript::enc($id_banca_examinadora)]);
+
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Para excluir Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+
+    }
 
 } 

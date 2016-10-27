@@ -3,19 +3,13 @@
 namespace MembrosBanca\Controller;
 
 use Estrutura\Controller\AbstractCrudController;
-use Estrutura\Helpers\Cript;
-use Estrutura\Helpers\Data;
+use Zend\View\Model\ViewModel;
+
 
 class MembrosBancaController extends AbstractCrudController
 {
-    /**
-     * @var \MembrosBanca\Service\MembrosBanca
-     */
     protected $service;
 
-    /**
-     * @var \MembrosBanca\Form\MembrosBanca
-     */
     protected $form;
 
     public function __construct(){
@@ -27,47 +21,61 @@ class MembrosBancaController extends AbstractCrudController
         return parent::index($this->service, $this->form);
     }
 
+    public function indexPaginationAction()
+    {
+        $filter = $this->getFilterPage();
+
+        $camposFilter = [
+            '0' => NULL,
+            '1' => [
+                'filter' => "banca_examinadora.dt_banca LIKE ?",
+            ],
+            '2' => [
+                'filter' => "professor.nm_professor LIKE ?",
+            ],
+            '3' => NULL,
+        ];
+
+
+        $paginator = $this->service->getMembrosBancaPaginator($filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => $this->form,
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+
+    public function gravarAction(){
+        $this->addSuccessMessage('Registro gravado com sucesso!');
+        $this->redirect()->toRoute('navegacao', array('controller' => 'membros_banca-membrosbanca') );
+        return parent::gravar($this->service, $this->form);
+    }
+
     public function cadastroAction()
     {
         return parent::cadastro($this->service, $this->form);
     }
 
-    #public function excluirAction()
-    #{
-    #    return parent::excluir($this->service, $this->form);
-    #}
-
     public function excluirAction()
     {
-        try {
-            $request = $this->getRequest();
-
-            if ($request->isPost()) {
-                return new JsonModel();
-            }
-
-            $id_membro_banca = $this->params('id');
-            $this->service->setId($id_membro_banca);
-
-            $dados = $this->service->filtrarObjeto()->current();
-
-            if (!$dados) {
-                throw new \Exception('Registro não encontrado');
-            }
-
-            $membro_banca = new \MembrosBanca\Service\MembrosBancaService();
-            $arrMembro = $membro_banca->getMembroBancaToArray($id_membro_banca);
-            $id_banca = $arrMembro['id_banca_examinadora'];
-
-            $this->service->excluir();
-            $this->addSuccessMessage('Registro excluido com sucesso');
-            return $this->redirect()->toRoute('navegacao', ['controller' => 'banca_examinadora-bancaexaminadora', 'action' => 'realizarinscricoes', 'id'=>Cript::enc($id_banca)]);
-        } catch (\Exception $e) {
-
-            $this->addErrorMessage($e->getMessage());
-            return $this->redirect()->toRoute('navegacao', ['controller' => 'banca_examinadora-bancaexaminadora', 'action' => 'realizarinscricoes', 'id'=>Cript::enc($id_banca)]);
-        }
+        return parent::excluir($this->service, $this->form);
     }
-
-
 }
