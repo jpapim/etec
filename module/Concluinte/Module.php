@@ -47,7 +47,7 @@ class Module
 				'factories' => array(
 						'Concluinte\Service\ConcluinteService' => function($sm) {
 
-						return new Concluinte\Service\ConcluinteService();
+						return new \Concluinte\Service\ConcluinteService();
 						},
 						)
 				);

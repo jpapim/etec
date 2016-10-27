@@ -1,0 +1,129 @@
+<div class="page-head">
+    <h2>Dados do TCC cadastrado</h2>
+</div>
+<div class="cl-mcont">
+    <div class="row">
+        <div class="block-flat">
+            <div class="content">
+
+                <?php
+                $form->setAttribute('action', $this->url('navegacao', array('controller' => 'membros_banca-membrosbanca', 'action' => 'gravar')));
+                $form->setAttribute('class', 'form-horizontal');
+                $form->setAttribute('method', 'post');
+                $form->setAttribute('data-role', 'form');
+                //                echo '<pre>';
+                //                 print_r($dadosBancaExaminadora);
+                //                 echo '</pre>';
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosBancaExaminadora->getId()));
+                $form->get('id_banca_examinadora')->setValue($dadosBancaExaminadora->getId());
+                echo $this->formHidden($form->get('id'));
+                echo $this->formHidden($form->get('id_banca_examinadora'));
+
+                #xd($dadosBancaExaminadora);
+
+                ?>
+
+
+                <div class="bs-callout bs-callout-primary">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4><b>Data da
+                                    Banca:</b> <?= Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($dadosBancaExaminadora->getDtBanca()) ?>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>Quant. Professores:</b>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Form para adicionar o professor como membro da Banca -->
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border" style="font-size: 200%;">Adicionar membro à Banca</legend>
+                    <div id="mensagem_professor"></div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <?= $this->formRow($form->get('id_professor')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <a style="margin-top: 25px;" id="adicionar_professor" class="btn btn-primary" href="#">Adicionar
+                                professor</a>
+                        </div>
+                    </div>
+                    <div class="row" id="listar-professores"></div>
+                </fieldset>
+                <?= $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"
+        src="/assets/compact-js/moment.js,bootstrap-datetimepicker.min.js,validator.min.js,jquery.mask.min.js,jquery.complexify.js,usuario|usuario|cadastro.js"></script>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function () {
+        $("#dt_banca").datepicker(
+            {dateFormat: 'dd/mm/yy'}
+        );
+
+        //Função que faz a listagem ser paginada.
+        function carregarProfessoresAjax() {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                cache: false,
+                url: '/banca_examinadora-bancaexaminadora/listar-professores',
+                async: true,
+                data: {id_banca_examinadora: <?=$dadosBancaExaminadora->getId()?>},
+                beforeSend: function () {
+                    $('#listar-professores').html(
+                        '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
+                    );
+                },
+                success: function (data) {
+                    $('#listar-professores').html(data);
+                }
+            });
+        }
+
+        carregarProfessoresAjax(); //Chama a Paginação da listagem
+
+        /*Função Ajax que adiciona os encontros ao Banco de dados*/
+        $('#adicionar_professor').click(function () {
+            var dados = $('#bancaexaminadoradetalheform').serialize();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/banca_examinadora-bancaexaminadora/listar-professores',
+                async: true,
+                data: dados,
+                success: function (response) {
+                    $('#mensagem_professor').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
+                    $("#id_professor").val("");
+                    if (response.sucesso == true) {
+                        $('#mensagem_professor').show();
+                        $('#mensagem_professor').html("<p>O professor, " + response.nm_professor + ", foi adicionado com sucesso!</p>");
+                        carregarProfessoresAjax();
+                        setTimeout(function () {
+                            $('#mensagem_professor').hide(); // "mensagem_professor" é o id do elemento que seja manipular.
+                        }, 45000000); // O valor é representado em milisegundos.
+                    } else {
+                        $('#mensagem_professor').show();
+                        $('#mensagem_professor').html("<p>Este professor já foi adicionado!</p>");
+                        $('#mensagem_professor').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
+                        setTimeout(function () {
+                            $('#mensagem_professor').hide(); // "mensagem_professor" é o id do elemento que seja manipular.
+                        }, 45000000); // O valor é representado em milisegundos.
+                    }
+                }
+            });
+        });
+
+    });
+</script>

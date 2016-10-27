@@ -34,16 +34,11 @@ class ConcluinteService extends Entity {
 		];
 
 		if (!empty($filter)) {
-
 			foreach ($filter as $key => $value) {
-
 				if ($value) {
-
 					if (isset($camposFilter[$key]['mascara'])) {
-
 						eval("\$value = " . $camposFilter[$key]['mascara'] . ";");
 					}
-
 					$where[$camposFilter[$key]['filter']] = '%' . $value . '%';
 				}
 			}

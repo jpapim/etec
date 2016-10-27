@@ -2,143 +2,138 @@
 
 namespace BancaExaminadora\Controller;
 
+use Professor;
 use Estrutura\Controller\AbstractCrudController;
-use Zend\View\Model\JsonModel;
 use Estrutura\Helpers\Cript;
-use Zend\View\Model\ViewModel;
 use Estrutura\Helpers\Data;
+use Estrutura\Helpers\Pagination;
+use Zend\View\Model\ViewModel;
+use Zend\Form\Element;
+use Zend\View\Model\JsonModel;
+use Zend\Http\Response\Stream;
+
 
 class BancaExaminadoraController extends AbstractCrudController
 {
+
     /**
      * @var \BancaExaminadora\Service\BancaExaminadora
      */
     protected $service;
-
     /**
      * @var \BancaExaminadora\Form\BancaExaminadora
      */
     protected $form;
 
-    public function __construct(){
+        public function  __construct()
+    {
         parent::init();
     }
 
-    public function indexAction() {
-  		return new ViewModel([
-  				'service' => $this->service,
-  				'form' => $this->form,
-  				'controller' => $this->params('controller'),
-  				'atributos' => array()
-  		]);
-  	}
+    public function indexAction()
+    {
+        return parent::index($this->service, $this->form);
+    }
 
-    /*
-    * Chamado quando é filtrado algo
-    */
     public function indexPaginationAction()
     {
-      $filter = $this->getFilterPage();
 
-      $camposFilter = [
-          '0' => [
-              'filter' => "banca_examinadora.id_banca_examinadora LIKE ?",
-          ],
-          '1' => [
-              'filter' => "DATE(banca_examinadora.dt_banca) LIKE STR_TO_DATE(?, '%d/%m/%Y') ",
-          ],
-          '2' => NULL,
-      ];
+        $filter = $this->getFilterPage();
 
-      $paginator = $this->service->getBancaExaminadoraPaginator($filter, $camposFilter);
+        $camposFilter = [
+            '0' => [
+                'filter' => "banca_examinadora.id_banca_examinadora  LIKE ?"
+            ],
+            '1' => [
+                'filter' => "banca_examinadora.dt_banca  LIKE ?"
+            ],
+            '2' => NULL,
 
-      $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+        ];
 
-      $countPerPage = $this->getCountPerPage(
-          current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
-          );
+        #xd($id_banca_examinadora = $this->params('id'));
 
-      $paginator->setItemCountPerPage($this->getCountPerPage(
-          current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
-          ))->setCurrentPageNumber($this->getCurrentPage());
+        $paginator = $this->service->getBancaExaminadoraPaginator($filter, $camposFilter);
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+        $countPerPage = $this->getCountPerPage(
+            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
 
-          $viewModel = new ViewModel([
-              'service' => $this->service,
-              'form' => $this->form,
-              'paginator' => $paginator,
-              'filter' => $filter,
-              'countPerPage' => $countPerPage,
-              'camposFilter' => $camposFilter,
-              'controller' => $this->params('controller'),
-              'atributos' => array()
-          ]);
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
 
-          return $viewModel->setTerminal(TRUE);
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => $this->form,
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'atributos' => array(),
+        ]);
+
+        return $viewModel->setTerminal(true);
     }
 
-    public function gravarAction() {
-      try {
-          $controller = $this->params('controller');
-          $request = $this->getRequest();
-          $service = $this->service;
-          $form = $this->form;
-
-          if (!$request->isPost()) {
-              throw new \Exception('Dados Inv�lidos');
-          }
-
-          $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
-
-          $files = $request->getFiles();
-          $upload = $this->uploadFile($files);
-
-          $post = array_merge($post, $upload);
-
-          if (isset($post['id']) && $post['id']) {
-              $post['id'] = Cript::dec($post['id']);
-          }
-
-          #################################################################
-          # Customizaçao dos Valores antes de gravar no banco
-          $post['dt_banca'] = Data::converterDataHoraBrazil2BancoMySQL($post['dt_banca']);
-          #################################################################
-
-          $form->setData($post);
-
-          if (!$form->isValid()) {
-              $this->addValidateMessages($form);
-              $this->setPost($post);
-              $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
-              return false;
-          }
-
-          $service->exchangeArray($form->getData());
-          $this->addSuccessMessage('Registro Alterado com sucesso');
-
-          $id_banca_examinadora = $service->salvar();
-
-          //Define o redirecionamento
-          if (isset($post['id']) && $post['id']) {
-              $this->redirect()->toRoute('navegacao',array('controller'=>$controller,'action'=>'index'));
-          } else {
-              $this->redirect()->toRoute('navegacao',array('controller'=>$controller,
-                'action'=>'realizarinscricoes','id'=>Cript::enc($id_banca_examinadora)));
-          }
-
-          return $id_banca_examinadora;
-
-      } catch (\Exception $e) {
-
-          $this->setPost($post);
-          $this->addErrorMessage($e->getMessage());
-          $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
-          return false;
-      }
-    }
-
-    public function cadastroAction()
+    public function gravarAction()
     {
-        return parent::cadastro($this->service, $this->form);
+        try {
+            $controller = $this->params('controller');
+            $request = $this->getRequest();
+            $service = $this->service;
+            $form = $this->form;
+
+            if (!$request->isPost()) {
+                throw new \Exception('Dados Inválidos');
+            }
+
+            $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+
+            $files = $request->getFiles();
+            $upload = $this->uploadFile($files);
+
+            $post = array_merge($post, $upload);
+
+            if (isset($post['id']) && $post['id']) {
+                $post['id'] = Cript::dec($post['id']);
+            }
+            #################################################################
+            # Inicio da Customizaçao dos Valores antes de gravar no banco
+            $post['dt_banca'] = Data::converterDataHoraBrazil2BancoMySQL($post['dt_banca']);
+            # Fim da Customizaçao dos Valores antes de gravar no banco
+            #################################################################
+
+            $form->setData($post);
+
+            if (!$form->isValid()) {
+                $this->addValidateMessages($form);
+                $this->setPost($post);
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+                return false;
+            }
+            $service->exchangeArray($form->getData());
+            $this->addSuccessMessage('Registro Alterado com sucesso');
+            $id_banca_examinadora = $service->salvar();
+
+            //Define o redirecionamento
+            if (isset($post['id']) && $post['id']) {
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
+            } else {
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($id_banca_examinadora
+				)));
+            }
+
+            return $id_banca_examinadora;
+
+        } catch (\Exception $e) {
+
+            $this->setPost($post);
+            $this->addErrorMessage($e->getMessage());
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+            return false;
+        }
     }
 
     public function excluirAction()
@@ -146,95 +141,141 @@ class BancaExaminadoraController extends AbstractCrudController
         return parent::excluir($this->service, $this->form);
     }
 
-    public function realizarinscricoesAction()
+    public function cadastroAction()
     {
-        //Se for a chamada Ajax
-        if ($this->getRequest()->isPost()) {
-
-          // recebendo o nome do professor e o id da banca  
-          $request = $this->getRequest();
-          $nm_professor = $this->params()->fromPost('nm_professor');
-          $id_banca = $this->params()->fromPost('id_banca_examinadora');
-
-          // buscando o id do professor através de seu nome
-          $professor = new \Professor\Service\ProfessorService();
-          $arrProfessor = $professor->getIdProfessorPorNomeToArray(trim($this->params()->fromPost('nm_professor')));
-
-          // verifica a existência do professor na base de dados.
-          $membrosService = new \MembrosBanca\Service\MembrosBancaService();
-          $values = [];
-          if (!$arrProfessor) {
-            $values['sucesso'] = false;
-            $values['nm_professor'] = null;
-          } else {
-            // verifica se o professor já está cadastrado na banca examinadora. 
-            // Caso não esteja será efetuado o cadastro.
-            if ($membrosService->checarSeProfessorEstaInscritoNaBanca($arrProfessor['id_professor'],$id_banca)) {
-                  $values['sucesso'] = false;
-                  $values['nm_professor'] = $arrProfessor['nm_professor'];
-            } else {
-                $id_inserido = $membrosService->getTable()->salvar(
-                  array('id_banca_examinadora'=>$id_banca,
-                    'id_professor'=>$arrProfessor['id_professor'],
-                      'cs_orientador'=>$arrProfessor['cs_orientador']), null);
-                  $values['sucesso'] = true;
-                  $values['nm_professor'] = $arrProfessor['nm_professor'];
-            }
-          }
-
-          // realiza a contagem dos professores inscritos
-          $inscricoes = $membrosService->fetchAllMembrosBanca(array('id_banca_examinadora' => $id_banca));
-          $values['qtd_inscritos'] = count($inscricoes);
-
-          $valuesJson = new JsonModel($values);
-          return $valuesJson;
-
-        } else { //Se for requisição normal
-
-          $id = Cript::dec($this->params('id'));
-          $post = $this->getPost();
-
-          if (!empty($post)) {
-              $this->form->setData($post);
-          }
- 
-          $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
-          $dadosBanca = $banca->getBancaExaminadoraToArray($id);
-
-          $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
-          $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
-              'id_banca_examinadora' => $dadosBanca['id_banca_examinadora']));
-
-          $dadosView = [
-              'service' => $this->service,
-              'form' => $this->form,
-              'controller' => $this->params('controller'),
-              'atributos' => array(),
-              'dados_banca' => $dadosBanca,
-              'lista_inscritos' => $dadosInscricoes
-          ];
-
-          return new ViewModel($dadosView);
-        }        
+        return parent::cadastro($this->service, $this->form);
     }
 
-    public function detalhePaginationAction()
-    {
-        // busca os inscritos de uma determinada banca a partir do id informado
-        $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
-        $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
-        $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
-            'id_banca_examinadora' => $id_banca_examinadora));
+    // Iniciando ações do Cadastro Detalhe
 
-        // passando os dados service, form, controller, id_banca_examinadora
-        // e lista_incritos para a view
+    public function cadastroDetalheAction()
+    {
+        //recuperar o id do Modulo Banca
+        $id_banca_examinadora = Cript::dec($this->params('id') );
+
+        $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
+        $dadosBancaExaminadora = $banca->buscar($id_banca_examinadora);
+        #xd($dadosBancaExaminadora);
+
         $dadosView = [
-          'service' => $this->service,
-          'form' => $this->form,
-          'controller' => $this->params('controller'),
-          'id_banca_examinadora' => $id_banca_examinadora,
-          'lista_inscritos' => $dadosInscricoes
+            'service' => new \MembrosBanca\Service\MembrosBancaService(),
+            'form' => new \MembrosBanca\Form\MembrosBancaForm(),
+            'controller' => $this->params('controller'),
+            'atributos' => array(),
+            'id_banca_examinadora' => $id_banca_examinadora,
+            'dadosBancaExaminadora' => $dadosBancaExaminadora,
         ];
-        return (new ViewModel($dadosView))->setTerminal(true);
+        #xd($dadosView);
+
+        return new ViewModel($dadosView);
+
     }
-}
+
+    public function listarProfessoresAction()
+    {
+        $filter = $this->getFilterPage();
+
+        $id_banca_examinandora = $this->params()->fromPost('id_banca_examinandora');
+        $camposFilter = [
+            '0' => [
+                'filter' => "Membros_banca.nm_professor LIKE ?"
+            ],
+            '1' => [
+                'filter' => "Membros_banca.cs_orientador  LIKE ?"
+            ],
+            '2' => NULL,
+        ];
+        #xd($id_banca_examinadora = $this->params('id'));
+
+        $paginator = $this->service->getProfessorPaginator( $id_banca_examinandora, $filter, $camposFilter);
+
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => new \MembrosBanca\Form\MembrosBancaForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'id_banca_examinandora'=>$id_banca_examinandora,
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+
+//    public function adicionarbancaexaminadoradetalheAction()
+//    {
+//        //Se for a chamada Ajax
+//        if ($this->getRequest()->isPost()) {
+//            $id_banca_examinadora = $this->params()->fromPost('id');
+//            $dt_encontro = $this->params()->fromPost('dt_encontro');
+//
+//            $dt_encontro = Data::converterDataHoraBrazil2BancoMySQL($dt_encontro);
+//            $detalhe_periodo_letivo = new \DetalhePeriodoLetivo\Service\DetalhePeriodoLetivoService();
+//
+//            $id_inserido = $detalhe_periodo_letivo->getTable()->salvar(array('id_periodo_letivo' => $id_periodo_letivo, 'dt_encontro' => $dt_encontro), null);
+//            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'dt_encontro' => $dt_encontro));
+//
+//            return $valuesJson;
+//        }
+//    }
+//
+//    public function detalhePaginationAction()
+//    {
+//        #$this->params()->fromPost('paramname');   // From POST
+//        #$this->params()->fromQuery('paramname');  // From GET
+//        #$this->params()->fromRoute('paramname');  // From RouteMatch
+//        #$this->params()->fromHeader('paramname'); // From header
+//        #$this->params()->fromFiles('paramname');  // From file being uploaded
+//
+//        $filter = $this->getFilterPage();
+//
+//        $id_periodo_letivo = $this->params()->fromPost('id_periodo_letivo');
+//        $id_periodo_letivo = isset($id_periodo_letivo) && $id_periodo_letivo ? $id_periodo_letivo : $this->params()->fromRoute('id');
+//
+//        $camposFilter = [
+//            '0' => [
+//                //'filter' => "periodoletivodetalhe.nm_sacramento LIKE ?",
+//            ],
+//
+//        ];
+//
+//        $paginator = $this->service->getPeriodoLetivoDetalhePaginator($id_periodo_letivo, $filter, $camposFilter);
+//
+//        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+//
+//        $countPerPage = $this->getCountPerPage(
+//            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+//        );
+//
+//        $paginator->setItemCountPerPage($this->getCountPerPage(
+//            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+//        ))->setCurrentPageNumber($this->getCurrentPage());
+//
+//        $viewModel = new ViewModel([
+//            'service' => $this->service,
+//            'form' => new \DetalhePeriodoLetivo\Form\DetalhePeriodoLetivoForm(),
+//            'paginator' => $paginator,
+//            'filter' => $filter,
+//            'countPerPage' => $countPerPage,
+//            'camposFilter' => $camposFilter,
+//            'controller' => $this->params('controller'),
+//            'id_periodo_letivo' => $id_periodo_letivo,
+//            'atributos' => array()
+//        ]);
+//
+//        return $viewModel->setTerminal(TRUE);
+//    }
+
+} 

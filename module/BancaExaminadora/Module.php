@@ -1,6 +1,8 @@
 <?php
+
 namespace BancaExaminadora;
 
+use BancaExaminadora\Service\BancaExaminadoraService;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -48,7 +50,7 @@ class Module
             'factories' => array(
                 'BancaExaminadora\Service\BancaExaminadoraService' => function($sm) {
 
-                    return new \BancaExaminadora\Service\BancaExaminadoraService();
+                    return new BancaExaminadoraService();
                 },
             )
         );
