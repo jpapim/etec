@@ -176,19 +176,20 @@ class BancaExaminadoraController extends AbstractCrudController
     {
         $filter = $this->getFilterPage();
 
-        $id_banca_examinandora = $this->params()->fromPost('id_banca_examinandora');
+        $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
+
         $camposFilter = [
             '0' => [
-                'filter' => "Membros_banca.nm_professor LIKE ?"
+                'filter' => "membros_banca.nm_professor LIKE ?"
             ],
             '1' => [
-                'filter' => "Membros_banca.cs_orientador  LIKE ?"
+                'filter' => "membros_banca.cs_orientador  LIKE ?"
             ],
             '2' => NULL,
         ];
         #xd($id_banca_examinadora = $this->params('id'));
 
-        $paginator = $this->service->getProfessorPaginator( $id_banca_examinandora, $filter, $camposFilter);
+        $paginator = $this->service->getProfessorPaginator( $id_banca_examinadora, $filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
@@ -208,7 +209,7 @@ class BancaExaminadoraController extends AbstractCrudController
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
-            'id_banca_examinandora'=>$id_banca_examinandora,
+            'id_banca_examinadora'=>$id_banca_examinadora,
             'atributos' => array()
         ]);
 
@@ -221,14 +222,17 @@ class BancaExaminadoraController extends AbstractCrudController
         if ($this->getRequest()->isPost()) {
 
             $id_banca_examinadora = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
-            $id_membro_banca = $this->params()->fromPost('id_membro_banca');
+            $id_professor = $this->params()->fromPost('id_professor');
+            $cs_orientador = $this->params()->fromPost('cs_orientador');
+
             $detalhe_banca = new MembrosBanca\Service\MembrosBancaService();
 
             $id_inserido = $detalhe_banca->getTable()->salvar(array(
                 'id_banca_examinadora'=>$id_banca_examinadora,
-                'id_membro_banca'=>$id_membro_banca,
+                'id_professor'=>$id_professor,
+                'cs_orientador'=>$cs_orientador,
             ), null);
-            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'id_membro_banca'=>$id_membro_banca) );
+            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'id_membro_banca'=>$id_professor) );
             return $valuesJson;
         }
     }

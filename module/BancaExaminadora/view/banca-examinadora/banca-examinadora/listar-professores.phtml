@@ -22,7 +22,7 @@
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
-                            'urlPagination' => '/banca_examinadora-bancaexaminadora/listar-professores'.\Estrutura\Helpers\Cript::enc($id_banca_examinadora),
+                            'urlPagination' => '/banca_examinadora-bancaexaminadora/listar-professores' . \Estrutura\Helpers\Cript::enc($id_banca_examinadora),
                             'countPerPage' => $countPerPage,
                             'divData' => '#listar-professores',
                         ]
@@ -65,15 +65,7 @@
                     <tr>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_banca['nm_professor']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_banca['cs_orientador']) ?></td>
-                        <td class="text-center">
-                                <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('banca_examinadora-bancaexaminadora' ,
-                                        array('controller' => 'banca_examinadora-bancaexaminadora',
-                                            'action' => 'excluir-MembroBanca-via-banca', 'id'
-                                        => Estrutura\Helpers\Cript::enc($detalhe_banca['id_banca_examinadora']), 'aux'
-                                        => Estrutura\Helpers\Cript::enc($id_banca_examinadora)))) ?>
-                                </span>
-                        </td>
+                        
                     </tr>
 
                     <?php
@@ -89,7 +81,8 @@
             <div class="col-md-12">
                 <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
                    class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
-                <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Listar Bancas</a></div>
+                <a href="<?= $this->url('navegacao', ['controller' => $controller]) ?>" class="btn btn-default">Listar
+                    Bancas</a></div>
         </div>
     </div>
 </div>
