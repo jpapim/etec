@@ -111,7 +111,7 @@ class AreaConhecimentoService extends Entity {
             }
         }
 
-        $select->where($where)->order(['nm_area_conhecimento DESC']);
+        $select->where($where)->order(['id_area_conhecimento DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }

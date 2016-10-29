@@ -39,10 +39,10 @@ class AreaConhecimentoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "areaconhecimento.id_area_conhecimento LIKE ?",
+                'filter' => "area_conhecimento.id_area_conhecimento LIKE ?",
             ],
             '1' => [
-                'filter' => "areaconhecimento.nm_area_conhecimento LIKE ?",
+                'filter' => "area_conhecimento.nm_area_conhecimento LIKE ?",
             ],
             '2' => NULL,
         ];
@@ -86,7 +86,7 @@ class AreaConhecimentoController extends AbstractCrudController
             $form = $this->form;
 
             if (!$request->isPost()) {
-                throw new \Exception('Dados Inv�lidos');
+                throw new \Exception('Dados Inválidos');
             }
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
@@ -114,7 +114,7 @@ class AreaConhecimentoController extends AbstractCrudController
             }
 
             $service->exchangeArray($form->getData());
-            $this->addSuccessMessage('Registro Alterado com sucesso');
+            $this->addSuccessMessage('Registro executado com sucesso');
             $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
             return $service->salvar();
 

@@ -86,7 +86,7 @@ class ProfessorController extends AbstractCrudController
             $form = $this->form;
 
             if (!$request->isPost()) {
-                throw new \Exception('Dados Inv�lidos');
+                throw new \Exception('Dados Inválidos');
             }
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());

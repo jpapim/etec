@@ -39,7 +39,7 @@ class PalavraChaveController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "palavrachave.nm_pala_vrachave LIKE ?",
+                'filter' => "palavra_chave.nm_palavra_chave LIKE ?",
             ],
             '6' => NULL,
         ];

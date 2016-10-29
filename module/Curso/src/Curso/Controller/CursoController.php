@@ -21,7 +21,7 @@ class CursoController extends AbstractCrudController
     public function indexAction()
     {
         //http://igorrocha.com.br/tutorial-zf2-parte-9-paginacao-busca-e-listagem/4/
-    
+
         return new ViewModel([
             'service' => $this->service,
             'form' => $this->form,
@@ -29,7 +29,7 @@ class CursoController extends AbstractCrudController
             'atributos' => array()
         ]);
     }
-    
+
     public function indexPaginationAction()
     {
 
@@ -44,8 +44,8 @@ class CursoController extends AbstractCrudController
             ],
             '6' => NULL,
         ];
-        
-        
+
+
         $paginator = $this->service->getCursosPaginator($filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
@@ -71,10 +71,10 @@ class CursoController extends AbstractCrudController
 
         return $viewModel->setTerminal(TRUE);
     }
-    
-    
-    
-    
+
+
+
+
 
     public function gravarAction() {
         try {
@@ -100,7 +100,7 @@ class CursoController extends AbstractCrudController
 
 
             #################################################################
-           
+
 
             $form->setData($post);
 
@@ -112,7 +112,7 @@ class CursoController extends AbstractCrudController
             }
 
             $service->exchangeArray($form->getData());
-            $this->addSuccessMessage('Registro Alterado com sucesso');
+            $this->addSuccessMessage('Registro executado com sucesso');
             $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
             return $service->salvar();
 

@@ -37,10 +37,10 @@ class TipoTccController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "tipotcc.id_tipo_tcc LIKE ?",
+                'filter' => "tipo_tcc.id_tipo_tcc LIKE ?",
             ],
             '1' => [
-                'filter' => "tipotcc.nm_tipo_tcc LIKE ?",
+                'filter' => "tipo_tcc.nm_tipo_tcc LIKE ?",
             ],
             '2' => NULL,
         ];

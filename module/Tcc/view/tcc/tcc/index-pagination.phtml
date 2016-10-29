@@ -6,10 +6,10 @@
             <thead>
             <tr>
                 <th class="text-center">Registro</th>
-                <th class="text-center">Data da Banca</th>
                 <th class="text-center">Assunto</th>
                 <th class="text-center">Prof Orientador</th>
                 <th class="text-center">Título do Tcc</th>
+                <th class="text-center">Nota do Tcc</th>
                 <th class="text-center">Download</th>
                 <th class="text-center">Ações</th>
             </tr>
@@ -17,10 +17,10 @@
             <tfoot>
             <tr>
                 <th class="text-center">Registro</th>
-                <th class="text-center">Data da Banca</th>
                 <th class="text-center">Assunto</th>
                 <th class="text-center">Prof Orientador</th>
                 <th class="text-center">Título do Tcc</th>
+                <th class="text-center">Nota do Tcc</th>
                 <th class="text-center">Download</th>
                 <th class="text-center">Ações</th>
             </tr>
@@ -71,10 +71,11 @@
                     ?>
                     <tr>
                         <td><?= $item['id_tcc']?></td>
-                        <td class="text-center"><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_banca']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_area_conhecimento']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_professor']) ?></td>
                         <td><?= $item['tx_titulo_tcc']?></td>
+                        <td><?= $item['nr_nota_final']?></td>
+
                         <td class="text-center">
                             <?php if(is_null($item['ar_arquivo'])) { ?>
                                 &nbsp;
