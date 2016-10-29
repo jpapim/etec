@@ -21,6 +21,11 @@
                 echo $this->formHidden($form->get('id'));
                 echo $this->formHidden($form->get('id_banca_examinadora'));
 
+                // Método para o autocomplete do Professor / convertendo id em nm
+                $professor = new \Professor\Service\ProfessorService();
+                $arrProfessor = $professor->getProfessorToArray($form->get('id_professor')->getValue());
+                $form->setData(['id_professor' => $arrProfessor['nm_professor']]);
+
                 #xd($dadosBancaExaminadora);
 
                 ?>
@@ -36,7 +41,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <b>Quant. Professores:</b>
+                            <b>Quant. Professores:</b><?= count($lista_inscritos) ?>
                         </div>
                     </div>
 
@@ -72,6 +77,11 @@
             {dateFormat: 'dd/mm/yy'}
         );
 
+        $( "input#id_professor" ).autocomplete({
+            minLength: 4,
+            source: "/professor-professor/autocompleteprofessor"
+        });
+
         //Função que faz a listagem ser paginada.
         function carregarProfessoresAjax() {
             $.ajax({
@@ -96,7 +106,7 @@
 
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_professor').click(function () {
-            var dados = $('#bancaexaminadoradetalheform').serialize();
+            var dados = $('#membrobancaform').serialize();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -109,6 +119,7 @@
                     if (response.sucesso == true) {
                         $('#mensagem_professor').show();
                         $('#mensagem_professor').html("<p>O professor, " + response.nm_professor + ", foi adicionado com sucesso!</p>");
+                        $('#count').html(response.qtd_inscritos); // atualizando a quantidade de inscritos
                         carregarProfessoresAjax();
                         setTimeout(function () {
                             $('#mensagem_professor').hide(); // "mensagem_professor" é o id do elemento que seja manipular.
@@ -124,6 +135,9 @@
                 }
             });
         });
+
+        //Colocar o foco no componente.
+        $("#id_professor").focus();
 
     });
 </script>

@@ -60,12 +60,20 @@
                 </tr>
                 <?php
                 foreach ($paginator as $key => $detalhe_banca) {
-                    #xd($detalhe_tcc);
+                    #xd($detalhe_banca);
                     ?>
                     <tr>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_banca['nm_professor']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_banca['cs_orientador']) ?></td>
-                        
+                        <td class="text-center">
+                                <span class="btn-group" style="width: 100px;">
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('membros_banca',
+                                        array('controller' => 'membros_banca-membrosbanca',
+                                            'action' => 'excluirMembroBancaviaBanca excluirvialistagemperiodoletivo',
+                                            'id' => Estrutura\Helpers\Cript::enc($detalhe_banca['id_membro_banca']),
+                                            'aux' => $id_banca_examinadora))) ?>
+                                </span>
+                        </td>
                     </tr>
 
                     <?php
