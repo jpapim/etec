@@ -26,7 +26,7 @@ class BancaExaminadoraController extends AbstractCrudController
      */
     protected $form;
 
-        public function  __construct()
+    public function __construct()
     {
         parent::init();
     }
@@ -123,7 +123,7 @@ class BancaExaminadoraController extends AbstractCrudController
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'index'));
             } else {
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($id_banca_examinadora
-				)));
+                )));
             }
 
             return $id_banca_examinadora;
@@ -152,7 +152,7 @@ class BancaExaminadoraController extends AbstractCrudController
     public function cadastroDetalheAction()
     {
         //recuperar o id do Modulo Banca
-        $id_banca_examinadora = Cript::dec($this->params('id') );
+        $id_banca_examinadora = Cript::dec($this->params('id'));
 
         $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
         $dadosBancaExaminadora = $banca->buscar($id_banca_examinadora);
@@ -189,7 +189,7 @@ class BancaExaminadoraController extends AbstractCrudController
         ];
         #xd($id_banca_examinadora = $this->params('id'));
 
-        $paginator = $this->service->getProfessorPaginator( $id_banca_examinadora, $filter, $camposFilter);
+        $paginator = $this->service->getProfessorPaginator($id_banca_examinadora, $filter, $camposFilter);
 
         $paginator->setItemCountPerPage($paginator->getTotalItemCount());
 
@@ -209,35 +209,35 @@ class BancaExaminadoraController extends AbstractCrudController
             'countPerPage' => $countPerPage,
             'camposFilter' => $camposFilter,
             'controller' => $this->params('controller'),
-            'id_banca_examinadora'=>$id_banca_examinadora,
+            'id_banca_examinadora' => $id_banca_examinadora,
             'atributos' => array()
         ]);
 
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function adicionarProfessoresAction_backup()
+    public function adicionarProfessoresAction()
     {
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
 
             $id_banca_examinadora = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
-            $nm_professor = $this->params()->fromPost('nm_professor');
+            $id_professor = $this->params()->fromPost('id_professor');
             $cs_orientador = $this->params()->fromPost('cs_orientador');
-
             $detalhe_banca = new MembrosBanca\Service\MembrosBancaService();
 
+
             $id_inserido = $detalhe_banca->getTable()->salvar(array(
-                'id_banca_examinadora'=>$id_banca_examinadora,
-                'nm_professor'=>$nm_professor,
-                'cs_orientador'=>$cs_orientador,
+                'id_banca_examinadora' => $id_banca_examinadora,
+                'id_professor' => $id_professor,
+                'cs_orientador' => $cs_orientador,
             ), null);
-            $valuesJson = new JsonModel( array('id_inserido'=>$id_inserido, 'sucesso'=>true, 'id_membro_banca'=>$nm_professor) );
+            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'id_professor' => $id_professor));
             return $valuesJson;
         }
     }
 
-    public function excluirMembroBancaViaBancaAction()
+    public function excluirMembrobancaViaBancaAction()
     {
         try {
             $request = $this->getRequest();
@@ -249,22 +249,22 @@ class BancaExaminadoraController extends AbstractCrudController
             $id = Cript::dec($this->params('id'));
             $id_banca_examinadora = Cript::dec($this->params('aux'));
 
-            $MembrobancaService = new \MembrosBanca\Service\MembrosBancaService();
-            $MembrobancaService->setId($id);
-            $MembrobancaService->setIdBancaExaminadora();
+            $MembrosBancaService = new \MembrosBanca\Service\MembrosBancaService();
+            $MembrosBancaService->setId($id);
+            $MembrosBancaService->setIdBanca_examinadora($id_banca_examinadora);
 
-            $dados = $MembrobancaService->filtrarObjeto()->current();
+            $dados = $MembrosBancaService->filtrarObjeto()->current();
             if (!$dados) {
                 throw new \Exception('Registro nao encontrado');
             }
 
-            $MembrobancaService->excluir();
+            $MembrosBancaService->excluir();
             $this->addSuccessMessage('Registro excluido com sucesso');
             return $this->redirect()->toRoute('navegacao', ['controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => \Estrutura\Helpers\Cript::enc($id_banca_examinadora)]);
 
         } catch (\Exception $e) {
             if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
-                $this->addErrorMessage('Para excluir Verifique!');
+                $this->addErrorMessage('Para excluir. Verifique!');
             }else {
                 $this->addErrorMessage($e->getMessage());
             }
@@ -273,5 +273,4 @@ class BancaExaminadoraController extends AbstractCrudController
         }
 
     }
-
 } 

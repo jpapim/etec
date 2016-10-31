@@ -64,14 +64,11 @@
                     ?>
                     <tr>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_banca['nm_professor']) ?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_banca['cs_orientador']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_banca['cs_orientador'] == 'S'? 'Orientador':'Professor') ?></td>
+
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('membros_banca',
-                                        array('controller' => 'membros_banca-membrosbanca',
-                                            'action' => 'excluirMembroBancaviaBanca excluirvialistagemperiodoletivo',
-                                            'id' => Estrutura\Helpers\Cript::enc($detalhe_banca['id_membro_banca']),
-                                            'aux' => $id_banca_examinadora))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('banca_examinadora-bancaexaminadora', array('controller' => 'banca_examinadora-bancaexaminadora', 'action' => 'excluir-membrobanca-via-banca', 'id' => Estrutura\Helpers\Cript::enc($detalhe_banca['id_membro_banca']), 'aux' => Estrutura\Helpers\Cript::enc($id_banca_examinadora)))) ?>
                                 </span>
                         </td>
                     </tr>

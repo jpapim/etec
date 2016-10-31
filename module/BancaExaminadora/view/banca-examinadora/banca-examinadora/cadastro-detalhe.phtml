@@ -41,7 +41,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <b>Quant. Professores:</b><?= count($lista_inscritos) ?>
+                            <b>Quant. Professores:</b>
                         </div>
                     </div>
 
@@ -55,6 +55,10 @@
                     <div class="form-group">
                         <div class="col-md-4">
                             <?= $this->formRow($form->get('id_professor')) ?>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <?= $this->formRow($form->get('cs_orientador')) ?>
                             <div class="help-block with-errors"></div>
                         </div>
                         <div class="col-md-2">
@@ -106,19 +110,20 @@
 
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_professor').click(function () {
-            var dados = $('#membrobancaform').serialize();
+            var dados = $('#membrosbancaform').serialize();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/banca_examinadora-bancaexaminadora/listar-professores',
+                url: '/banca_examinadora-bancaexaminadora/adicionar-professores',
                 async: true,
                 data: dados,
                 success: function (response) {
                     $('#mensagem_professor').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
                     $("#id_professor").val("");
+                    $("#cs_orientador").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_professor').show();
-                        $('#mensagem_professor').html("<p>O professor, " + response.nm_professor + ", foi adicionado com sucesso!</p>");
+                        $('#mensagem_professor').html("<p>O professor, " + response.id_professor + ", foi adicionado com sucesso!</p>");
                         $('#count').html(response.qtd_inscritos); // atualizando a quantidade de inscritos
                         carregarProfessoresAjax();
                         setTimeout(function () {

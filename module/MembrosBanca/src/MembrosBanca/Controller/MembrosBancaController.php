@@ -12,7 +12,8 @@ class MembrosBancaController extends AbstractCrudController
 
     protected $form;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::init();
     }
 
@@ -63,9 +64,10 @@ class MembrosBancaController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function gravarAction(){
+    public function gravarAction()
+    {
         $this->addSuccessMessage('Registro gravado com sucesso!');
-        $this->redirect()->toRoute('navegacao', array('controller' => 'membros_banca-membrosbanca') );
+        $this->redirect()->toRoute('navegacao', array('controller' => 'membros_banca-membrosbanca'));
         return parent::gravar($this->service, $this->form);
     }
 
@@ -76,6 +78,43 @@ class MembrosBancaController extends AbstractCrudController
 
     public function excluirAction()
     {
+        return parent::excluir($this->service, $this->form);
+    }
+
+    public function excluirembroBancaViaBancaAction()
+    {
+        try {
+            $request = $this->getRequest();
+
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+
+            $id = Cript::dec($this->params('id'));
+            $id_banca_examinadora = Cript::enc($this->params('aux'));
+
+            $this->service->setId($id);
+
+            $dados = $this->service->filtrarObjeto()->current();
+            if (!$dados) {
+                throw new \Exception('Registro nao encontrado');
+            }
+
+            $this->service->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao', array('controller' => 'banca_examinadora-bancaexaminadora', 'action' => 'cadastro-detalhe', 'id' => $id_banca_examinadora));
+        } catch (\Exception $e) {
+            if (strstr($e->getMessage(), '1451')) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Para excluir Verifique!');
+            } else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+
         return parent::excluir($this->service, $this->form);
     }
 }

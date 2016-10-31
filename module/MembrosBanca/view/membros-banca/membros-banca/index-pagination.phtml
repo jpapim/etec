@@ -8,7 +8,7 @@
                 <th class="text-center">Localizador</th>
                 <th class="text-center">Data</th>
                 <th class="text-center">Nome do Professor</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center">Orientador</th>
             </tr>
             </thead>
             <tfoot>
@@ -16,7 +16,7 @@
                 <th class="text-center">Localizador</th>
                 <th class="text-center">Data</th>
                 <th class="text-center">Nome do Professor</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center">Orientador</th>
             </tr>
             <tr>
                 <th colspan="6" class="ts-pager form-horizontal">
@@ -64,15 +64,10 @@
                     ?>
                     <tr>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['id_membro_banca']) ?></td>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['dt_banca']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($concluinte['dt_banca'])?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['nm_professor']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($concluinte['cs_orientador']) ?></td>
 
-                        <td class="text-center">
-                                <span class="btn-group" style="width: 150px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_membro_banca']))), 'Modificar banca') ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_membro_banca'])))) ?>
-                                </span>
-                        </td>
                     </tr>
                     <?php
                 }

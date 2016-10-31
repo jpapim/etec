@@ -63,7 +63,7 @@
                     ?>
                     <tr>
                         <td><?= $item['id_banca_examinadora']?></td>
-                        <td><?=Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_banca'])?></td>
+                        <td><?= \Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_banca'])?></td>
 
                         <td style="width: 150px;">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_banca_examinadora']))), 'Modificar Data') ?>

@@ -145,7 +145,7 @@ class BancaExaminadoraService extends Entity
             }
         }
 
-        $select->where($where)->order(['id_membro_banca DESC']);
+        $select->where($where)->order(['cs_orientador DESC']);
         #xd($select->getSqlString($this->getAdapter()->getPlatform()));
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }

@@ -20,6 +20,27 @@ class MembrosBancaService extends Entity
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
+    public function buscarBancaExaminadora($params)
+    {
+        $resultSet = null;
+        if (isset($params['id_banca_examinadora']) && $params['id_banca_examinadora']) {
+            $resultSet = $this->select(['banca_examinadora.id_banca_examinadora = ?'
+            => $params['id_banca_examinadora']]);
+        }
+        return $resultSet;
+    }
+
+    public function getFilterBancaExaminadoraPorData($dt_banca)
+    {
+        $sql = new Sql($this->getAdapter());
+
+        $select = $sql->select('tcc')
+            ->columns(array('dt_banca'))
+            ->where(['banca_examinadora.dt_banca LIKE ?' => '%' . $dt_banca . '%']);
+
+        return $sql->prepareStatementForSqlObject($select)->execute();
+    }
+
     public function getMembrosBancaPaginator($filter = NULL, $camposFilter = NULL)
     {
 
@@ -53,51 +74,5 @@ class MembrosBancaService extends Entity
         $select->where($where)->order(['id_membro_banca DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
-    }
-
-    /**
-     * Consulta que retorna o membro_banca tendo como condição o id do professor
-     * e o id da banca examinadora
-     */
-    public function checarSeProfessorEstaInscritoNaBanca($id_professor, $id_banca_examinadora)
-    {
-
-        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
-
-        #die($id);
-        $select = $sql->select('membros_banca')
-            ->where([
-                'membros_banca.id_professor = ?' => $id_professor,
-                'membros_banca.id_banca_examinadora = ?' => $id_banca_examinadora,
-            ]);
-        #print_r($sql->prepareStatementForSqlObject($select)->execute());exit;
-
-        return $sql->prepareStatementForSqlObject($select)->execute()->current();
-    }
-
-    /**
-     * Função que altera o campo cs_orientador a partir do valor informado.
-     */
-    public function alterarCampoCsOrientador($id_banca_examinadora, $cs_orientador)
-    {
-        $this->preSave();
-        $dados = $this->hydrate();
-        $where = null;
-
-        if ($id_banca_examinadora) {
-            if (!$field = $this->fieldName('id')) {
-                $field = $this->fieldName('Id');
-            }
-            $where = [$field => $id_banca_examinadora];
-        }
-
-        $dados['cs_orientador'] = $cs_orientador;
-
-        $result = $this->getTable()->salvar($dados, $where);
-        if (is_string($result)) {
-            $this->setId($result);
-        }
-        $this->posSave();
-        return $result;
     }
 }

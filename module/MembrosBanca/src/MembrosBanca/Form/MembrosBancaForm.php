@@ -22,7 +22,11 @@ class MembrosBancaForm extends AbstractForm
         $objForm->hidden("id")->required(false)->label("Id");
         $objForm->combo("id_banca_examinadora", '\BancaExaminadora\Service\BancaExaminadoraService', 'id', 'dt_banca')->required(true)->label("Data da Banca");
         $objForm->text("id_professor")->required(false)->label("Nome do Professor");
-//        $objForm->combo("id_professor",'\Professor\Service\ProfessorService', 'id','cs_orientador')->required(true)->label("Orientador?");
+
+        $arrOpcoes[] = array('value' => '', 'label' => 'Selecione...');
+        $arrOpcoes[] = array('value' => 'S', 'label' => 'Orientador');
+        $arrOpcoes[] = array('value' => 'N', 'label' => 'Professor');
+        $objForm->select("cs_orientador", $arrOpcoes)->required(false)->label("Função na Banca");
     }
 
     
