@@ -221,18 +221,21 @@ class BancaExaminadoraController extends AbstractCrudController
         //Se for a chamada Ajax
         if ($this->getRequest()->isPost()) {
 
-            $id_banca_examinadora = \Estrutura\Helpers\Cript::dec($this->params()->fromPost('id'));
-            $id_professor = $this->params()->fromPost('id_professor');
+            $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
+            $nm_professor = $this->params()->fromPost('id_professor'); #Aqui tem o Nome do Professor e Não o ID
             $cs_orientador = $this->params()->fromPost('cs_orientador');
             $detalhe_banca = new MembrosBanca\Service\MembrosBancaService();
 
+            #Recuperar o ID do Professor
+            $professorService = new \Professor\Service\ProfessorService();
+            $obProfessor = $professorService->getIdProfessorPorNomeToArray($nm_professor);
 
             $id_inserido = $detalhe_banca->getTable()->salvar(array(
                 'id_banca_examinadora' => $id_banca_examinadora,
-                'id_professor' => $id_professor,
+                'id_professor' => $obProfessor['id_professor'],
                 'cs_orientador' => $cs_orientador,
             ), null);
-            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'id_professor' => $id_professor));
+            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'id_professor' => $obProfessor['id_professor']));
             return $valuesJson;
         }
     }

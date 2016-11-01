@@ -110,13 +110,16 @@
 
         /*Função Ajax que adiciona os encontros ao Banco de dados*/
         $('#adicionar_professor').click(function () {
-            var dados = $('#membrosbancaform').serialize();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
                 url: '/banca_examinadora-bancaexaminadora/adicionar-professores',
                 async: true,
-                data: dados,
+                data: {
+                        id_banca_examinadora: $("#id_banca_examinadora").val(),
+                        id_professor: $("#id_professor").val(),
+                        cs_orientador: $("#cs_orientador").val()
+                },
                 success: function (response) {
                     $('#mensagem_professor').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
                     $("#id_professor").val("");

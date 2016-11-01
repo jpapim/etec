@@ -68,7 +68,7 @@
 
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('banca_examinadora-bancaexaminadora', array('controller' => 'banca_examinadora-bancaexaminadora', 'action' => 'excluir-membrobanca-via-banca', 'id' => Estrutura\Helpers\Cript::enc($detalhe_banca['id_membro_banca']), 'aux' => Estrutura\Helpers\Cript::enc($id_banca_examinadora)))) ?>
+                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('banca_examinadora', array('controller' => 'banca_examinadora-bancaexaminadora', 'action' => 'excluir-membrobanca-via-banca', 'id' => Estrutura\Helpers\Cript::enc($detalhe_banca['id_membro_banca']), 'aux' => Estrutura\Helpers\Cript::enc($id_banca_examinadora)))) ?>
                                 </span>
                         </td>
                     </tr>

@@ -3,6 +3,16 @@
 return array(
     'router' => array(
         'routes' => array(
+            'banca_examinadora-home' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/banca_examinadora',
+                    'defaults' => array(
+                        'controller' => 'banca_examinadora',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             'banca_examinadora' => array(
                 'type'    => 'Segment',
                 'options' => array(
