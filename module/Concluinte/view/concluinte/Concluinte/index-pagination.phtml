@@ -76,7 +76,6 @@
                         <td class="text-center">
                                 <span class="btn-group" style="width: 150px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_concluinte']))), 'Modificar dados do Concluinte') ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($concluinte['id_concluinte'])))) ?>
                                 </span>
                         </td>
                     </tr>

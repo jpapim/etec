@@ -172,12 +172,87 @@ class BancaExaminadoraController extends AbstractCrudController
 
     }
 
+    public function adicionarProfessoresAction()
+    {
+        //Se for a chamada Ajax
+        if ($this->getRequest()->isPost()) {
+
+            $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
+            $nm_professor = $this->params()->fromPost('id_professor'); #Aqui tem o Nome do Professor e Não o ID
+            $cs_orientador = $this->params()->fromPost('cs_orientador');
+
+            #Recuperar o ID do Professor
+            $professorService = new \Professor\Service\ProfessorService();
+            $obProfessor = $professorService->getIdProfessorPorNomeToArray($nm_professor);
+
+            // verifica se o professor é membro da Banca.
+            $detalhe_banca = new MembrosBanca\Service\MembrosBancaService();
+            $values = [];
+            if (!$obProfessor) {
+                $values['sucesso'] = false;
+                $values['nm_professor'] = null;
+                xd($obProfessor);
+            } else {
+                // verifica se o professor já está cadastrado na banca examinadora.
+                // Caso não esteja será efetuado o cadastro.
+                if ($detalhe_banca->checarSeProfessorEstaInscritoNaBanca($obProfessor['id_professor'],$id_banca_examinadora)) {
+                    $values['sucesso'] = false;
+                    $values['nm_professor'] = $obProfessor['nm_professor'];
+                } else {
+                    $id_inserido = $detalhe_banca->getTable()->salvar(
+                        array('id_banca_examinadora' => $id_banca_examinadora,
+                            'id_professor' => $obProfessor['id_professor'],
+                            'cs_orientador' => $cs_orientador,
+                        ), null);
+                    $values['sucesso'] = true;
+                    $values['nm_professor'] = $obProfessor['nm_professor'];
+                }
+            }
+
+            // contar quantos professores tem inscritos na banca
+            $inscricoes = $detalhe_banca->fetchAllMembrosBanca(array('id_banca_examinadora' => $id_banca_examinadora));
+            $values['qtd_inscritos'] = count($inscricoes);
+
+            $valuesJson = new JsonModel($values);
+            #xd($valuesJson);
+            return $valuesJson;
+
+        } else { //Se for requisição normal
+
+            $id = Cript::dec($this->params('id'));
+            $post = $this->getPost();
+
+            if (!empty($post)) {
+                $this->form->setData($post);
+            }
+
+            $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
+            $dadosBanca = $banca->getBancaExaminadoraToArray($id);
+
+            $inscricoes = new \MembrosBanca\Service\MembrosBancaService();
+            $dadosInscricoes = $inscricoes->fetchAllMembrosBanca(array(
+                'id_banca_examinadora' => $dadosBanca['id_banca_examinadora']));
+
+            $dadosView = [
+                'service' => $this->service,
+                'form' => $this->form,
+                'controller' => $this->params('controller'),
+                'atributos' => array(),
+                'dados_banca' => $dadosBanca,
+                'lista_inscritos' => $dadosInscricoes
+            ];
+
+            return new ViewModel($dadosView);
+        }
+    }
+
+
     public function listarProfessoresAction()
     {
         $filter = $this->getFilterPage();
 
         $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
-
+  
         $camposFilter = [
             '0' => [
                 'filter' => "membros_banca.nm_professor LIKE ?"
@@ -216,29 +291,6 @@ class BancaExaminadoraController extends AbstractCrudController
         return $viewModel->setTerminal(TRUE);
     }
 
-    public function adicionarProfessoresAction()
-    {
-        //Se for a chamada Ajax
-        if ($this->getRequest()->isPost()) {
-
-            $id_banca_examinadora = $this->params()->fromPost('id_banca_examinadora');
-            $nm_professor = $this->params()->fromPost('id_professor'); #Aqui tem o Nome do Professor e Não o ID
-            $cs_orientador = $this->params()->fromPost('cs_orientador');
-            $detalhe_banca = new MembrosBanca\Service\MembrosBancaService();
-
-            #Recuperar o ID do Professor
-            $professorService = new \Professor\Service\ProfessorService();
-            $obProfessor = $professorService->getIdProfessorPorNomeToArray($nm_professor);
-
-            $id_inserido = $detalhe_banca->getTable()->salvar(array(
-                'id_banca_examinadora' => $id_banca_examinadora,
-                'id_professor' => $obProfessor['id_professor'],
-                'cs_orientador' => $cs_orientador,
-            ), null);
-            $valuesJson = new JsonModel(array('id_inserido' => $id_inserido, 'sucesso' => true, 'id_professor' => $obProfessor['id_professor']));
-            return $valuesJson;
-        }
-    }
 
     public function excluirMembrobancaViaBancaAction()
     {

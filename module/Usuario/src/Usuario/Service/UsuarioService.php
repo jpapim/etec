@@ -45,10 +45,6 @@ class UsuarioService extends Entity
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
-    /**
-     *
-     * @return type
-     */
     public function getIdProximoUsuarioCadastro($configList)
     {
 

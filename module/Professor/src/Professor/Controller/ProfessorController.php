@@ -130,7 +130,7 @@ class ProfessorController extends AbstractCrudController
 
     public function excluirAction()
     {
-        return parent::excluir($this->service, $this->form);
+        return parent::excluirProfessor($this->service, $this->form);
     }
 
     public function autocompleteprofessorAction()

@@ -42,6 +42,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <b>Quant. Professores:</b>
+                            <text id="count"><?= count($lista_inscritos) ?></text>
                         </div>
                     </div>
 
@@ -81,8 +82,8 @@
             {dateFormat: 'dd/mm/yy'}
         );
 
-        $( "input#id_professor" ).autocomplete({
-            minLength: 4,
+        $("input#id_professor").autocomplete({
+            minLength: 3,
             source: "/professor-professor/autocompleteprofessor"
         });
 
@@ -116,9 +117,9 @@
                 url: '/banca_examinadora-bancaexaminadora/adicionar-professores',
                 async: true,
                 data: {
-                        id_banca_examinadora: $("#id_banca_examinadora").val(),
-                        id_professor: $("#id_professor").val(),
-                        cs_orientador: $("#cs_orientador").val()
+                    id_banca_examinadora: $("#id_banca_examinadora").val(),
+                    id_professor: $("#id_professor").val(),
+                    cs_orientador: $("#cs_orientador").val()
                 },
                 success: function (response) {
                     $('#mensagem_professor').removeClass("bs-callout bs-callout-danger").addClass("bs-callout bs-callout-success");
@@ -126,19 +127,19 @@
                     $("#cs_orientador").val("");
                     if (response.sucesso == true) {
                         $('#mensagem_professor').show();
-                        $('#mensagem_professor').html("<p>O professor, " + response.id_professor + ", foi adicionado com sucesso!</p>");
+                        $('#mensagem_professor').html("<p>Professor adicionado com sucesso!</p>");
                         $('#count').html(response.qtd_inscritos); // atualizando a quantidade de inscritos
                         carregarProfessoresAjax();
-                        setTimeout(function () {
-                            $('#mensagem_professor').hide(); // "mensagem_professor" é o id do elemento que seja manipular.
-                        }, 45000000); // O valor é representado em milisegundos.
+                        setTimeout(function() {
+                            $('#mensagem_professor').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 3000); // O valor é representado em milisegundos.
                     } else {
                         $('#mensagem_professor').show();
                         $('#mensagem_professor').html("<p>Este professor já foi adicionado!</p>");
                         $('#mensagem_professor').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
-                        setTimeout(function () {
-                            $('#mensagem_professor').hide(); // "mensagem_professor" é o id do elemento que seja manipular.
-                        }, 45000000); // O valor é representado em milisegundos.
+                        setTimeout(function() {
+                            $('#mensagem_professor').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 3000); // O valor é representado em milisegundos.
                     }
                 }
             });

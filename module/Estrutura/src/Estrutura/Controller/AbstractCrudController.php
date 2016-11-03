@@ -156,6 +156,73 @@ abstract class AbstractCrudController extends AbstractEstruturaController
             return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
         }
     }
+    //** Excluir personalisado */
+    public function excluirTitulacao($service, $form, $atributos = [])
+    {
+        try {
+            $request = $this->getRequest();
+
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+
+            $id = Cript::dec($this->params('id'));
+            $service->setId($id);
+
+            $dados = $service->filtrarObjeto()->current();
+
+            if (!$dados) {
+                throw new \Exception('Registro não encontrado');
+            }
+
+            $service->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Título vinculado a um professor. Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+    }
+    public function excluirProfessor($service, $form, $atributos = [])
+    {
+        try {
+            $request = $this->getRequest();
+
+            if ($request->isPost()) {
+                return new JsonModel();
+            }
+
+            $controller = $this->params('controller');
+
+            $id = Cript::dec($this->params('id'));
+            $service->setId($id);
+
+            $dados = $service->filtrarObjeto()->current();
+
+            if (!$dados) {
+                throw new \Exception('Registro não encontrado');
+            }
+
+            $service->excluir();
+            $this->addSuccessMessage('Registro excluido com sucesso');
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        } catch (\Exception $e) {
+            if( strstr($e->getMessage(), '1451') ) { #ERRO de SQL (Mysql) para nao excluir registro que possua filhos
+                $this->addErrorMessage('Professor vinculado a uma Banca Examinadora. Verifique!');
+            }else {
+                $this->addErrorMessage($e->getMessage());
+            }
+
+            return $this->redirect()->toRoute('navegacao', ['controller' => $controller]);
+        }
+    }
 
     public function uploadFile($files, $local = './data/arquivos')
     {
@@ -174,3 +241,4 @@ abstract class AbstractCrudController extends AbstractEstruturaController
     }
 
 }
+

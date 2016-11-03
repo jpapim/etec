@@ -179,15 +179,15 @@
                         $('#mensagem_palavra_chave').html("<p>Palavra chave adicionada com sucesso!</p>");
                         carregarPalavraChaveTccAjax();
                         setTimeout(function () {
-                            $('#mensagem_palavra_chave').hide(); // "mensagem_palavra_chave" é o id do elemento que seja manipular.
-                        }, 45000000); // O valor é representado em milisegundos.
+                            $('#mensagem_palavra_chave').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 3000); // O valor é representado em milisegundos.
                     } else {
                         $('#mensagem_palavra_chave').show();
                         $('#mensagem_palavra_chave').html("<p>A Palavra chave já foi adicionada!</p>");
                         $('#mensagem_palavra_chave').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
                         setTimeout(function () {
-                            $('#mensagem_palavra_chave').hide(); // "mensagem_palavra_chave" é o id do elemento que seja manipular.
-                        }, 45000000); // O valor é representado em milisegundos.
+                            $('#mensagem_palavra_chave').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 3000); // O valor é representado em milisegundos.
                     }
                 }
             });
@@ -211,20 +211,22 @@
                         $('#mensagem_concluinte').html("<p>Aluno [" + response.nm_concluinte + "] foi adicionado com sucesso!</p>");
                         carregarConcluinteAjax();
                         setTimeout(function () {
-                            $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
-                        }, 45000000); // O valor é representado em milisegundos.
+                            $('#mensagem_concluinte').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 3000); // O valor é representado em milisegundos.
                     } else {
                         $('#mensagem_concluinte').show();
                         $('#mensagem_concluinte').html("<p>Este Aluno já foi adicionado!</p>");
                         $('#mensagem_concluinte').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
                         setTimeout(function () {
-                            $('#mensagem_concluinte').hide(); // "mensagem_concluinte" é o id do elemento que seja manipular.
-                        }, 45000000); // O valor é representado em milisegundos.
+                            $('#mensagem_concluinte').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
+                        }, 3000); // O valor é representado em milisegundos.
                     }
                 }
             });
         });
 
+        //Colocar o foco no Concluinte.
+        $("#nm_concluinte").focus();
 
     });
 </script>

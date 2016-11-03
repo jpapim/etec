@@ -18,12 +18,12 @@ return array(
                 'options' => array(
                     'route'    => '/banca_examinadora/:action[/:id][/:aux]',
                     'defaults' => array(
-                        'controller' => 'banca_examinadora',
+                        'controller' => 'banca_examinadora-bancaexaminadora',
                         'action'     => 'index',
                     ),
                 ),
-
             ),
+
         ),
     ),
     'controllers' => array(

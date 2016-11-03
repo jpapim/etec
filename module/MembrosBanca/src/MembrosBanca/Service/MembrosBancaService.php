@@ -20,6 +20,21 @@ class MembrosBancaService extends Entity
         return $sql->prepareStatementForSqlObject($select)->execute()->current();
     }
 
+    public function fetchAllMembrosBanca($params) {
+
+        $resultSet = NULL;
+
+        if (isset($params['id_banca_examinadora']) && $params['id_banca_examinadora']) {
+
+            $resultSet = $this->select(
+                [
+                    'membros_banca.id_banca_examinadora = ? ' => $params['id_banca_examinadora']
+                ]
+            );
+        }
+        return $resultSet;
+    }
+
     public function buscarBancaExaminadora($params)
     {
         $resultSet = null;
@@ -75,4 +90,20 @@ class MembrosBancaService extends Entity
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }
-}
+
+    public function checarSeProfessorEstaInscritoNaBanca($id_professor, $id_banca_examinadora) {
+
+        $sql = new \Zend\Db\Sql\Sql($this->getAdapter());
+
+        #die($id);
+        $select = $sql->select('membros_banca')
+            ->where([
+                'membros_banca.id_professor = ?' => $id_professor,
+                'membros_banca.id_banca_examinadora = ?' => $id_banca_examinadora,
+            ]);
+//        print_r($sql->prepareStatementForSqlObject($select)->execute());exit;
+
+        return $sql->prepareStatementForSqlObject($select)->execute()->current();
+    }
+
+   }

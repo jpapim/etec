@@ -73,6 +73,6 @@ class TitulacaoController extends AbstractCrudController
 
     public function excluirAction()
     {
-        return parent::excluir($this->service, $this->form);
+        return parent::excluirTitulacao($this->service, $this->form);
     }
 }
