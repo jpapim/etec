@@ -2,17 +2,15 @@
 
 <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped" id="tablesorterBancaExaminadora" >
+        <table class="table table-striped" id="tablesorterBancaExaminadora">
             <thead>
             <tr>
-                <th class="text-center">Localizador</th>
                 <th class="text-center">Data da banca</th>
                 <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th class="text-center">Localizador</th>
                 <th class="text-center">Data da banca</th>
                 <th class="text-center">Ações</th>
             </tr>
@@ -28,9 +26,7 @@
                     );
                     ?>
                 </th>
-
             </tr>
-
             </tfoot>
             <?php
             $numeroLinha = (($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage());
@@ -41,53 +37,57 @@
                     <?php
                     foreach ($camposFilter as $key => $campoFilter) {
                         ?>
-                        <td style="background-color: #e3e3e3;">
+                        <td>
                             <?php
                             if (!is_null($campoFilter)) {
                                 ?>
-                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>" value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
-                            <?php
+                                <input type="search" placeholder="" class="tablesorter-filter" data-column="<?= $key ?>"
+                                       value="<?= isset($filter[$key]) ? $filter[$key] : '' ?>">
+                                <?php
                             } else {
                                 ?>
                                 &nbsp;
-                            <?php
+                                <?php
                             }
                             ?>
                         </td>
-                    <?php
+                        <?php
                     }
                     ?>
                 </tr>
                 <?php
-                foreach ($paginator as $item) {
+                foreach ($paginator as $key => $item) {
                     ?>
                     <tr>
-                        <td><?= $item['id_banca_examinadora']?></td>
-                        <td><?= \Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_banca'])?></td>
+                        <td><?= \Estrutura\Helpers\Data::converterDataBancoMySQL2Brazil($item['dt_banca']) ?></td>
 
-                        <td style="width: 150px;">
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_banca_examinadora']))), 'Modificar Data') ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_banca_examinadora']))), 'Modificar Membros') ?>
+                        <td class="text-center">
+                                <span class="btn-group" style="width: 150px;">
+                         <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_banca_examinadora']))), 'Modificar Data') ?>
+                         <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_banca_examinadora']))), 'Modificar Membros') ?>
+                                </span>
                         </td>
                     </tr>
-                <?php
+                    <?php
                 }
                 ?>
                 </tbody>
-            <?php
+                <?php
             }
             ?>
 
         </table>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
-
+                <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>"
+                   class="btn btn-primary" title="Retorna para a Página Principal">Início</a>
             </div>
         </div>
     </div>
 </div>
-<script src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js" type="text/javascript"></script>
+<script
+    src="/assets/compact-js/moment.js,validator.min.js,jquery.mask.min.js,jquery.ui.widget.js,jquery.tablesorter.js,jquery.tablesorter.widgets.js,jquery.tablesorter.pager.js"
+    type="text/javascript"></script>
 <!--<script src="/assets/js/moment.js" type="text/javascript"></script>-->
 <!--<script src="/assets/js/validator.min.js" type="text/javascript"></script>-->
 <!--<script src="/assets/js/jquery.mask.min.js" type="text/javascript"></script>-->
@@ -96,7 +96,7 @@
 <!--<script src="/assets/js/jquery.tablesorter.widgets.js" type="text/javascript"></script>-->
 <!--<script src="/assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>-->
 
-<script type="text/javascript" language="javascript" >
+<script type="text/javascript" language="javascript">
     $(function () {
 
         // NOTE: $.tablesorter.theme.bootstrap is ALREADY INCLUDED in the jquery.tablesorter.widgets.js

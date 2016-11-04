@@ -5,14 +5,12 @@
         <table class="table table-striped" id="tablesorterCursos" >
             <thead>
                 <tr>
-                    <th class="text-center">localizador</th>
                     <th class="text-center">Nome do Curso</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th class="text-center">localizador</th>
                     <th class="text-center">Nome do Curso</th>
                     <th class="text-center">Ações</th>
                 </tr>
@@ -60,7 +58,6 @@
                     foreach ($paginator as $key => $curso) {
                     ?>
                         <tr>
-                            <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($curso['id_curso']) ?></td>
                             <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($curso['nm_curso']) ?></td>
 
                             <td class="text-center">

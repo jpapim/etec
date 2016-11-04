@@ -42,12 +42,15 @@ class ProfessorController extends AbstractCrudController
                 'filter' => "titulacao.nm_titulacao LIKE ?",
             ],
             '2' => [
-                'filter' => "professor.cs_orientador LIKE ?",
+                'filter' => "titulacao.nm_titulacao LIKE ?",
             ],
             '3' => [
+                'filter' => "professor.cs_orientador LIKE ?",
+            ],
+            '4' => [
                 'filter' => "professor.cs_ativo LIKE ?",
             ],
-            '4' => NULL,
+            '5' => NULL,
         ];
 
 

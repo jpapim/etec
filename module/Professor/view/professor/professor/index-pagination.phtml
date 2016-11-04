@@ -5,6 +5,7 @@
         <table class="table table-striped" id="tablesorterProfessores">
             <thead>
             <tr>
+                <th class="text-center">Registro</th>
                 <th class="text-center">Nome do Professor</th>
                 <th class="text-center">Titulação</th>
                 <th class="text-center">Orientador</th>
@@ -14,6 +15,7 @@
             </thead>
             <tfoot>
             <tr>
+                <th class="text-center">Registro</th>
                 <th class="text-center">Nome do Professor</th>
                 <th class="text-center">Titulação</th>
                 <th class="text-center">Orientador</th>
@@ -65,6 +67,7 @@
                 foreach ($paginator as $key => $professor) {
                     ?>
                     <tr>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($professor['id_professor']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($professor['nm_professor']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($professor['nm_titulacao']) ?></td>
                         <td class="text-center">
@@ -87,10 +90,6 @@
                                         array('controller' => $controller, 'action' => 'cadastro',
                                             'id' => Estrutura\Helpers\Cript::enc($professor['id_professor']))), 'Modificar dados do Professor')
                                     ?>
-                                    <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao',
-                                        array('controller' => $controller, 'action' => 'excluir',
-                                            'id' => Estrutura\Helpers\Cript::enc($professor['id_professor'])))) ?>
-
                                 </span>
                         </td>
                     </tr>

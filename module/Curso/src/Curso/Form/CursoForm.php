@@ -16,7 +16,7 @@ class CursoForm extends AbstractForm{
         $objForm->hidden("id_usuario")->required(false)->label("Id Usuario");
         $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario Cadastrador");
 
-        $objForm->text("nm_curso")->required(true)->label("Curso");
+        $objForm->text("nm_curso")->required(true)->label("Nome do Curso");
        
         $this->formObject = $objForm;
     }

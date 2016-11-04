@@ -39,12 +39,9 @@ class AreaConhecimentoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "area_conhecimento.id_area_conhecimento LIKE ?",
-            ],
-            '1' => [
                 'filter' => "area_conhecimento.nm_area_conhecimento LIKE ?",
             ],
-            '2' => NULL,
+            '1' => NULL,
         ];
         
         

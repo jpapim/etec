@@ -81,7 +81,7 @@ class ProfessorService extends Entity
             }
         }
 
-        $select->where($where)->order(['nm_professor DESC']);
+        $select->where($where)->order(['id_professor DESC']);
 
         return new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\DbSelect($select, $this->getAdapter()));
     }

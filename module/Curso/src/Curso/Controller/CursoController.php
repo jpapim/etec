@@ -37,12 +37,9 @@ class CursoController extends AbstractCrudController
 
         $camposFilter = [
             '0' => [
-                'filter' => "curso.id_curso LIKE ?",
-            ],
-            '1' => [
                 'filter' => "curso.nm_curso LIKE ?",
             ],
-            '6' => NULL,
+            '1' => NULL,
         ];
 
 

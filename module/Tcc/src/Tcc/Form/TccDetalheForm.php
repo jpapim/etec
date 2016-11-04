@@ -33,7 +33,7 @@ class TccDetalheForm extends AbstractForm
         #Dados dos Concluintes
         $objForm->combo("id_curso", '\Curso\Service\CursoService', 'id', 'nm_curso')->required(true)->label("Curso");
         $objForm->text("nm_concluinte")->required(true)->label("Nome do Aluno");
-        $objForm->text("nr_matricula")->required(true)->label("Matricula");
+        $objForm->text("nr_matricula")->required(true)->label("Matrícula");
 
         $this->formObject = $objForm;
     }
