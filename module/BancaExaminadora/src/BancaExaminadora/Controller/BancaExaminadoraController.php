@@ -194,7 +194,7 @@ class BancaExaminadoraController extends AbstractCrudController
             if (!$obProfessor) {
                 $values['sucesso'] = false;
                 $values['nm_professor'] = null;
-                xd($obProfessor);
+                #xd($obProfessor);
             } else {
                 // verifica se o professor já está cadastrado na banca examinadora.
                 // Caso não esteja será efetuado o cadastro.
