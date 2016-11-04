@@ -156,7 +156,9 @@ class BancaExaminadoraController extends AbstractCrudController
 
         $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
         $dadosBancaExaminadora = $banca->buscar($id_banca_examinadora);
-        #xd($dadosBancaExaminadora);
+
+        $membrosBancoService = new \MembrosBanca\Service\MembrosBancaService();
+        $arrResultado = $membrosBancoService->fetchAllById(['id_banca_examinadora'=>$id_banca_examinadora]);
 
         $dadosView = [
             'service' => new \MembrosBanca\Service\MembrosBancaService(),
@@ -165,6 +167,7 @@ class BancaExaminadoraController extends AbstractCrudController
             'atributos' => array(),
             'id_banca_examinadora' => $id_banca_examinadora,
             'dadosBancaExaminadora' => $dadosBancaExaminadora,
+            'quantidade_professores' => count($arrResultado),
         ];
         #xd($dadosView);
 
@@ -191,7 +194,7 @@ class BancaExaminadoraController extends AbstractCrudController
             if (!$obProfessor) {
                 $values['sucesso'] = false;
                 $values['nm_professor'] = null;
-                xd($obProfessor);
+                #xd($obProfessor);
             } else {
                 // verifica se o professor já está cadastrado na banca examinadora.
                 // Caso não esteja será efetuado o cadastro.

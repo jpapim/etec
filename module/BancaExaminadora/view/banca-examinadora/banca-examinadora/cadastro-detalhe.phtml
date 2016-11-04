@@ -11,9 +11,6 @@
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('method', 'post');
                 $form->setAttribute('data-role', 'form');
-                //                echo '<pre>';
-                //                 print_r($dadosBancaExaminadora);
-                //                 echo '</pre>';
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosBancaExaminadora->getId()));
@@ -42,7 +39,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <b>Quant. Professores:</b>
-                            <text id="count"><?= count($lista_inscritos) ?></text>
+                            <text id="count"><?= $quantidade_professores ?></text>
                         </div>
                     </div>
 
@@ -132,14 +129,19 @@
                         carregarProfessoresAjax();
                         setTimeout(function() {
                             $('#mensagem_professor').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
-                        }, 3000); // O valor é representado em milisegundos.
+                        }, 5000); // O valor é representado em milisegundos.
                     } else {
+                        if(response.nm_professor == null) {
+                            mensagem = "<p>Professor não localizado na base!</p>";
+                        } else {
+                            mensagem = "<p>Este professor já foi adicionado!</p>";
+                        }
                         $('#mensagem_professor').show();
-                        $('#mensagem_professor').html("<p>Este professor já foi adicionado!</p>");
+                        $('#mensagem_professor').html(mensagem);
                         $('#mensagem_professor').removeClass("bs-callout bs-callout-success").addClass("bs-callout bs-callout-danger");
-                        setTimeout(function() {
+                        setTimeout(function () {
                             $('#mensagem_professor').fadeOut('fast'); // "mensagem_professor" fechará após 3 minutos.
-                        }, 3000); // O valor é representado em milisegundos.
+                        }, 5000); // O valor é representado em milisegundos.
                     }
                 }
             });
