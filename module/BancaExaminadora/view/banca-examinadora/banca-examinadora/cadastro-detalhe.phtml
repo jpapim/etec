@@ -11,9 +11,6 @@
                 $form->setAttribute('class', 'form-horizontal');
                 $form->setAttribute('method', 'post');
                 $form->setAttribute('data-role', 'form');
-                //                echo '<pre>';
-                //                 print_r($dadosBancaExaminadora);
-                //                 echo '</pre>';
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 $form->get('id')->setValue(Estrutura\Helpers\Cript::enc($dadosBancaExaminadora->getId()));
@@ -42,7 +39,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <b>Quant. Professores:</b>
-                            <text id="count"><?= count($lista_inscritos) ?></text>
+                            <text id="count"><?= $quantidade_professores ?></text>
                         </div>
                     </div>
 

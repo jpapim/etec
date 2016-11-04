@@ -156,7 +156,9 @@ class BancaExaminadoraController extends AbstractCrudController
 
         $banca = new \BancaExaminadora\Service\BancaExaminadoraService();
         $dadosBancaExaminadora = $banca->buscar($id_banca_examinadora);
-        #xd($dadosBancaExaminadora);
+
+        $membrosBancoService = new \MembrosBanca\Service\MembrosBancaService();
+        $arrResultado = $membrosBancoService->fetchAllById(['id_banca_examinadora'=>$id_banca_examinadora]);
 
         $dadosView = [
             'service' => new \MembrosBanca\Service\MembrosBancaService(),
@@ -165,6 +167,7 @@ class BancaExaminadoraController extends AbstractCrudController
             'atributos' => array(),
             'id_banca_examinadora' => $id_banca_examinadora,
             'dadosBancaExaminadora' => $dadosBancaExaminadora,
+            'quantidade_professores' => count($arrResultado),
         ];
         #xd($dadosView);
 
