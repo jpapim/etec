@@ -7,6 +7,7 @@
             <tr>
                 <th class="text-center">Registro</th>
                 <th class="text-center">Assunto</th>
+                <th class="text-center">Tipo de Tcc</th>
                 <th class="text-center">Prof Orientador</th>
                 <th class="text-center">Título do Tcc</th>
                 <th class="text-center">Nota do Tcc</th>
@@ -18,6 +19,7 @@
             <tr>
                 <th class="text-center">Registro</th>
                 <th class="text-center">Assunto</th>
+                <th class="text-center">Tipo de Tcc</th>
                 <th class="text-center">Prof Orientador</th>
                 <th class="text-center">Título do Tcc</th>
                 <th class="text-center">Nota do Tcc</th>
@@ -25,7 +27,7 @@
                 <th class="text-center">Ações</th>
             </tr>
             <tr>
-                <th colspan="7" class="ts-pager form-horizontal">
+                <th colspan="8" class="ts-pager form-horizontal">
                     <?php
                     echo $this->paginationControl(
                         $paginator, 'Sliding', 'partials/pagination.phtml', [
@@ -72,6 +74,7 @@
                     <tr>
                         <td><?= $item['id_tcc']?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_area_conhecimento']) ?></td>
+                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_tipo_tcc']) ?></td>
                         <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($item['nm_professor']) ?></td>
                         <td><?= $item['tx_titulo_tcc']?></td>
                         <td><?= $item['nr_nota_final']?></td>
@@ -91,8 +94,7 @@
                         </td>
                         <td style="width: 180px;">
                             <?= \Estrutura\Service\HtmlHelper::botaoAlterar($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar TCC') ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar Concluinte') ?>
-                            <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('navegacao', array('controller' => $controller, 'action' => 'excluir', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc'])))) ?>
+                            <?= \Estrutura\Service\HtmlHelper::botaoAlterarCustomizado($this->url('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Estrutura\Helpers\Cript::enc($item['id_tcc']))), 'Modificar detalhes do TCC') ?>
                         </td>
                     </tr>
                     <?php

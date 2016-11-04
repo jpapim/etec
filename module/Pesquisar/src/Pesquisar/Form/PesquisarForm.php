@@ -23,10 +23,10 @@ class PesquisarForm extends AbstractForm
 
         $objForm = new FormObject('tccformpesquisa', $this, $this->inputFilter);
 
-        $objForm->date("dt_inicio")->required(false)->label("Inicio Periodo");
+        $objForm->date("dt_inicio")->required(false)->label("Início Periodo");
         $objForm->date("dt_final")->required(false)->label("Final da Periodo");
         $objForm->combo("id_tipo_tcc",'\TipoTcc\Service\TipoTccService', 'id', 'nm_tipo_tcc')->required(false)->label("Tipo de Trabalho");
-        $objForm->combo("id_area_conhecimento", '\AreaConhecimento\Service\AreaConhecimentoService', 'id', 'nm_area_conhecimento')->required(false)->label("Area de Conhecimento");
+        $objForm->combo("id_area_conhecimento", '\AreaConhecimento\Service\AreaConhecimentoService', 'id', 'nm_area_conhecimento')->required(false)->label("Área de Conhecimento");
         $objForm->combo("id_professor_orientador",'\Professor\Service\ProfessorService', 'id','nm_Professor', 'retornaOrientadores')->required(false)->label("Orientador");
         $objForm->text("tx_titulo_tcc")->required(false)->label("Título do TCC");
 

@@ -33,14 +33,13 @@ class TccForm extends AbstractForm
             $arrBancaExaminadoraFormatado[] = array('value' => $item['id_banca_examinadora'], 'label' => \Estrutura\Helpers\Data::converterDataHoraBancoMySQL2DataBrazil($item['dt_banca']));
         }
         $objForm->select("id_banca_examinadora",$arrBancaExaminadoraFormatado)->required(true)->label("Data da Banca");
+
         $objForm->combo("id_tipo_tcc",'\TipoTcc\Service\TipoTccService', 'id', 'nm_tipo_tcc')->required(true)->label("Tipo de TCC");
         $objForm->combo("id_area_conhecimento", '\AreaConhecimento\Service\AreaConhecimentoService', 'id', 'nm_area_conhecimento')->required(true)->label("Ãrea de Conhecimento");
-
         $objForm->combo("id_professor_orientador",'\Professor\Service\ProfessorService', 'id','nm_Professor', 'retornaOrientadores')->required(true)->label("Nome do Professor Orientador");
-
         $objForm->text("tx_titulo_tcc")->required(true)->label("Título do TCC");
         $objForm->textarea("tx_resumo")->required(true)->label("Resumo");
-        $objForm->text("nr_nota_final")->required(true)->label("Nota");
+        $objForm->text("nr_nota_final")->maxLength(4)->minLength(4)->mask(99.9)->required(true)->label("Nota");
         $objForm->file("ar_arquivo")->required(true)->label("Upload do Trabalho");
 
         $this->formObject = $objForm;

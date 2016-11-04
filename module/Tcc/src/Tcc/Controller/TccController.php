@@ -45,16 +45,19 @@ class TccController extends  AbstractCrudController {
                 'filter' => "area_conhecimento.nm_area_conhecimento  LIKE ?"
             ],
             '2' => [
-                'filter' => "tcc.nm_area_conhecimento  LIKE ?"
+                'filter' => "tipo_tcc.nm_tipo_tcc  LIKE ?"
             ],
             '3' => [
-                'filter' => "tcc.tx_titulo_tcc LIKE ?"
+                'filter' => "professor.nm_professor  LIKE ?"
             ],
             '4' => [
+                'filter' => "tcc.tx_titulo_tcc LIKE ?"
+            ],
+            '5' => [
                 'filter' => "tcc.nr_nota_final  LIKE ?"
             ],
-            '5' => NULL,
             '6' => NULL,
+            '7' => NULL,
 
         ];
 

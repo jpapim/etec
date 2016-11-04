@@ -86,7 +86,7 @@ class PesquisarService extends AbstractEstruturaService
             $whereBruto['tcc.id_tipo_tcc = ?'] =  $arrFiltro['id_tipo_tcc'];
         }
         if (isset($arrFiltro['id_area_conhecimento']) && $arrFiltro['id_area_conhecimento']) {
-            $whereBruto['id_area_conhecimento = ?'] = $arrFiltro['id_area_conhecimento'];
+            $whereBruto['tcc.id_area_conhecimento = ?'] = $arrFiltro['id_area_conhecimento'];
         }
         if (isset($arrFiltro['id_professor_orientador']) && $arrFiltro['id_professor_orientador']) {
             $whereBruto['id_professor_orientador = ?'] = $arrFiltro['id_professor_orientador'];
