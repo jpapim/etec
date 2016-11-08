@@ -85,7 +85,7 @@ class AuthController extends AbstractCrudController {
 
     /**
      * Autentica o usuário
-     * 
+     *
      * @return type
      */
     public function authenticateAction()
@@ -148,7 +148,7 @@ class AuthController extends AbstractCrudController {
 
     /**
      * Realiza o Logoff
-     * 
+     *
      * @return type
      */
     public function logoffAction()
@@ -161,7 +161,7 @@ class AuthController extends AbstractCrudController {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function captchaAction()
@@ -612,6 +612,53 @@ class AuthController extends AbstractCrudController {
         $this->addSuccessMessage('E-mail confirmado com sucesso.');
         $this->redirect()->toRoute('navegacao', ['controller' => 'auth', 'action' => 'login']);
         return FALSE;
+    }
+
+    /**
+     * Ações para pesquisar
+     */
+    public function indexPesquisarAction()
+    {
+        return parent::index($this->service, $this->form);
+    }
+
+    public function detalhesFiltrosPaginationAction()
+    {
+        #$this->params()->fromPost('paramname');   // From POST
+        #$this->params()->fromQuery('paramname');  // From GET
+        #$this->params()->fromRoute('paramname');  // From RouteMatch
+        #$this->params()->fromHeader('paramname'); // From header
+        #$this->params()->fromFiles('paramname');  // From file being uploaded
+        $filter = $this->getFilterPage();
+        $request = $this->getRequest();
+        $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+
+        $camposFilter = [
+        ];
+
+        $paginator = $this->service->getDetalhesFiltrosPaginator($post, $filter, $camposFilter);
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $this->service,
+            'form' => new \Pesquisar\Form\PesquisarForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
     }
 
 }
