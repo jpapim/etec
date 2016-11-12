@@ -37,10 +37,10 @@
 	
 	SetEnv APPLICATION_ENV development
 	ServerAdmin alyssontkd@gmail.com
-	DocumentRoot "/var/www/etec/public"
+	DocumentRoot "/var/www/html/etec/public"
 	ServerName dev.etec.com.br
 
-	<Directory "/var/www/etec/public">
+	<Directory "/var/www/html/etec/public">
 	    AllowOverride All
 	    Require all granted
 	</Directory>
