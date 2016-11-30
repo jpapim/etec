@@ -16,7 +16,7 @@ class PalavraChaveForm extends AbstractForm{
         $objForm->hidden("id_usuario")->required(false)->label("Id Usuario");
         $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario Cadastrador");
 
-        $objForm->text("nm_palavra_chave")->required(true)->label("Palavra Chave");
+        $objForm->text("nm_palavra_chave")->required(true)->label("Nome da Palavra Chave");
        
         $this->formObject = $objForm;
     }

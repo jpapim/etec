@@ -21,5 +21,6 @@ class AuthService extends Entity
         $authService->setStorage($this->getServiceLocator()->get('Auth\Table\MyAuth'));
         
         return $authService;        
-    }    
+    }
+
 }

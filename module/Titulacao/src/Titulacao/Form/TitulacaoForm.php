@@ -13,7 +13,7 @@ class TitulacaoForm extends AbstractForm{
         $this->inputFilter = new InputFilter();
         $objForm = new FormObject('titulacaoform',$this,$this->inputFilter);
         $objForm->hidden("id")->required(false)->label("Id");  
-        $objForm->text("nm_titulacao")->required(true)->label("Titulacao");  
+        $objForm->text("nm_titulacao")->required(true)->label("Nome da Titulação");
 
         $this->formObject = $objForm;
     }

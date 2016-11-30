@@ -1,16 +1,18 @@
-<link rel="stylesheet" type="text/css" href="/assets/compact-css/selectize.bootstrap2.css" />
+<link rel="stylesheet" type="text/css" href="/assets/compact-css/selectize.bootstrap2.css"/>
 <div class="row row-offcanvas row-offcanvas-right">
-    <br/>
-    <br/>
-    <br/>
+    <p align="right">
+        <button><a href="/pesquisar-pesquisar">Pesquisar TCC</a></button>
+    </p>
 
+    <br/>
+    <br/>
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-4">
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h3 class="light panel-title">Login</h3>
+                        <h3 class="light panel-title">Login de acesso</h3>
                     </div>
                     <div class="panel-body">
                         <?php
@@ -42,7 +44,6 @@
                                 <button type="submit" class="btn btn-primary">Acessar</button>
                             </div>
                         </div>
-                        <br>
                         <div class="row">
                             <div class="col-md-12 text-center" style="margin: 4px 0px 4px 0px;">
                                 <a href="/auth/esqueci-senha" class="pull-right">Não consigo acessar minha conta</a>
@@ -51,12 +52,6 @@
                         <?php
                         echo $this->form()->closeTag();
                         ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-center" style="margin: 4px 0px 4px 0px;">
-                        <?php $obVersionamento = new \Estrutura\View\Helper\Versionamento(); ?>
-                        <div class="versao"><?php echo $obVersionamento->getGitFullVersion() ; ?></div>
                     </div>
                 </div>
             </div>
@@ -70,10 +65,4 @@
             </div>
         </div>
     </div>
-
-    <!--    <div class="col-xs-12 col-sm-4">-->
-    <!--    <h2>ALGO PODE VIR AQUI</h2>-->
-    <!--    Arquivo raiz se encontra em module\auth\view\login      -->
-    <!--    </div>-->
-
 </div>

@@ -16,8 +16,8 @@ class AreaConhecimentoForm extends AbstractForm{
         $objForm->hidden("id_usuario")->required(false)->label("Id Usuario");
         $objForm->hidden("id_usuario_cadastro")->required(false)->label("Usuario Cadastrador");
 
-        $objForm->text("nm_area_conhecimento")->required(true)->label("Área de Conhecimento");
-       
+        $objForm->text("nm_area_conhecimento")->required(true)->label("Nome da Área de Conhecimento");
+
         $this->formObject = $objForm;
     }
 
