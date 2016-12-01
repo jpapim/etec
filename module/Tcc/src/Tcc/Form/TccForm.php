@@ -39,8 +39,8 @@ class TccForm extends AbstractForm
         $objForm->combo("id_professor_orientador",'\Professor\Service\ProfessorService', 'id','nm_Professor', 'retornaOrientadores')->required(true)->label("Professor Orientador");
         $objForm->text("tx_titulo_tcc")->required(true)->label("Título do TCC");
         $objForm->textarea("tx_resumo")->required(true)->label("Resumo");
-        $objForm->text("nr_nota_final")->maxLength(4)->minLength(4)->mask(99.9)->required(true)->label("Nota");
-        $objForm->file("ar_arquivo")->required(true)->label("Upload do Trabalho");
+        $objForm->text("nr_nota_final")->maxLength(4)->minLength(4)->mask(99.9)->required(false)->label("Nota");
+        $objForm->file("ar_arquivo")->required(false)->label("Upload do Trabalho");
 
         $this->formObject = $objForm;
     }
