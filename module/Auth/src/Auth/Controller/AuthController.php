@@ -256,6 +256,40 @@ class AuthController extends AbstractCrudController {
     }
 
     /**
+     * @return Stream
+     */
+    public function downloadArquivoAction()
+    {
+
+        define('DIR_DOWNLOAD', '.'.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'arquivos'.DIRECTORY_SEPARATOR);
+        $obTcc = new \Tcc\Service\TccService();
+        $resultado = $obTcc->buscar(\Estrutura\Helpers\Cript::dec($this->params()->fromRoute('id')));
+        $file = DIR_DOWNLOAD.$resultado->getArArquivo();
+        $file = filter_var($file, FILTER_SANITIZE_STRING);
+
+        $response = new \Zend\Http\Response\Stream();
+        $response->setStream(fopen($file, 'r'));
+        $response->setStatusCode(200);
+        $response->setStreamName(basename($file));
+        $headers = new \Zend\Http\Headers();
+
+        $headers->addHeaders(array(
+            'Content-Disposition' => 'attachment; filename="' . basename($file) . '"',
+            'Content-Type' => 'application/pdf',
+            'Content-Type' => 'application/msword',
+            'Content-Type' => 'application/octet-stream',
+            'Content-Type' => 'image/jpg',
+            'Expires' => '@0', // @0, because zf2 parses date as string to \DateTime() object
+            'Content-Length' => filesize($file),
+            'Cache-Control' => 'must-revalidate',
+            'Pragma' => 'public'
+        ));
+        $response->setHeaders($headers);
+        return $response;
+
+    }
+
+    /**
      * 
      * @param type $param
      * @return boolean

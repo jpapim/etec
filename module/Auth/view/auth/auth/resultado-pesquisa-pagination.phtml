@@ -76,7 +76,7 @@
                                 &nbsp;
                             <?php } else {  ?>
                                 <?= \Estrutura\Service\HtmlHelper::botaoDownload(
-                                    $this->url('navegacao', array('controller' => 'tcc-tcc', 'action' => 'download-arquivo', 'id' => \Estrutura\Helpers\Cript::enc($item['id_tcc']))),
+                                    $this->url('navegacao', array('controller' => 'auth', 'action' => 'download-arquivo', 'id' => \Estrutura\Helpers\Cript::enc($item['id_tcc']))),
                                     'Download',
                                     'enviar_para_download',
                                     'glyphicon glyphicon-cloud-download',
