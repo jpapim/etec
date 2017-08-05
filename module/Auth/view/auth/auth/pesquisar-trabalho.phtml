@@ -2,7 +2,7 @@
 /** @var $lista \Pesquisar\Service\Pesquisar[] */
 ?>
 <div class="page-head">
-    <h2>Pesquisa Avançada TCC</h2>
+    <h2>Pesquisa Avançada Trabalhos de Conclusão e Monografias</h2>
 </div>
 <div class="row row-offcanvas row-offcanvas-right">
 
@@ -81,9 +81,16 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="detalhesfiltros-pagination"></div>
+            <div class="row" id="resultadopesquisa-pagination"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="<?= $this->url('navegacao', ['controller' => 'principal-principal']) ?>" class="btn btn-primary" title="Retorna para a Página Principal">Ir Home</a>
+                </div>
+            </div>
         </div>
+
     </div>
+
 </div>
 <script type="text/javascript" language="javascript" class="init">
     $(document).ready(function () {
@@ -100,7 +107,7 @@
                 type: "post",
                 dataType: "text",
                 cache: false,
-                url: '/pesquisar-pesquisar/detalhes-filtros-pagination',
+                url: '/auth/resultado-pesquisa-pagination',
                 async: true,
                 data: {
                     dt_inicio: $('#dt_inicio').val(),
@@ -114,12 +121,12 @@
                     tx_palavra_chave: $('#tx_palavra_chave').val()
                 },
                 beforeSend: function () {
-                    $('#detalhesfiltros-pagination').html(
+                    $('#resultadopesquisa-pagination').html(
                         '<div class="row"><div class="col-md-12 text-center"><p><img src="/assets/img/carregando.gif"><p></div></div>'
                     );
                 },
                 success: function (data) {
-                    $('#detalhesfiltros-pagination').html(data);
+                    $('#resultadopesquisa-pagination').html(data);
                 }
             });
         }
