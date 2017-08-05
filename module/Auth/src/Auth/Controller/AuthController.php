@@ -203,6 +203,58 @@ class AuthController extends AbstractCrudController {
         ]);
     }
 
+    public function pesquisarTrabalhoAction()
+    {
+
+        return new ViewModel([
+            'form' => new \Pesquisar\Form\PesquisarForm(),
+            'controller' => new \Pesquisar\Controller\PesquisarController()
+        ]);
+
+    }
+
+    public function resultadoPesquisaPaginationAction()
+    {
+        #$this->params()->fromPost('paramname');   // From POST
+        #$this->params()->fromQuery('paramname');  // From GET
+        #$this->params()->fromRoute('paramname');  // From RouteMatch
+        #$this->params()->fromHeader('paramname'); // From header
+        #$this->params()->fromFiles('paramname');  // From file being uploaded
+        $filter = $this->getFilterPage();
+        $request = $this->getRequest();
+        $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+
+        $camposFilter = [
+        ];
+
+        $pesquisaService = new \Pesquisar\Service\PesquisarService();
+
+        $paginator =$pesquisaService->getDetalhesFiltrosPaginator($post, $filter, $camposFilter);
+        $paginator->setItemCountPerPage($paginator->getTotalItemCount());
+
+        $countPerPage = $this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        );
+
+        $paginator->setItemCountPerPage($this->getCountPerPage(
+            current(\Estrutura\Helpers\Pagination::getCountPerPage($paginator->getTotalItemCount()))
+        ))->setCurrentPageNumber($this->getCurrentPage());
+
+        $viewModel = new ViewModel([
+            'service' => $pesquisaService,
+            'form' => new \Pesquisar\Form\PesquisarForm(),
+            'paginator' => $paginator,
+            'filter' => $filter,
+            'countPerPage' => $countPerPage,
+            'camposFilter' => $camposFilter,
+            'controller' => $this->params('controller'),
+            #'controller' =>  new \Pesquisar\Controller\PesquisarController(),
+            'atributos' => array()
+        ]);
+
+        return $viewModel->setTerminal(TRUE);
+    }
+
     /**
      * 
      * @param type $param
