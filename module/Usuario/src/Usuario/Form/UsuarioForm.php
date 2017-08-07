@@ -24,11 +24,11 @@ class UsuarioForm extends AbstractForm {
         $objForm->combo("id_sexo", '\Sexo\Service\SexoService', 'id', 'nm_sexo')->required(false)->label("Sexo");
         $objForm->combo("id_perfil", '\Perfil\Service\PerfilService', 'id', 'nm_perfil')->required(true)->label("Perfil do Usuário");
         $objForm->combo("id_situacao_usuario", '\SituacaoUsuario\Service\SituacaoUsuarioService', 'id', 'nm_situacao_usuario')->required(true)->label("Situação do Usuário");
-        $objForm->email("em_email")->required(true)->label("Email");
-        $objForm->email("em_email_confirm")->required(true)->label("Confirme o email")
+        $objForm->email("em_email")->required(true)->label("E-mail");
+        $objForm->email("em_email_confirm")->required(true)->label("Confirme o e-mail")
                 ->setAttribute('data-match', '#em_email')
-                ->setAttribute('data-match-error', 'Email não correspondem');
-        $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("Email");
+                ->setAttribute('data-match-error', 'E-mails não correspondem');
+        $objForm->combo("id_email", '\Email\Service\EmailService', 'id', 'em_email')->required(false)->label("E-mail");
         $objForm->telefone("nr_telefone")->required(true)->label("Telefone");
         $objForm->telefone("id_telefone", '\Telefone\Service\TelefoneService', 'id', 'nr_telefone')->required(true)->label("Telefone");
 

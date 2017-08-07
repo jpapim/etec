@@ -19,7 +19,7 @@ class PermissaoForm extends AbstractForm
 
         $objForm->combo("id_perfil", '\Perfil\Service\PerfilService', 'id', 'nm_perfil')->required(false)->label("Selecionar Perfil");
 
-        $objForm->combo("id_modulo", '\Controller\Service\ControllerService', 'id', 'nm_modulo', 'fetchAllModulos')->required(false)->label("Selecione o Modulo");
+        $objForm->combo("id_modulo", '\Controller\Service\ControllerService', 'id', 'nm_modulo', 'fetchAllModulos')->required(false)->label("Selecione o Módulo");
 
         if (isset($options['acoes'])) {
             #Carrego Todos Os Actions existentes na Tabela de Controle por Controller e Perfil
@@ -42,7 +42,7 @@ class PermissaoForm extends AbstractForm
                     'selected' => in_array($ob_action->getId(), $options['acoes']) ? true : false,
                 ];
             }
-            $objForm->multicheckbox('id_action', $arrTodasActions, 'checkbox')->required(false)->label('Marque as açoes disponiveis ao Pefil e Módulo:');
+            $objForm->multicheckbox('id_action', $arrTodasActions, 'checkbox')->required(false)->label('Marque as ações disponíveis ao Pefil e Módulo:');
         }
         $this->formObject = $objForm;
     }
