@@ -62,7 +62,7 @@
                     #xd($detalhe_tcc);
                     ?>
                     <tr>
-                        <td class="text-center"><?= \Estrutura\Helpers\String::nomeMaiusculo($detalhe_tcc['nm_palavra_chave']) ?></td>
+                        <td class="text-center"><?= $detalhe_tcc['nm_palavra_chave'] ?></td>
                         <td class="text-center">
                                 <span class="btn-group" style="width: 100px;">
                                     <?= \Estrutura\Service\HtmlHelper::botaoExcluir($this->url('tcc-tcc',

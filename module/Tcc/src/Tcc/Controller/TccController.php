@@ -267,7 +267,7 @@ class TccController extends  AbstractCrudController {
             }
 
             $palavrachaveService->excluir();
-            $this->addSuccessMessage('Registro excluido com sucesso');
+            $this->addSuccessMessage('Registro excluído com sucesso!');
             return $this->redirect()->toRoute('navegacao', ['controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => \Estrutura\Helpers\Cript::enc($id_tcc)]);
 
         } catch (\Exception $e) {
@@ -373,7 +373,7 @@ class TccController extends  AbstractCrudController {
             }
 
             $concluinteService->excluir();
-            $this->addSuccessMessage('Registro excluido com sucesso');
+            $this->addSuccessMessage('Registro excluído com sucesso!');
             return $this->redirect()->toRoute('navegacao', ['controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => \Estrutura\Helpers\Cript::enc($id_tcc)]);
 
         } catch (\Exception $e) {
