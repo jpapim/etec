@@ -702,7 +702,7 @@ CREATE TABLE `tcc` (
   `tx_titulo_tcc` varchar(150) DEFAULT NULL,
   `tx_resumo` text,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dt_alteracao` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',,
   `nr_nota_final` decimal(4,2) DEFAULT NULL,
   `ar_arquivo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_tcc`),
