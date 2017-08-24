@@ -112,7 +112,7 @@ CREATE TABLE `banca_examinadora` (
   `id_banca_examinadora` int(11) NOT NULL AUTO_INCREMENT,
   `dt_banca` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_banca_examinadora`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,6 @@ CREATE TABLE `banca_examinadora` (
 
 LOCK TABLES `banca_examinadora` WRITE;
 /*!40000 ALTER TABLE `banca_examinadora` DISABLE KEYS */;
-INSERT INTO `banca_examinadora` VALUES (1,'2016-07-22 03:00:00'),(2,'2016-10-14 03:00:00'),(3,'2016-10-15 03:00:00'),(4,'2016-10-19 02:00:00'),(5,'2016-11-15 02:00:00');
 /*!40000 ALTER TABLE `banca_examinadora` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +169,7 @@ CREATE TABLE `concluinte` (
   KEY `fk_tcc_concluinte_idx` (`id_tcc`),
   CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`),
   CONSTRAINT `fk_tcc_concluinte` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +178,6 @@ CREATE TABLE `concluinte` (
 
 LOCK TABLES `concluinte` WRITE;
 /*!40000 ALTER TABLE `concluinte` DISABLE KEYS */;
-INSERT INTO `concluinte` VALUES (1,1,'Eduardo ','545485',2),(2,1,'Elias Jose','2332',1),(3,2,'jdvsvydjww','fefefe',4),(4,2,'fgegefgief','efefe',4),(5,1,'Jose','e3e3e3e',2);
 /*!40000 ALTER TABLE `concluinte` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -608,7 +606,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (1,2,1,'Alysson Vicuña de Oliveira','2016-06-20 18:40:44','N','A'),(2,3,1,'Eduardo Prola Salinas','2016-06-20 18:41:10','S','A'),(3,3,1,'Vanessa Coelho','2016-10-14 18:34:49','N','A'),(4,3,1,'Jorge Targino','2016-10-14 18:35:07','N','A'),(5,2,1,'Fernando Feliu','2016-10-14 18:35:21','S','A'),(6,3,1,'Renato Leao','2016-10-15 13:18:43','S','I');
+INSERT INTO `professor` VALUES (1,2,1,'Alysson Vicuña de Oliveira','2016-06-20 18:40:44','N','A'),(2,3,1,'Eduardo Prola Salinas','2016-06-20 18:41:10','S','A'),(3,3,1,'Vanessa Coelho','2016-10-14 18:34:49','N','A'),(4,3,1,'Jorge Targino','2016-10-14 18:35:07','N','A'),(5,2,1,'Fernando Feliu','2016-10-14 18:35:21','S','A'),(6,3,1,'Renato Leao','2016-10-15 13:18:43','S','A');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -718,7 +716,7 @@ CREATE TABLE `tcc` (
   CONSTRAINT `FK_Reference_95` FOREIGN KEY (`id_banca_examinadora`) REFERENCES `banca_examinadora` (`id_banca_examinadora`),
   CONSTRAINT `FK_Reference_96` FOREIGN KEY (`id_area_conhecimento`) REFERENCES `area_conhecimento` (`id_area_conhecimento`),
   CONSTRAINT `FK_Reference_99` FOREIGN KEY (`id_tipo_tcc`) REFERENCES `tipo_tcc` (`id_tipo_tcc`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -727,7 +725,6 @@ CREATE TABLE `tcc` (
 
 LOCK TABLES `tcc` WRITE;
 /*!40000 ALTER TABLE `tcc` DISABLE KEYS */;
-INSERT INTO `tcc` VALUES (1,1,1,1,2,1,5,'Teste','aqaqaq','2016-10-14 19:42:31','2016-10-16 20:16:20',10.00,NULL),(2,1,1,2,1,3,2,'Teste do Salinas','deded','2016-10-14 19:45:49','2016-10-16 20:16:20',99.99,NULL),(3,1,1,1,2,3,5,'Teste de Arquivo','swswswsw','2016-10-15 15:01:42','2016-10-16 20:16:20',99.99,NULL),(4,1,1,1,2,2,2,'rgrgrg','fbfvbfbfbfbfb','2016-10-19 00:03:56','2016-10-23 22:11:41',3.00,NULL);
 /*!40000 ALTER TABLE `tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
