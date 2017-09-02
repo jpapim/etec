@@ -125,9 +125,64 @@ class ConcluinteController extends AbstractCrudController
     }
 
     public function gravarAction(){
-        $this->addSuccessMessage('Registro gravado com sucesso');
-        $this->redirect()->toRoute('navegacao', array('controller' => 'concluinte-concluinte', 'action' => 'index'));
-        return parent::gravar($this->service, $this->form);
+
+        $form = $this->form;
+        $service = $this->service;
+
+        try {
+            $controller = $this->params('controller');
+            $request = $this->getRequest();
+
+            if (!$request->isPost()) {
+                throw new \Exception('Dados Inválidos');
+            }
+
+            $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
+
+            $files = $request->getFiles();
+            $upload = $this->uploadFile($files);
+
+            $post = array_merge($post, $upload);
+
+            if (isset($post['id']) && $post['id']) {
+                $post['id'] = Cript::dec($post['id']);
+            }
+
+            $concluinteService = new \Concluinte\Service\ConcluinteService();
+            $concluinteService->setNrMatricula($post['nr_matricula']);
+
+            if ($concluinteService->filtrarObjeto()->count() > 0) {
+                $this->setPost($post);
+                $this->addErrorMessage("Já existe um concluinte com a matricula Nº" . $post['nr_matricula']);
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+                return false;
+            }
+
+            $form->setData($post);
+
+            if (!$form->isValid()) {
+                $this->addValidateMessages($form);
+                $this->setPost($post);
+                $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+                return false;
+            }
+
+            $service->exchangeArray($form->getData());
+            $this->addSuccessMessage('Registro gravado com sucesso');
+            $this->redirect()->toRoute('navegacao', array('controller' => 'concluinte-concluinte', 'action' => 'index'));
+            return $service->salvar();
+
+        } catch (\Exception $e) {
+
+            $this->setPost($post);
+            $this->addErrorMessage($e->getMessage());
+            $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro'));
+            return false;
+        }
+
+        #$this->addSuccessMessage('Registro gravado com sucesso');
+        #$this->redirect()->toRoute('navegacao', array('controller' => 'concluinte-concluinte', 'action' => 'index'));
+        #return parent::gravar($this->service, $this->form);
     }
 
     public function cadastroAction()
