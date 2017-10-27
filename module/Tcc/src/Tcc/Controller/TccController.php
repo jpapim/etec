@@ -11,6 +11,8 @@ use Concluinte;
 use PalavraChaveTcc;
 use Estrutura\Controller\AbstractCrudController;
 use Estrutura\Helpers\Cript;
+use Tcc\Entity\TccEntity;
+use Zend\Json\Server\Smd\Service;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Estrutura\Helpers\Pagination;
@@ -116,11 +118,29 @@ class TccController extends  AbstractCrudController {
                 }
             }
 
+            #Faz a junção dos dados enviados via post e dos arquivos submetidos
             $post = array_merge($post, $upload);
 
+            #Descriptografa O id passado como parametro que pode ser null ou alum id valido
             if (isset($post['id']) && $post['id']) {
                 $post['id'] = Cript::dec($post['id']);
             }
+
+            #############################################################################
+            $tccService = new \Tcc\Service\TccService();
+            $tccEntity = $tccService->buscar($post['id']);
+            #Se O id estiver preenchido o formulario foi Submetido via Edição, do contrario é a inserção de um novo TCC
+            if(!is_null($post['id']) && !empty($post['id'])){ #Se for uma alteração
+
+                #Se não trocou o arquivo, continua com o mesmo que ja esta cadastrado no banco
+                if(empty($post['ar_arquivo'])){
+                    $post['ar_arquivo'] = $tccEntity->getArArquivo();
+                }
+                //TODO: Implementar um metodo para apagar o arquivo antigo, caso o usuario tenha optado por subir um novo arquivo.
+
+            }
+            $this->getRequest()->getPost()->set('ar_arquivo', $post['ar_arquivo']);
+            #############################################################################
 
             $form->setData($post);
 
@@ -132,12 +152,17 @@ class TccController extends  AbstractCrudController {
             }
             $service->exchangeArray($form->getData());
             $this->addSuccessMessage('Registro alterado com sucesso');
+
             $id_tcc = $service->salvar();
 
             //Define o redirecionamento
             if (isset($post['id']) && $post['id']) {
+
+                #Alteração
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($post['id'])));
             } else {
+
+                #Inserção
                 $this->redirect()->toRoute('navegacao', array('controller' => $controller, 'action' => 'cadastro-detalhe', 'id' => Cript::enc($id_tcc)));
             }
 
