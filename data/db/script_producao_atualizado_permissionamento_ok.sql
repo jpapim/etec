@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.26, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.5.50, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: bdetec
 -- ------------------------------------------------------
--- Server version	5.6.24
+-- Server version	5.5.50-0+deb8u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,16 +24,17 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bdetec` /*!40100 DEFAULT CHARACTER SET
 USE `bdetec`;
 
 --
--- Temporary view structure for view `acl`
+-- Temporary table structure for view `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `acl` AS SELECT 
- 1 AS `id_perfil`,
- 1 AS `nm_resource`*/;
+/*!50001 CREATE TABLE `acl` (
+  `id_perfil` tinyint NOT NULL,
+  `nm_resource` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -85,20 +86,21 @@ INSERT INTO `area_conhecimento` VALUES (1,'Engenharia de Software'),(2,'Seguran�
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `auth`
+-- Temporary table structure for view `auth`
 --
 
 DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `auth` AS SELECT 
- 1 AS `id_usuario`,
- 1 AS `id_perfil`,
- 1 AS `em_email`,
- 1 AS `pw_senha`,
- 1 AS `nm_usuario`,
- 1 AS `id_contrato`*/;
+/*!50001 CREATE TABLE `auth` (
+  `id_usuario` tinyint NOT NULL,
+  `id_perfil` tinyint NOT NULL,
+  `em_email` tinyint NOT NULL,
+  `pw_senha` tinyint NOT NULL,
+  `nm_usuario` tinyint NOT NULL,
+  `id_contrato` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -121,7 +123,7 @@ CREATE TABLE `banca_examinadora` (
 
 LOCK TABLES `banca_examinadora` WRITE;
 /*!40000 ALTER TABLE `banca_examinadora` DISABLE KEYS */;
-INSERT INTO `banca_examinadora` VALUES (1,'2016-07-22 03:00:00'),(2,'2016-10-14 03:00:00'),(3,'2016-10-15 03:00:00'),(4,'2016-10-19 02:00:00'),(5,'2016-11-15 02:00:00');
+INSERT INTO `banca_examinadora` VALUES (1,'2016-11-28 02:00:00'),(2,'2016-12-01 02:00:00'),(3,'2016-11-24 02:00:00'),(4,'2016-11-24 02:00:00'),(5,'2016-11-24 02:00:00');
 /*!40000 ALTER TABLE `banca_examinadora` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +172,7 @@ CREATE TABLE `concluinte` (
   KEY `fk_tcc_concluinte_idx` (`id_tcc`),
   CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`),
   CONSTRAINT `fk_tcc_concluinte` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +181,7 @@ CREATE TABLE `concluinte` (
 
 LOCK TABLES `concluinte` WRITE;
 /*!40000 ALTER TABLE `concluinte` DISABLE KEYS */;
-INSERT INTO `concluinte` VALUES (1,1,'Eduardo ','545485',2),(2,1,'Elias Jose','2332',1),(3,2,'jdvsvydjww','fefefe',4),(4,2,'fgegefgief','efefe',4),(5,1,'Jose','e3e3e3e',2);
+INSERT INTO `concluinte` VALUES (1,1,'Joyce Lisiane de Sousa Silva',NULL,2),(2,1,'Gilvan Viana Rodrigues',NULL,2),(3,1,'Gabriel Abreu Ramos',NULL,1),(4,1,'Humberto Junio de Jesus',NULL,1),(5,1,'Jeancarlo Dias dos Santos',NULL,1),(6,1,'Gustavo Manso Marques',NULL,3),(7,1,'Miguel da Silva Sousa',NULL,3),(8,1,'Rayany Maria Bastos Pereira',NULL,3),(9,1,'Erick Pinheiro de Sousa',NULL,4),(10,1,'Igor Rodrigues de Santana',NULL,4),(11,1,'Rafael Paiva da Silva',NULL,4);
 /*!40000 ALTER TABLE `concluinte` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,8 +273,8 @@ CREATE TABLE `email` (
   `id_situacao` int(11) NOT NULL,
   PRIMARY KEY (`id_email`),
   KEY `ix_emails_situacao` (`id_situacao`),
-  CONSTRAINT `FK_Reference_32` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
-  CONSTRAINT `fk_emails_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_emails_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Reference_32` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -334,10 +336,10 @@ CREATE TABLE `esqueci_senha` (
   PRIMARY KEY (`id_esqueci_senha`),
   KEY `ix_esqueci_senha_usuarios` (`id_usuario`),
   KEY `ix_esqueci_senha_situacoes` (`id_situacao`),
-  CONSTRAINT `FK_Reference_23` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `FK_Reference_40` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
   CONSTRAINT `fk_esqueci_senha_situacoes1` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_esqueci_senha_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_esqueci_senha_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Reference_23` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `FK_Reference_40` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -422,11 +424,11 @@ CREATE TABLE `login` (
   KEY `ix_Login_situacao` (`id_situacao`),
   KEY `FK_Reference_26` (`id_perfil`),
   KEY `fk_Login_usuarios` (`id_usuario`),
-  CONSTRAINT `FK_Reference_26` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
-  CONSTRAINT `FK_Reference_31` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
   CONSTRAINT `fk_Login_emails` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Login_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Login_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Login_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Reference_26` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
+  CONSTRAINT `FK_Reference_31` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -457,7 +459,7 @@ CREATE TABLE `membros_banca` (
   KEY `FK_Reference_98` (`id_professor`),
   CONSTRAINT `FK_Reference_97` FOREIGN KEY (`id_banca_examinadora`) REFERENCES `banca_examinadora` (`id_banca_examinadora`),
   CONSTRAINT `FK_Reference_98` FOREIGN KEY (`id_professor`) REFERENCES `professor` (`id_professor`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,7 +468,7 @@ CREATE TABLE `membros_banca` (
 
 LOCK TABLES `membros_banca` WRITE;
 /*!40000 ALTER TABLE `membros_banca` DISABLE KEYS */;
-INSERT INTO `membros_banca` VALUES (1,1,1,'N'),(2,1,2,'S'),(3,2,1,'N'),(4,2,2,'S'),(5,3,1,'N'),(6,3,2,'S'),(7,3,5,'S'),(8,4,1,'N'),(9,4,2,'S'),(10,4,3,'N'),(11,5,1,'N'),(12,5,2,'S'),(15,5,3,'N');
+INSERT INTO `membros_banca` VALUES (4,2,2,'S'),(5,3,1,'N'),(6,3,2,'S'),(8,4,1,'N'),(9,4,2,'S'),(11,5,1,'N'),(12,5,2,'S'),(16,1,8,'S'),(17,1,7,'N'),(18,1,9,'N'),(19,2,12,'N'),(20,2,5,'N'),(21,2,8,'S'),(22,2,10,'N'),(23,2,11,'N'),(24,3,7,'N'),(25,4,7,'N'),(26,5,7,'N');
 /*!40000 ALTER TABLE `membros_banca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,7 +483,7 @@ CREATE TABLE `palavra_chave` (
   `id_palavra_chave` bigint(20) NOT NULL AUTO_INCREMENT,
   `nm_palavra_chave` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id_palavra_chave`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,7 +492,7 @@ CREATE TABLE `palavra_chave` (
 
 LOCK TABLES `palavra_chave` WRITE;
 /*!40000 ALTER TABLE `palavra_chave` DISABLE KEYS */;
-INSERT INTO `palavra_chave` VALUES (1,'Arduino'),(2,'Android'),(3,'IOS');
+INSERT INTO `palavra_chave` VALUES (1,'Arduino'),(2,'Android'),(3,'IOS'),(4,'Internet'),(5,'Sociedade'),(6,'Tecnologia'),(7,'Sistemas'),(8,'comodidade'),(9,'Tempo'),(10,'Acompanhamento'),(11,'Alunos'),(12,'Pais'),(13,'Professores'),(14,'Reserva'),(15,'hotel'),(16,'Mapeamento de quartos'),(17,'On line'),(18,'Roubos'),(19,'Aplicativos'),(20,'Localização'),(21,'Google Maps'),(22,'Economia'),(23,'Mobile'),(24,'geolocalização'),(25,'posto de combustível');
 /*!40000 ALTER TABLE `palavra_chave` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,7 +512,7 @@ CREATE TABLE `palavra_chave_tcc` (
   KEY `FK_Reference_101` (`id_palavra_chave`),
   CONSTRAINT `FK_Reference_100` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`),
   CONSTRAINT `FK_Reference_101` FOREIGN KEY (`id_palavra_chave`) REFERENCES `palavra_chave` (`id_palavra_chave`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -519,7 +521,7 @@ CREATE TABLE `palavra_chave_tcc` (
 
 LOCK TABLES `palavra_chave_tcc` WRITE;
 /*!40000 ALTER TABLE `palavra_chave_tcc` DISABLE KEYS */;
-INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1),(5,4,1),(6,4,2),(7,3,2);
+INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1),(6,4,2),(7,3,2),(8,2,NULL),(9,1,NULL),(10,3,15),(11,3,16),(12,3,7),(13,3,14),(14,4,18),(15,4,19),(16,4,21),(17,4,20);
 /*!40000 ALTER TABLE `palavra_chave_tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -599,7 +601,7 @@ CREATE TABLE `professor` (
   KEY `FK_Reference_91` (`id_usuario_cadastro`),
   CONSTRAINT `FK_Reference_90` FOREIGN KEY (`id_titulacao`) REFERENCES `titulacao` (`id_titulacao`),
   CONSTRAINT `FK_Reference_91` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -608,7 +610,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (1,2,1,'Alysson Vicuña de Oliveira','2016-06-20 18:40:44','N','A'),(2,3,1,'Eduardo Prola Salinas','2016-06-20 18:41:10','S','A'),(3,3,1,'Vanessa Coelho','2016-10-14 18:34:49','N','A'),(4,3,1,'Jorge Targino','2016-10-14 18:35:07','N','A'),(5,2,1,'Fernando Feliu','2016-10-14 18:35:21','S','A'),(6,3,1,'Renato Leao','2016-10-15 13:18:43','S','I');
+INSERT INTO `professor` VALUES (1,2,1,'Alysson Vicuña de Oliveira','2016-06-20 18:40:44','N','A'),(2,3,1,'Eduardo Prola Salinas','2016-06-20 18:41:10','S','A'),(3,3,1,'Vanessa Coelho','2016-10-14 18:34:49','N','A'),(4,3,1,'Jorge Targino','2016-10-14 18:35:07','N','A'),(5,2,1,'Fernando Feliu','2016-10-14 18:35:21','S','A'),(6,3,1,'Renato Leao','2016-10-15 13:18:43','S','A'),(7,2,1,'Renato José','2017-10-19 13:46:25','S','A'),(8,1,1,'Daniel Souza Coelho','2017-10-19 13:46:54','S','A'),(9,1,1,'Wanderson Pereira dos Santos','2017-10-19 13:49:21','S','A'),(10,1,1,'João Evangelista de Souza','2017-10-19 13:49:53','S','A'),(11,2,1,'Websters Gomes','2017-10-19 13:50:23','N','A'),(12,1,1,'Hedson Rodrigues Lima','2017-10-19 13:50:53','N','A');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -702,7 +704,7 @@ CREATE TABLE `tcc` (
   `tx_titulo_tcc` varchar(150) DEFAULT NULL,
   `tx_resumo` text,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dt_alteracao` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nr_nota_final` decimal(4,2) DEFAULT NULL,
   `ar_arquivo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_tcc`),
@@ -727,7 +729,7 @@ CREATE TABLE `tcc` (
 
 LOCK TABLES `tcc` WRITE;
 /*!40000 ALTER TABLE `tcc` DISABLE KEYS */;
-INSERT INTO `tcc` VALUES (1,1,1,1,2,1,5,'Teste','aqaqaq','2016-10-14 19:42:31','2016-10-16 20:16:20',10.00,NULL),(2,1,1,2,1,3,2,'Teste do Salinas','deded','2016-10-14 19:45:49','2016-10-16 20:16:20',99.99,NULL),(3,1,1,1,2,3,5,'Teste de Arquivo','swswswsw','2016-10-15 15:01:42','2016-10-16 20:16:20',99.99,NULL),(4,1,1,1,2,2,2,'rgrgrg','fbfvbfbfbfbfb','2016-10-19 00:03:56','2016-10-23 22:11:41',3.00,NULL);
+INSERT INTO `tcc` VALUES (1,1,1,1,2,1,2,'Sistema de Comanda Eletrônica QR Code','RESUMO\r\nEste projeto tem como objetivo apresentar sistema que gerencia comandas eletrônicas em bares e restaurantes com auxílio da tecnologia QR Code, buscando agilidade no registro dos pedidos e disponibilizando para o cliente a possibilidade de visualizar o consumo de comidas e bebidas de forma simples e transparente, através da leitura QR Code, além da possibilidade de adicionar novos pedidos sem a necessidade de atendimento físico de garçons, ou seja, após a leitura da comanda pelo smartphone é apresentado o cardápio para cliente do estabelecimento onde pode-se adicionar os produtos na comanda (pedidos) e visualizar o consumo de forma dinâmica.\r\nPalavras-Chave: Comanda eletrônica, QR Code, transparência, tecnologia.','2017-10-19 14:08:20','0000-00-00 00:00:00',NULL,NULL),(2,1,1,2,1,1,8,'SISTEMA DE ACOMPANHAMENTO ON LINE DE RENDIMENTO DE ALUNOS E INSTITUIÇÕES NA REDE PÚBLICA DE ENSINO.','Com o advento da Internet, é importante para os setores da sociedade aderirem as mudanças impostas pela tecnologia. É fato que hoje as pessoas conseguem resolver problemas ou situações que antes não poderiam se imaginar, através de um clique.\r\nA falta de tempo e a comodidade são fatos que impulsionam o crescimento de aplicativos e sistemas, já que fazem com que as pessoas não percam tempo, ou faltem um dia de trabalho para resolver algo.\r\nCom isso, tem-se a necessidade de um sistema de acompanhamento on-line de rendimento de alunos e instituições da rede pública de ensino, tendo como principal foco proporcionar aos pais ou responsáveis um acompanhamento do rendimento escolar do aluno, podendo inclusive ter feedbacks dos docentes sobre o comportamento do estudante.\r\nPalavras-Chave: Internet, sociedade, tecnologia, sistemas, comodidade, tempo, acompanhamento, alunos, pais, professores.','2017-10-19 18:21:12','0000-00-00 00:00:00',NULL,NULL),(3,1,1,2,1,1,8,'SISTEMA DE RESERVAS ONLINE DE HOTEL COM FUNCIONALIDADE PARA VISUALIZAÇÃO DE QUARTOS NO MOMENTO DA RESERVA','Este Trabalho de Conclusão de Curso (TCC) tem como objetivo o aprimoramento do processo de reservas online para hotel, possibilitando a visualização de mapa com a localização dos quartos. A ferramenta trará maior comodidade e independência aos hóspedes com a escolha de acordo com suas preferências e, consequentemente, tornará o estabelecimento mais competitivo no mercado hoteleiro, visto que a comodidade do já citado sistema, além de reafirmar o compromisso do estabelecimento com a qualidade e conforto para com os clientes já cativos, atrairá também um novo grupo de consumidores, aquele que está sempre em busca de novos mecanismos para tornarem a vida mais prática e fácil.\r\nNeste documento serão apresentados todos artefatos do sistema que foi desenvolvido, especificando e detalhando cada funcionalidade do mesmo, com técnicas e modelos de diagramas definidos pela UML.\r\nPalavras-Chave: Sistema de Reserva Online. Hotel. Mapeamento de Quartos.','2017-10-20 10:42:56','0000-00-00 00:00:00',NULL,NULL),(4,1,1,3,1,1,2,'LOCALIZA BIKE','Atualmente é notado através dos veículos de comunicação uma gama de notícias sobre roubos em diversos segmentos. E destes segmentos podemos destacar o roubo de bicicletas, porque este bem ainda é objeto para diversos tipos de pessoas, desde um simples passeio e realização de esporte até o trajeto de ir para o trabalho. E com isso os criminosos também intensificaram o foco de roubo aos ciclistas de maneira que após a subtração, dependendo do modelo da bicicleta, vendem em feiras clandestinas a preço abaixo do mercado. Entretanto vários ciclistas ficavam desfalcado e receosos em adquirir este tipo de bem.\r\nEntão o aplicativo Localiza Bike visa auxiliar o ciclista na recuperação da sua bicicleta em virtude dos roubos, porque após a subtração o ciclista altera o seu status para bicicleta roubada e com isso os demais usuários que avistarem um modelo similar com o que foi descrito no aplicativo no meio da rua ou em feiras clandestinas, poderá fazer uma consulta através do número de série que se encontra no quadro da bicicleta próximos aos pedais e caso a suspeita seja positiva pode tirar uma foto e marcar a localização, aonde se encontrou a bicicleta. Além disso o usuário contará com a funcionalidade de realizar seu trajeto com o apoio do Google Maps, pois ao definir o local de origem e de destino será realizado o trajeto que se pretende percorrer.\r\nEntretanto seguindo o contexto do parágrafo anterior, o usuário dispõe da alteração de proprietário, ou seja, caso o mesmo venha efetuar a venda da bicicleta basta inserir no campo designado para transferência o CPF do novo proprietário e com isso o próprio sistema altera e registra a bicicleta no perfil ao novo comprador, tendo como necessidade de se cadastrar no aplicativo. O foco principal que é a consulta da bicicleta, também se volta para a segurança pública, aonde forças policias suspeitando do meliante portador de uma bicicleta, contará com este aplicativo para identificar o verdadeiro dono.\r\nPalavras-Chave: Roubos – Aplicativo – Google Maps – Localização.','2017-10-20 11:16:51','0000-00-00 00:00:00',0.00,'');
 /*!40000 ALTER TABLE `tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -908,6 +910,7 @@ USE `bdetec`;
 -- Final view structure for view `acl`
 --
 
+/*!50001 DROP TABLE IF EXISTS `acl`*/;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -926,6 +929,7 @@ USE `bdetec`;
 -- Final view structure for view `auth`
 --
 
+/*!50001 DROP TABLE IF EXISTS `auth`*/;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -949,4 +953,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-01 11:28:40
+-- Dump completed on 2017-10-27 10:17:26

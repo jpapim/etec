@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.26, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.5.50, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: bdetec
 -- ------------------------------------------------------
--- Server version	5.6.24
+-- Server version	5.5.50-0+deb8u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,16 +24,17 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bdetec` /*!40100 DEFAULT CHARACTER SET
 USE `bdetec`;
 
 --
--- Temporary view structure for view `acl`
+-- Temporary table structure for view `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `acl` AS SELECT 
- 1 AS `id_perfil`,
- 1 AS `nm_resource`*/;
+/*!50001 CREATE TABLE `acl` (
+  `id_perfil` tinyint NOT NULL,
+  `nm_resource` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -56,7 +57,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(53,'detalhe-pagination'),(56,'listar-permissoes-acoes'),(58,'autocompleteprofessor'),(59,'gerar-relatorio-pdf'),(60,'cadastro-detalhe'),(61,'adicionar-palavrachavetcc'),(62,'listar-palavrachavetcc'),(63,'excluir-palavrachavetcc-via-tcc'),(64,'adicionar-concluintes'),(65,'listar-concluintes'),(66,'excluir-concluinte-via-tcc'),(67,'download-arquivo'),(68,'pesquisar'),(69,'realizar-pesquisa-tcc'),(70,'detalhes-filtros-pagination'),(71,'realizarinscricoes'),(72,'listar-professores'),(73,'adicionar-professores'),(74,'excluir-membrobanca-via-banca');
+INSERT INTO `action` VALUES (1,'index'),(6,'cadastro'),(7,'gravar'),(8,'excluir'),(9,'upload'),(14,'dados-pessoais'),(15,'atualizar-dados'),(17,'gravar-atualizacao'),(27,'enviar-id'),(30,'ativar-id'),(35,'negar-id'),(36,'alterar-senha'),(37,'salvar-redefinicao-senha'),(51,'index-pagination'),(52,'cadastroperiodoletivodetalhe'),(53,'detalhe-pagination'),(54,'adicionarperiodoletivodetalhe'),(55,'excluirvialistagemperiodoletivo'),(56,'listar-permissoes-acoes'),(58,'autocompleteprofessor'),(59,'gerar-relatorio-pdf'),(60,'cadastro-detalhe'),(61,'adicionar-palavrachavetcc'),(62,'listar-palavrachavetcc'),(63,'excluir-palavrachavetcc-via-tcc'),(64,'adicionar-concluintes'),(65,'listar-concluintes'),(66,'excluir-concluinte-via-tcc'),(67,'download-arquivo'),(68,'pesquisar'),(69,'realizar-pesquisa-tcc'),(70,'detalhes-filtros-pagination'),(71,'realizarinscricoes'),(72,'listar-professores'),(73,'adicionar-professores'),(74,'excluir-membrobanca-via-banca');
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,20 +86,21 @@ INSERT INTO `area_conhecimento` VALUES (1,'Engenharia de Software'),(2,'Seguran�
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `auth`
+-- Temporary table structure for view `auth`
 --
 
 DROP TABLE IF EXISTS `auth`;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `auth` AS SELECT 
- 1 AS `id_usuario`,
- 1 AS `id_perfil`,
- 1 AS `em_email`,
- 1 AS `pw_senha`,
- 1 AS `nm_usuario`,
- 1 AS `id_contrato`*/;
+/*!50001 CREATE TABLE `auth` (
+  `id_usuario` tinyint NOT NULL,
+  `id_perfil` tinyint NOT NULL,
+  `em_email` tinyint NOT NULL,
+  `pw_senha` tinyint NOT NULL,
+  `nm_usuario` tinyint NOT NULL,
+  `id_contrato` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -121,7 +123,7 @@ CREATE TABLE `banca_examinadora` (
 
 LOCK TABLES `banca_examinadora` WRITE;
 /*!40000 ALTER TABLE `banca_examinadora` DISABLE KEYS */;
-INSERT INTO `banca_examinadora` VALUES (1,'2016-07-22 03:00:00'),(2,'2016-10-14 03:00:00'),(3,'2016-10-15 03:00:00'),(4,'2016-10-19 02:00:00'),(5,'2016-11-15 02:00:00');
+INSERT INTO `banca_examinadora` VALUES (1,'2016-11-28 02:00:00'),(2,'2016-12-01 02:00:00'),(3,'2016-11-24 02:00:00'),(4,'2016-11-24 02:00:00'),(5,'2016-11-24 02:00:00');
 /*!40000 ALTER TABLE `banca_examinadora` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +172,7 @@ CREATE TABLE `concluinte` (
   KEY `fk_tcc_concluinte_idx` (`id_tcc`),
   CONSTRAINT `FK_concluinte_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`),
   CONSTRAINT `fk_tcc_concluinte` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +181,7 @@ CREATE TABLE `concluinte` (
 
 LOCK TABLES `concluinte` WRITE;
 /*!40000 ALTER TABLE `concluinte` DISABLE KEYS */;
-INSERT INTO `concluinte` VALUES (1,1,'Eduardo ','545485',2),(2,1,'Elias Jose','2332',1),(3,2,'jdvsvydjww','fefefe',4),(4,2,'fgegefgief','efefe',4),(5,1,'Jose','e3e3e3e',2);
+INSERT INTO `concluinte` VALUES (1,1,'Joyce Lisiane de Sousa Silva',NULL,2),(2,1,'Gilvan Viana Rodrigues',NULL,2),(3,1,'Gabriel Abreu Ramos',NULL,1),(4,1,'Humberto Junio de Jesus',NULL,1),(5,1,'Jeancarlo Dias dos Santos',NULL,1),(6,1,'Gustavo Manso Marques',NULL,3),(7,1,'Miguel da Silva Sousa',NULL,3),(8,1,'Rayany Maria Bastos Pereira',NULL,3),(9,1,'Erick Pinheiro de Sousa',NULL,4),(10,1,'Igor Rodrigues de Santana',NULL,4),(11,1,'Rafael Paiva da Silva',NULL,4);
 /*!40000 ALTER TABLE `concluinte` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +232,7 @@ CREATE TABLE `controller` (
 
 LOCK TABLES `controller` WRITE;
 /*!40000 ALTER TABLE `controller` DISABLE KEYS */;
-INSERT INTO `controller` VALUES (3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','N'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(23,'tipo_tcc-tipotcc','Tipo de TCC','S'),(24,'area_conhecimento-areaconhecimento','Área de Conhecimento','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Actions','S'),(27,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(28,'detalhe_periodo_letivo','Detalhe Periodo Letivo (Encontros)','S'),(29,'permissao-permissao','Gerenciador de Permissao','S'),(30,'professor-professor','Professores','S'),(31,'curso-curso','Cursos','S'),(32,'banca_examinadora-bancaexaminadora','Banca Examinadora','S'),(36,'palavra_chave-palavrachave','Palavras Chave','S'),(37,'infra-infra','Infraestrutura','S'),(38,'palavra_chave_tcc-palavrachavetcc','Palavra Chave TCC','S'),(39,'concluinte-concluinte','Concluinte (Alunos Formandos)','S'),(40,'tcc-tcc','TCC','S'),(41,'titulacao-titulacao','Titulação','S'),(42,'pesquisar-pesquisar','Pesquisar','S');
+INSERT INTO `controller` VALUES (3,'usuario-usuario','Usuario','S'),(4,'application-index','Aplicação','N'),(9,'PhpBoletoZf2\\Controller\\Itau','Boleto do Itau','N'),(11,'principal-principal','Principal','S'),(12,'perfil-perfil','Perfil','S'),(23,'tipo_tcc-tipotcc','Tipo de TCC','S'),(24,'area_conhecimento-areaconhecimento','Área de Conhecimento','S'),(25,'controller-controller','Controller','S'),(26,'action-action','Actions','S'),(27,'periodo_letivo-periodoletivo','Periodo Letivo','S'),(28,'detalhe_periodo_letivo','Detalhe Periodo Letivo (Encontros)','S'),(29,'permissao-permissao','Gerenciador de Permissao','S'),(30,'professor-professor','Professores','S'),(31,'curso-curso','Cursos','S'),(32,'banca_examinadora-bancaexaminadora','Banca Examinadora','S'),(36,'palavra_chave-palavrachave','Palavras Chave','S'),(37,'infra-infra','Infraestrutura','S'),(38,'palavra_chave_tcc-palavrachavetcc','Palavra Chave TCC','S'),(39,'concluinte-concluinte','Concluinte (Alunos Formandos)','S'),(40,'tcc-tcc','TCC','S'),(41,'titulacao-titulacao','Titulaçao','S'),(42,'pesquisar-pesquisar','Pesquisar','S');
 /*!40000 ALTER TABLE `controller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,8 +273,8 @@ CREATE TABLE `email` (
   `id_situacao` int(11) NOT NULL,
   PRIMARY KEY (`id_email`),
   KEY `ix_emails_situacao` (`id_situacao`),
-  CONSTRAINT `FK_Reference_32` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
-  CONSTRAINT `fk_emails_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_emails_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Reference_32` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -334,10 +336,10 @@ CREATE TABLE `esqueci_senha` (
   PRIMARY KEY (`id_esqueci_senha`),
   KEY `ix_esqueci_senha_usuarios` (`id_usuario`),
   KEY `ix_esqueci_senha_situacoes` (`id_situacao`),
-  CONSTRAINT `FK_Reference_23` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `FK_Reference_40` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
   CONSTRAINT `fk_esqueci_senha_situacoes1` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_esqueci_senha_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_esqueci_senha_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Reference_23` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `FK_Reference_40` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -422,11 +424,11 @@ CREATE TABLE `login` (
   KEY `ix_Login_situacao` (`id_situacao`),
   KEY `FK_Reference_26` (`id_perfil`),
   KEY `fk_Login_usuarios` (`id_usuario`),
-  CONSTRAINT `FK_Reference_26` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
-  CONSTRAINT `FK_Reference_31` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`),
   CONSTRAINT `fk_Login_emails` FOREIGN KEY (`id_email`) REFERENCES `email` (`id_email`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Login_situacao` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Login_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Login_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Reference_26` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
+  CONSTRAINT `FK_Reference_31` FOREIGN KEY (`id_situacao`) REFERENCES `situacao` (`id_situacao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -457,7 +459,7 @@ CREATE TABLE `membros_banca` (
   KEY `FK_Reference_98` (`id_professor`),
   CONSTRAINT `FK_Reference_97` FOREIGN KEY (`id_banca_examinadora`) REFERENCES `banca_examinadora` (`id_banca_examinadora`),
   CONSTRAINT `FK_Reference_98` FOREIGN KEY (`id_professor`) REFERENCES `professor` (`id_professor`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,7 +468,7 @@ CREATE TABLE `membros_banca` (
 
 LOCK TABLES `membros_banca` WRITE;
 /*!40000 ALTER TABLE `membros_banca` DISABLE KEYS */;
-INSERT INTO `membros_banca` VALUES (1,1,1,'N'),(2,1,2,'S'),(3,2,1,'N'),(4,2,2,'S'),(5,3,1,'N'),(6,3,2,'S'),(7,3,5,'S'),(8,4,1,'N'),(9,4,2,'S'),(10,4,3,'N'),(11,5,1,'N'),(12,5,2,'S'),(15,5,3,'N');
+INSERT INTO `membros_banca` VALUES (4,2,2,'S'),(5,3,1,'N'),(6,3,2,'S'),(8,4,1,'N'),(9,4,2,'S'),(11,5,1,'N'),(12,5,2,'S'),(16,1,8,'S'),(17,1,7,'N'),(18,1,9,'N'),(19,2,12,'N'),(20,2,5,'N'),(21,2,8,'S'),(22,2,10,'N'),(23,2,11,'N'),(24,3,7,'N'),(25,4,7,'N'),(26,5,7,'N');
 /*!40000 ALTER TABLE `membros_banca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,7 +483,7 @@ CREATE TABLE `palavra_chave` (
   `id_palavra_chave` bigint(20) NOT NULL AUTO_INCREMENT,
   `nm_palavra_chave` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id_palavra_chave`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,7 +492,7 @@ CREATE TABLE `palavra_chave` (
 
 LOCK TABLES `palavra_chave` WRITE;
 /*!40000 ALTER TABLE `palavra_chave` DISABLE KEYS */;
-INSERT INTO `palavra_chave` VALUES (1,'Arduino'),(2,'Android'),(3,'IOS');
+INSERT INTO `palavra_chave` VALUES (1,'Arduino'),(2,'Android'),(3,'IOS'),(4,'Internet'),(5,'Sociedade'),(6,'Tecnologia'),(7,'Sistemas'),(8,'comodidade'),(9,'Tempo'),(10,'Acompanhamento'),(11,'Alunos'),(12,'Pais'),(13,'Professores'),(14,'Reserva'),(15,'hotel'),(16,'Mapeamento de quartos'),(17,'On line'),(18,'Roubos'),(19,'Aplicativos'),(20,'Localização'),(21,'Google Maps'),(22,'Economia'),(23,'Mobile'),(24,'geolocalização'),(25,'posto de combustível');
 /*!40000 ALTER TABLE `palavra_chave` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,7 +512,7 @@ CREATE TABLE `palavra_chave_tcc` (
   KEY `FK_Reference_101` (`id_palavra_chave`),
   CONSTRAINT `FK_Reference_100` FOREIGN KEY (`id_tcc`) REFERENCES `tcc` (`id_tcc`),
   CONSTRAINT `FK_Reference_101` FOREIGN KEY (`id_palavra_chave`) REFERENCES `palavra_chave` (`id_palavra_chave`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -519,7 +521,7 @@ CREATE TABLE `palavra_chave_tcc` (
 
 LOCK TABLES `palavra_chave_tcc` WRITE;
 /*!40000 ALTER TABLE `palavra_chave_tcc` DISABLE KEYS */;
-INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1),(5,4,1),(6,4,2),(7,3,2);
+INSERT INTO `palavra_chave_tcc` VALUES (1,2,1),(2,2,2),(3,1,3),(4,1,1),(6,4,2),(7,3,2),(8,2,NULL),(9,1,NULL),(10,3,15),(11,3,16),(12,3,7),(13,3,14),(14,4,18),(15,4,19),(16,4,21),(17,4,20);
 /*!40000 ALTER TABLE `palavra_chave_tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,7 +545,7 @@ CREATE TABLE `perfil` (
 
 LOCK TABLES `perfil` WRITE;
 /*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
-INSERT INTO `perfil` VALUES (1,'Administrador'),(2,'Coordenação'),(3,'Secretaría'),(4,'Aluno');
+INSERT INTO `perfil` VALUES (1,'Administrador'),(2,'Professor'),(3,'Aluno'),(4,'Auxiliar');
 /*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -566,7 +568,7 @@ CREATE TABLE `perfil_controller_action` (
   CONSTRAINT `fk_perfil_controller_action_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id_action`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_controller` FOREIGN KEY (`id_controller`) REFERENCES `controller` (`id_controller`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfil_controller_action_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=656 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=650 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -575,7 +577,7 @@ CREATE TABLE `perfil_controller_action` (
 
 LOCK TABLES `perfil_controller_action` WRITE;
 /*!40000 ALTER TABLE `perfil_controller_action` DISABLE KEYS */;
-INSERT INTO `perfil_controller_action` VALUES (3,3,1,1),(4,4,1,1),(20,3,7,1),(24,3,14,1),(27,3,17,1),(33,4,1,2),(62,3,15,1),(81,3,36,1),(83,3,37,1),(87,9,1,1),(88,9,1,2),(89,3,6,1),(93,11,1,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(164,23,1,1),(169,23,6,1),(170,23,7,1),(171,23,8,1),(172,23,9,1),(177,23,14,1),(178,23,15,1),(180,23,17,1),(190,23,27,1),(193,23,30,1),(198,23,35,1),(199,23,36,1),(200,23,37,1),(214,23,51,1),(215,24,1,1),(220,24,6,1),(221,24,7,1),(222,24,8,1),(223,24,9,1),(228,24,14,1),(229,24,15,1),(231,24,17,1),(241,24,27,1),(244,24,30,1),(249,24,35,1),(250,24,36,1),(251,24,37,1),(265,24,51,1),(266,3,51,1),(268,23,1,1),(269,23,6,1),(270,23,7,1),(271,23,8,1),(272,23,51,1),(273,25,1,1),(274,25,6,1),(275,25,7,1),(276,25,8,1),(277,25,51,1),(278,26,1,1),(279,26,6,1),(280,26,7,1),(281,26,8,1),(282,26,51,1),(283,27,1,1),(284,27,6,1),(285,27,7,1),(286,27,8,1),(287,27,51,1),(289,27,53,1),(313,29,1,1),(315,29,6,1),(316,29,7,1),(317,29,8,1),(318,29,51,1),(319,29,56,1),(351,31,1,1),(352,31,6,1),(353,31,7,1),(354,31,8,1),(355,31,51,1),(384,36,1,1),(385,36,6,1),(386,36,7,1),(387,36,8,1),(388,36,51,1),(389,37,1,1),(390,11,1,2),(391,11,1,3),(392,11,1,4),(401,38,1,1),(402,38,6,1),(403,38,7,1),(404,38,8,1),(405,38,9,1),(406,38,51,1),(407,39,1,1),(408,39,6,1),(409,39,7,1),(410,39,8,1),(411,39,51,1),(418,30,1,1),(419,30,6,1),(420,30,7,1),(421,30,8,1),(422,30,51,1),(423,30,58,1),(424,30,59,1),(438,40,1,1),(439,40,6,1),(440,40,7,1),(441,40,8,1),(442,40,9,1),(443,40,51,1),(444,40,60,1),(445,40,61,1),(446,40,62,1),(447,40,63,1),(448,40,64,1),(449,40,65,1),(450,40,66,1),(451,40,67,1),(452,41,1,1),(453,41,6,1),(454,41,7,1),(455,41,8,1),(456,41,51,1),(457,41,1,2),(458,41,6,2),(459,41,7,2),(460,41,8,2),(461,41,9,2),(462,41,51,2),(499,42,6,1),(500,42,70,1),(501,42,8,1),(502,42,7,1),(503,42,1,1),(504,42,51,1),(505,42,68,1),(506,42,69,1),(553,32,73,1),(554,32,58,1),(555,32,6,1),(556,32,60,1),(557,32,53,1),(558,32,8,1),(559,32,74,1),(560,32,7,1),(561,32,1,1),(562,32,51,1),(563,32,72,1),(564,32,71,1),(573,24,6,2),(574,24,27,2),(575,24,8,2),(576,24,7,2),(577,24,17,2),(578,24,1,2),(579,24,51,2),(580,24,35,2),(581,32,73,2),(582,32,58,2),(583,32,6,2),(584,32,60,2),(585,32,53,2),(586,32,8,2),(587,32,74,2),(588,32,7,2),(589,32,1,2),(590,32,51,2),(591,32,72,2),(592,32,71,2),(593,39,6,2),(594,39,8,2),(595,39,7,2),(596,39,1,2),(597,39,51,2),(598,31,6,2),(599,31,8,2),(600,31,7,2),(601,31,1,2),(602,31,51,2),(603,38,6,2),(604,38,8,2),(605,38,7,2),(606,38,1,2),(607,38,51,2),(608,36,6,2),(609,36,8,2),(610,36,7,2),(611,36,1,2),(612,36,51,2),(613,42,6,2),(614,42,70,2),(615,42,8,2),(616,42,7,2),(617,42,1,2),(618,42,51,2),(619,42,68,2),(620,42,69,2),(621,30,58,2),(622,30,6,2),(623,30,8,2),(624,30,59,2),(625,30,7,2),(626,30,1,2),(627,30,51,2),(628,40,64,2),(629,40,61,2),(630,40,6,2),(631,40,60,2),(632,40,67,2),(633,40,8,2),(634,40,66,2),(635,40,63,2),(636,40,7,2),(637,40,1,2),(638,40,51,2),(639,40,65,2),(640,40,62,2),(641,40,9,2),(642,23,6,2),(643,23,8,2),(644,23,7,2),(645,23,1,2),(646,23,51,2),(647,3,36,2),(648,3,15,2),(649,3,6,2),(650,3,14,2),(651,3,7,2),(652,3,17,2),(653,3,1,2),(654,3,51,2),(655,3,37,2);
+INSERT INTO `perfil_controller_action` VALUES (3,3,1,1),(4,4,1,1),(20,3,7,1),(24,3,14,1),(27,3,17,1),(32,3,1,2),(33,4,1,2),(49,3,7,2),(53,3,14,2),(59,3,15,2),(62,3,15,1),(81,3,36,1),(82,3,36,2),(83,3,37,1),(84,3,37,2),(86,3,17,2),(87,9,1,1),(88,9,1,2),(89,3,6,1),(93,11,1,1),(95,12,1,1),(96,12,6,1),(97,12,7,1),(164,23,1,1),(169,23,6,1),(170,23,7,1),(171,23,8,1),(172,23,9,1),(177,23,14,1),(178,23,15,1),(180,23,17,1),(190,23,27,1),(193,23,30,1),(198,23,35,1),(199,23,36,1),(200,23,37,1),(214,23,51,1),(215,24,1,1),(220,24,6,1),(221,24,7,1),(222,24,8,1),(223,24,9,1),(228,24,14,1),(229,24,15,1),(231,24,17,1),(241,24,27,1),(244,24,30,1),(249,24,35,1),(250,24,36,1),(251,24,37,1),(265,24,51,1),(266,3,51,1),(267,3,51,2),(268,23,1,1),(269,23,6,1),(270,23,7,1),(271,23,8,1),(272,23,51,1),(273,25,1,1),(274,25,6,1),(275,25,7,1),(276,25,8,1),(277,25,51,1),(278,26,1,1),(279,26,6,1),(280,26,7,1),(281,26,8,1),(282,26,51,1),(283,27,1,1),(284,27,6,1),(285,27,7,1),(286,27,8,1),(287,27,51,1),(288,27,52,1),(289,27,53,1),(290,27,54,1),(291,28,55,1),(313,29,1,1),(315,29,6,1),(316,29,7,1),(317,29,8,1),(318,29,51,1),(319,29,56,1),(351,31,1,1),(352,31,6,1),(353,31,7,1),(354,31,8,1),(355,31,51,1),(384,36,1,1),(385,36,6,1),(386,36,7,1),(387,36,8,1),(388,36,51,1),(389,37,1,1),(390,11,1,2),(391,11,1,3),(392,11,1,4),(401,38,1,1),(402,38,6,1),(403,38,7,1),(404,38,8,1),(405,38,9,1),(406,38,51,1),(407,39,1,1),(408,39,6,1),(409,39,7,1),(410,39,8,1),(411,39,51,1),(418,30,1,1),(419,30,6,1),(420,30,7,1),(421,30,8,1),(422,30,51,1),(423,30,58,1),(424,30,59,1),(438,40,1,1),(439,40,6,1),(440,40,7,1),(441,40,8,1),(442,40,9,1),(443,40,51,1),(444,40,60,1),(445,40,61,1),(446,40,62,1),(447,40,63,1),(448,40,64,1),(449,40,65,1),(450,40,66,1),(451,40,67,1),(452,41,1,1),(453,41,6,1),(454,41,7,1),(455,41,8,1),(456,41,51,1),(457,41,1,2),(458,41,6,2),(459,41,7,2),(460,41,8,2),(461,41,9,2),(462,41,51,2),(499,42,6,1),(500,42,70,1),(501,42,8,1),(502,42,7,1),(503,42,1,1),(504,42,51,1),(505,42,68,1),(506,42,69,1),(507,42,6,2),(508,42,70,2),(509,42,8,2),(510,42,7,2),(511,42,1,2),(512,42,51,2),(513,42,68,2),(514,42,69,2),(553,32,73,1),(554,32,58,1),(555,32,6,1),(556,32,60,1),(557,32,53,1),(558,32,8,1),(559,32,74,1),(560,32,7,1),(561,32,1,1),(562,32,51,1),(563,32,72,1),(564,32,71,1),(587,24,36,2),(588,24,30,2),(589,24,15,2),(590,24,6,2),(591,24,60,2),(592,24,14,2),(593,24,53,2),(594,24,67,2),(595,24,27,2),(596,24,8,2),(597,24,7,2),(598,24,17,2),(599,24,1,2),(600,24,51,2),(601,24,35,2),(602,24,68,2),(603,24,69,2),(604,24,37,2),(605,24,9,2),(606,32,73,2),(607,32,58,2),(608,32,6,2),(609,32,60,2),(610,32,53,2),(611,32,8,2),(612,32,74,2),(613,32,7,2),(614,32,1,2),(615,32,51,2),(616,32,72,2),(617,32,71,2),(618,39,6,2),(619,39,8,2),(620,39,7,2),(621,39,17,2),(622,39,1,2),(623,39,51,2),(631,40,64,2),(632,40,61,2),(633,40,73,2),(634,40,6,2),(635,40,60,2),(636,40,67,2),(637,40,8,2),(638,40,66,2),(639,40,74,2),(640,40,63,2),(641,40,55,2),(642,40,59,2),(643,40,7,2),(644,40,17,2),(645,40,1,2),(646,40,51,2),(647,40,65,2),(648,40,62,2),(649,40,9,2);
 /*!40000 ALTER TABLE `perfil_controller_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -599,7 +601,7 @@ CREATE TABLE `professor` (
   KEY `FK_Reference_91` (`id_usuario_cadastro`),
   CONSTRAINT `FK_Reference_90` FOREIGN KEY (`id_titulacao`) REFERENCES `titulacao` (`id_titulacao`),
   CONSTRAINT `FK_Reference_91` FOREIGN KEY (`id_usuario_cadastro`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -608,7 +610,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (1,2,1,'Alysson Vicuña de Oliveira','2016-06-20 18:40:44','N','A'),(2,3,1,'Eduardo Prola Salinas','2016-06-20 18:41:10','S','A'),(3,3,1,'Vanessa Coelho','2016-10-14 18:34:49','N','A'),(4,3,1,'Jorge Targino','2016-10-14 18:35:07','N','A'),(5,2,1,'Fernando Feliu','2016-10-14 18:35:21','S','A'),(6,3,1,'Renato Leao','2016-10-15 13:18:43','S','I');
+INSERT INTO `professor` VALUES (1,2,1,'Alysson Vicuña de Oliveira','2016-06-20 18:40:44','N','A'),(2,3,1,'Eduardo Prola Salinas','2016-06-20 18:41:10','S','A'),(3,3,1,'Vanessa Coelho','2016-10-14 18:34:49','N','A'),(4,3,1,'Jorge Targino','2016-10-14 18:35:07','N','A'),(5,2,1,'Fernando Feliu','2016-10-14 18:35:21','S','A'),(6,3,1,'Renato Leao','2016-10-15 13:18:43','S','A'),(7,2,1,'Renato José','2017-10-19 13:46:25','S','A'),(8,1,1,'Daniel Souza Coelho','2017-10-19 13:46:54','S','A'),(9,1,1,'Wanderson Pereira dos Santos','2017-10-19 13:49:21','S','A'),(10,1,1,'João Evangelista de Souza','2017-10-19 13:49:53','S','A'),(11,2,1,'Websters Gomes','2017-10-19 13:50:23','N','A'),(12,1,1,'Hedson Rodrigues Lima','2017-10-19 13:50:53','N','A');
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -702,7 +704,7 @@ CREATE TABLE `tcc` (
   `tx_titulo_tcc` varchar(150) DEFAULT NULL,
   `tx_resumo` text,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dt_alteracao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dt_alteracao` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nr_nota_final` decimal(4,2) DEFAULT NULL,
   `ar_arquivo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_tcc`),
@@ -727,7 +729,7 @@ CREATE TABLE `tcc` (
 
 LOCK TABLES `tcc` WRITE;
 /*!40000 ALTER TABLE `tcc` DISABLE KEYS */;
-INSERT INTO `tcc` VALUES (1,1,1,1,2,1,5,'Teste','aqaqaq','2016-10-14 19:42:31','2016-10-16 20:16:20',10.00,NULL),(2,1,1,2,1,3,2,'Teste do Salinas','deded','2016-10-14 19:45:49','2016-10-16 20:16:20',99.99,NULL),(3,1,1,1,2,3,5,'Teste de Arquivo','swswswsw','2016-10-15 15:01:42','2016-10-16 20:16:20',99.99,NULL),(4,1,1,1,2,2,2,'rgrgrg','fbfvbfbfbfbfb','2016-10-19 00:03:56','2016-10-23 22:11:41',3.00,NULL);
+INSERT INTO `tcc` VALUES (1,1,1,1,2,1,2,'Sistema de Comanda Eletrônica QR Code','RESUMO\r\nEste projeto tem como objetivo apresentar sistema que gerencia comandas eletrônicas em bares e restaurantes com auxílio da tecnologia QR Code, buscando agilidade no registro dos pedidos e disponibilizando para o cliente a possibilidade de visualizar o consumo de comidas e bebidas de forma simples e transparente, através da leitura QR Code, além da possibilidade de adicionar novos pedidos sem a necessidade de atendimento físico de garçons, ou seja, após a leitura da comanda pelo smartphone é apresentado o cardápio para cliente do estabelecimento onde pode-se adicionar os produtos na comanda (pedidos) e visualizar o consumo de forma dinâmica.\r\nPalavras-Chave: Comanda eletrônica, QR Code, transparência, tecnologia.','2017-10-19 14:08:20','0000-00-00 00:00:00',NULL,NULL),(2,1,1,2,1,1,8,'SISTEMA DE ACOMPANHAMENTO ON LINE DE RENDIMENTO DE ALUNOS E INSTITUIÇÕES NA REDE PÚBLICA DE ENSINO.','Com o advento da Internet, é importante para os setores da sociedade aderirem as mudanças impostas pela tecnologia. É fato que hoje as pessoas conseguem resolver problemas ou situações que antes não poderiam se imaginar, através de um clique.\r\nA falta de tempo e a comodidade são fatos que impulsionam o crescimento de aplicativos e sistemas, já que fazem com que as pessoas não percam tempo, ou faltem um dia de trabalho para resolver algo.\r\nCom isso, tem-se a necessidade de um sistema de acompanhamento on-line de rendimento de alunos e instituições da rede pública de ensino, tendo como principal foco proporcionar aos pais ou responsáveis um acompanhamento do rendimento escolar do aluno, podendo inclusive ter feedbacks dos docentes sobre o comportamento do estudante.\r\nPalavras-Chave: Internet, sociedade, tecnologia, sistemas, comodidade, tempo, acompanhamento, alunos, pais, professores.','2017-10-19 18:21:12','0000-00-00 00:00:00',NULL,NULL),(3,1,1,2,1,1,8,'SISTEMA DE RESERVAS ONLINE DE HOTEL COM FUNCIONALIDADE PARA VISUALIZAÇÃO DE QUARTOS NO MOMENTO DA RESERVA','Este Trabalho de Conclusão de Curso (TCC) tem como objetivo o aprimoramento do processo de reservas online para hotel, possibilitando a visualização de mapa com a localização dos quartos. A ferramenta trará maior comodidade e independência aos hóspedes com a escolha de acordo com suas preferências e, consequentemente, tornará o estabelecimento mais competitivo no mercado hoteleiro, visto que a comodidade do já citado sistema, além de reafirmar o compromisso do estabelecimento com a qualidade e conforto para com os clientes já cativos, atrairá também um novo grupo de consumidores, aquele que está sempre em busca de novos mecanismos para tornarem a vida mais prática e fácil.\r\nNeste documento serão apresentados todos artefatos do sistema que foi desenvolvido, especificando e detalhando cada funcionalidade do mesmo, com técnicas e modelos de diagramas definidos pela UML.\r\nPalavras-Chave: Sistema de Reserva Online. Hotel. Mapeamento de Quartos.','2017-10-20 10:42:56','0000-00-00 00:00:00',NULL,NULL),(4,1,1,3,1,1,2,'LOCALIZA BIKE','Atualmente é notado através dos veículos de comunicação uma gama de notícias sobre roubos em diversos segmentos. E destes segmentos podemos destacar o roubo de bicicletas, porque este bem ainda é objeto para diversos tipos de pessoas, desde um simples passeio e realização de esporte até o trajeto de ir para o trabalho. E com isso os criminosos também intensificaram o foco de roubo aos ciclistas de maneira que após a subtração, dependendo do modelo da bicicleta, vendem em feiras clandestinas a preço abaixo do mercado. Entretanto vários ciclistas ficavam desfalcado e receosos em adquirir este tipo de bem.\r\nEntão o aplicativo Localiza Bike visa auxiliar o ciclista na recuperação da sua bicicleta em virtude dos roubos, porque após a subtração o ciclista altera o seu status para bicicleta roubada e com isso os demais usuários que avistarem um modelo similar com o que foi descrito no aplicativo no meio da rua ou em feiras clandestinas, poderá fazer uma consulta através do número de série que se encontra no quadro da bicicleta próximos aos pedais e caso a suspeita seja positiva pode tirar uma foto e marcar a localização, aonde se encontrou a bicicleta. Além disso o usuário contará com a funcionalidade de realizar seu trajeto com o apoio do Google Maps, pois ao definir o local de origem e de destino será realizado o trajeto que se pretende percorrer.\r\nEntretanto seguindo o contexto do parágrafo anterior, o usuário dispõe da alteração de proprietário, ou seja, caso o mesmo venha efetuar a venda da bicicleta basta inserir no campo designado para transferência o CPF do novo proprietário e com isso o próprio sistema altera e registra a bicicleta no perfil ao novo comprador, tendo como necessidade de se cadastrar no aplicativo. O foco principal que é a consulta da bicicleta, também se volta para a segurança pública, aonde forças policias suspeitando do meliante portador de uma bicicleta, contará com este aplicativo para identificar o verdadeiro dono.\r\nPalavras-Chave: Roubos – Aplicativo – Google Maps – Localização.','2017-10-20 11:16:51','0000-00-00 00:00:00',0.00,'');
 /*!40000 ALTER TABLE `tcc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -908,6 +910,7 @@ USE `bdetec`;
 -- Final view structure for view `acl`
 --
 
+/*!50001 DROP TABLE IF EXISTS `acl`*/;
 /*!50001 DROP VIEW IF EXISTS `acl`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -926,6 +929,7 @@ USE `bdetec`;
 -- Final view structure for view `auth`
 --
 
+/*!50001 DROP TABLE IF EXISTS `auth`*/;
 /*!50001 DROP VIEW IF EXISTS `auth`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -949,4 +953,4 @@ USE `bdetec`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-01 11:28:40
+-- Dump completed on 2017-10-27 10:17:26
