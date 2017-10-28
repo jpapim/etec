@@ -103,12 +103,15 @@ class TccController extends  AbstractCrudController {
 
             $post = \Estrutura\Helpers\Utilities::arrayMapArray('trim', $request->getPost()->toArray());
 
+            ##### Faz o tratamento para upload do arquivo
+            #############################################################################
             $local = TXT_CONST_LOCAL_COMPLETO_UPLOAD;
             if (!file_exists($local)) {
                 mkdir($local, 0755);
             }
 
             $files = $request->getFiles();
+
             $upload = $this->uploadFile($files, $local);
 
             $local_relativo = TXT_CONST_LOCAL_RELATIVO_UPLOAD;
@@ -117,7 +120,6 @@ class TccController extends  AbstractCrudController {
                     $upload['ar_arquivo'] = str_replace($local_relativo,'',str_replace(BASE_PATCH, '', $file['tmp_name']));
                 }
             }
-
             #Faz a junção dos dados enviados via post e dos arquivos submetidos
             $post = array_merge($post, $upload);
 
@@ -126,12 +128,12 @@ class TccController extends  AbstractCrudController {
                 $post['id'] = Cript::dec($post['id']);
             }
 
+            ### Trata de É uma inserão ou alteração de Registro e define se devera alterarar o dado cadastrado no banco de dados ou não.
             #############################################################################
-            $tccService = new \Tcc\Service\TccService();
-            $tccEntity = $tccService->buscar($post['id']);
             #Se O id estiver preenchido o formulario foi Submetido via Edição, do contrario é a inserção de um novo TCC
             if(!is_null($post['id']) && !empty($post['id'])){ #Se for uma alteração
-
+                $tccService = new \Tcc\Service\TccService();
+                $tccEntity = $tccService->buscar($post['id']);
                 #Se não trocou o arquivo, continua com o mesmo que ja esta cadastrado no banco
                 if(empty($post['ar_arquivo'])){
                     $post['ar_arquivo'] = $tccEntity->getArArquivo();
