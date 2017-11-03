@@ -1,0 +1,51 @@
+version: '2'
+services:
+  web:
+    build: .
+    image: alyssontkd/ambiente-etec
+    container_name: 'dev-etec-v1.0'
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8888:8888"
+    volumes:
+      - /var/www/docker/etec:/var/www/html/etec.projecao.br
+      - /var/www/docker/log/apache2/etec:/var/log/apache2
+      - /var/www/docker/arquivos/etec:/var/www/html/etec.projecao.br/data/arquivos/
+    environment:
+      - APPLICATION_ENV=development
+
+#Bloco1: Comente este bloco e descomente o Bloco 2 caso queira subir o conteiner de banco de dados junto com o conteiner
+    external_links:
+      - database-mysql_1:mysql
+    networks:
+      - default
+      - databasemysql_default
+networks:
+    databasemysql_default:
+        external:
+            name: databasemysql_default
+
+
+#Bloco 2: Descomente este trecho e comente o Bloco 1 para compilar a imagem do banco junto com a imagem da aplicação.
+    #links:
+     #- database
+
+  #database:
+  # image: mysql:5.7
+  # container_name: 'database-mysql'
+  # command: mysqld --sql_mode=""
+  # expose:
+  #      - "3306"
+  # ports:
+  #      - "3306:3306"
+  # volumes:
+  #      - /var/www/database/mysql/conf.d:/etc/mysql/conf.d
+  #      - /var/www/database/mysql/mysql.conf.d:/etc/mysql/mysql.conf.d
+  #      - /var/www/database/mysql/data:/var/lib/mysql
+  #      - /var/www/database/mysql/log:/var/log/
+  # environment:
+  #      MYSQL_ROOT_PASSWORD: 12345678
+  #      MYSQL_USER: usr_aplicacao
+  #      MYSQL_PASSWORD: 12345678
+  #      MYSQL_DATABASE: bdetec
